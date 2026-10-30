@@ -42,7 +42,7 @@
   "source": "cloud-editor",
   "kind": "editor",
   "scenario": [],
-  "runner": "tools/shots/install_run.sh after + r2_finish.py（R4 で撮り直し。R4_ROOT）",
+  "runner": "tools/shots/install_run.sh after + r2_finish.py（R4 で撮り直し。R4_ROOT） + tools/shots/r5_rebadge.py（R5: Unity を起動せず、生の画像と印の記録から番号だけ描き直し）",
   "case": "なし",
   "product_version": "0.1.0",
   "product_commit": "9dc45be",
@@ -54,14 +54,14 @@
   ],
   "used_in_manual": true,
   "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）",
-  "note": "開いた直後の窓"
+  "note": "R5 で番号を 6 に（入れ方の手順 6）。製品の直し（空の欄の案内を白いふきだしに）のあとに撮り直す予定"
  },
  {
   "file": "02_04_select_folder.png",
   "source": "cloud-editor",
   "kind": "editor",
   "scenario": [],
-  "runner": "tools/shots/install_run.sh after + r2_finish.py",
+  "runner": "tools/shots/install_run.sh after + r2_finish.py + tools/shots/r5_rebadge.py（R5: Unity を起動せず、生の画像と印の記録から番号だけ描き直し）",
   "case": "なし",
   "product_version": "0.1.0",
   "product_commit": "57b7c48",
@@ -73,7 +73,7 @@
   ],
   "used_in_manual": true,
   "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）",
-  "note": "Project の木"
+  "note": "Project の木。R5 で番号だけを手順に合わせて描き直した"
  },
  {
   "file": "03_01_hierarchy_before.png",
@@ -82,7 +82,7 @@
   "scenario": [
    "tools/shots/scenarios/r2_ch03_c2.json"
   ],
-  "runner": "tools/shots/r2_queue.sh + tools/shots/r2_finish.py",
+  "runner": "tools/shots/r2_queue.sh + tools/shots/r2_finish.py + tools/shots/r5_rebadge.py（R5: Unity を起動せず、生の画像と印の記録から番号だけ描き直し）",
   "case": "C2",
   "product_version": "0.1.0",
   "product_commit": "57b7c48",
@@ -93,7 +93,8 @@
    282
   ],
   "used_in_manual": true,
-  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）"
+  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）",
+  "note": "R5 で番号だけを手順に合わせて描き直した"
  },
  {
   "file": "03_02_window_empty.png",
@@ -102,7 +103,7 @@
   "scenario": [
    "tools/shots/scenarios/r2_ch03_c2.json"
   ],
-  "runner": "tools/shots/r2_queue.sh + tools/shots/r2_finish.py",
+  "runner": "tools/shots/r2_queue.sh + tools/shots/r2_finish.py + tools/shots/r5_rebadge.py（R5: Unity を起動せず、生の画像と印の記録から番号だけ描き直し）",
   "case": "C2",
   "product_version": "0.1.0",
   "product_commit": "57b7c48",
@@ -113,7 +114,8 @@
    975
   ],
   "used_in_manual": true,
-  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）"
+  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）",
+  "note": "R5 で番号を 2 に（練習の手順 2）。製品の直し（空の欄の案内を白いふきだしに、［変換］の下の文）のあとに撮り直す予定"
  },
  {
   "file": "03_03_inputs.png",
@@ -122,7 +124,7 @@
   "scenario": [
    "tools/shots/scenarios/r2_ch03_c2.json"
   ],
-  "runner": "tools/shots/r2_queue.sh + tools/shots/r2_finish.py",
+  "runner": "tools/shots/r2_queue.sh + tools/shots/r2_finish.py + tools/shots/r5_rebadge.py（R5: Unity を起動せず、生の画像と印の記録から番号だけ描き直し）",
   "case": "C2",
   "product_version": "0.1.0",
   "product_commit": "57b7c48",
@@ -133,7 +135,8 @@
    772
   ],
   "used_in_manual": true,
-  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）"
+  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）",
+  "note": "R5 で番号だけを手順に合わせて描き直した"
  },
  {
   "file": "03_05_convert_button.png",
@@ -142,7 +145,7 @@
   "scenario": [
    "tools/shots/scenarios/r2_ch03_c2.json"
   ],
-  "runner": "tools/shots/r2_queue.sh + tools/shots/r2_finish.py",
+  "runner": "tools/shots/r2_queue.sh + tools/shots/r2_finish.py + tools/shots/r5_rebadge.py（R5: Unity を起動せず、生の画像と印の記録から番号だけ描き直し）",
   "case": "C2",
   "product_version": "0.1.0",
   "product_commit": "57b7c48",
@@ -153,7 +156,8 @@
    306
   ],
   "used_in_manual": true,
-  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）"
+  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）",
+  "note": "R5 で番号だけを手順に合わせて描き直した"
  },
  {
   "file": "03_06_result.png",
@@ -162,7 +166,7 @@
   "scenario": [
    "tools/shots/scenarios/r2_ch03_c2.json"
   ],
-  "runner": "tools/shots/r2_queue.sh + tools/shots/r2_finish.py",
+  "runner": "tools/shots/r2_queue.sh + tools/shots/r2_finish.py + tools/shots/r5_rebadge.py（R5: Unity を起動せず、生の画像と印の記録から番号だけ描き直し）",
   "case": "C2",
   "product_version": "0.1.0",
   "product_commit": "9dc45be",
@@ -173,7 +177,8 @@
    487
   ],
   "used_in_manual": true,
-  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）"
+  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）",
+  "note": "R5 で番号だけを手順に合わせて描き直した"
  },
  {
   "file": "03_07_hierarchy_after.png",
@@ -182,7 +187,7 @@
   "scenario": [
    "tools/shots/scenarios/r2_ch03_c2.json"
   ],
-  "runner": "tools/shots/r2_queue.sh + tools/shots/r2_finish.py",
+  "runner": "tools/shots/r2_queue.sh + tools/shots/r2_finish.py + tools/shots/r5_rebadge.py（R5: Unity を起動せず、生の画像と印の記録から番号だけ描き直し）",
   "case": "C2",
   "product_version": "0.1.0",
   "product_commit": "57b7c48",
@@ -193,7 +198,8 @@
    784
   ],
   "used_in_manual": true,
-  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）"
+  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）",
+  "note": "R5 で番号だけを手順に合わせて描き直した"
  },
  {
   "file": "03_09_undo_redo.png",
@@ -322,18 +328,19 @@
   "scenario": [
    "tools/shots/scenarios/r2_screen_c1.json"
   ],
-  "runner": "tools/shots/r2_queue.sh + tools/shots/r2_finish.py",
+  "runner": "tools/shots/r2_queue.sh + tools/shots/r2_finish.py + tools/shots/r5_rebadge.py（R5: Unity を起動せず、生の画像と印の記録から番号だけ描き直し）",
   "case": "C1",
   "product_version": "0.1.0",
   "product_commit": "9dc45be",
   "manual_commit": "fbf0ebb",
   "shot_date": "2026-10-30",
   "size": [
-   1160,
-   186
+   1190,
+   460
   ],
   "used_in_manual": true,
-  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）"
+  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）",
+  "note": "R5 で切り出しを広げ、自動チェックの数の欄に番号 7 を足した（手順 6 は置き換えの知らせ、手順 7 は数を比べる）"
  },
  {
   "file": "04_04_check_buttons.png",
@@ -362,7 +369,7 @@
   "scenario": [
    "tools/shots/scenarios/r2_screen_c1.json"
   ],
-  "runner": "tools/shots/r2_queue.sh + tools/shots/r2_finish.py",
+  "runner": "tools/shots/r2_queue.sh + tools/shots/r2_finish.py + tools/shots/r5_rebadge.py（R5: Unity を起動せず、生の画像と印の記録から番号だけ描き直し）",
   "case": "C1",
   "product_version": "0.1.0",
   "product_commit": "9dc45be",
@@ -373,7 +380,8 @@
    810
   ],
   "used_in_manual": true,
-  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）"
+  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）",
+  "note": "R5 で番号だけを手順に合わせて描き直した"
  },
  {
   "file": "04_05_hide_button.png",
@@ -442,7 +450,7 @@
   "scenario": [
    "tools/shots/scenarios/r3_brush_c3.json"
   ],
-  "runner": "tools/shots/r3_queue.sh + tools/shots/r3_finish.py",
+  "runner": "tools/shots/r3_queue.sh + tools/shots/r3_finish.py + tools/shots/r5_rebadge.py（R5: Unity を起動せず、生の画像と印の記録から番号だけ描き直し）",
   "case": "C3",
   "product_version": "0.1.0",
   "product_commit": "aff9f66",
@@ -454,7 +462,7 @@
   ],
   "used_in_manual": true,
   "processing": "Unity の撮影画像（実撮影）を、切り出し・並べ・ラベル付けした物。作図・手描きではない",
-  "note": "Scene ビューと小窓。印の四角の一部は描いた画像を見て決めた"
+  "note": "R5 で［半径 (cm)］の印を外し、塗った所を 4、［ブラシを終了］を 6 にした"
  },
  {
   "file": "04_06_brush_inspector.png",
@@ -503,7 +511,7 @@
   "scenario": [
    "tools/shots/scenarios/r3_mask_c3.json"
   ],
-  "runner": "tools/shots/r3_queue.sh + tools/shots/r3_finish.py",
+  "runner": "tools/shots/r3_queue.sh + tools/shots/r3_finish.py + tools/shots/r5_rebadge.py（R5: Unity を起動せず、生の画像と印の記録から番号だけ描き直し）",
   "case": "C3",
   "product_version": "0.1.0",
   "product_commit": "aff9f66",
@@ -514,7 +522,8 @@
    352
   ],
   "used_in_manual": true,
-  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）"
+  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）",
+  "note": "R5 で番号だけを手順に合わせて描き直した"
  },
  {
   "file": "04_06_mask_inspector.png",
@@ -603,18 +612,19 @@
   "scenario": [
    "tools/shots/scenarios/r3_ma_c2.json"
   ],
-  "runner": "tools/shots/r3_queue.sh + tools/shots/r3_finish.py（R3_PROJECT=VRChat SDK + Modular Avatar 入りのプロジェクト）",
+  "runner": "tools/shots/r3_queue.sh + tools/shots/r3_finish.py（R3_PROJECT=VRChat SDK + Modular Avatar 入りのプロジェクト） + tools/shots/r5_rebadge.py（R5: Unity を起動せず、生の画像と印の記録から番号だけ描き直し）",
   "case": "C2",
   "product_version": "0.1.0",
   "product_commit": "aff9f66",
   "manual_commit": "76a52f3",
   "shot_date": "2026-10-30",
   "size": [
-   1280,
+   1314,
    1142
   ],
   "used_in_manual": true,
-  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）"
+  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）",
+  "note": "R5 で番号 7 を足した（以前は番号の丸が無かった）"
  },
  {
   "file": "04_09_vrchat_options.png",
@@ -623,18 +633,19 @@
   "scenario": [
    "tools/shots/scenarios/r3_ma_c2.json"
   ],
-  "runner": "tools/shots/r3_queue.sh + tools/shots/r3_finish.py（R3_PROJECT=VRChat SDK + Modular Avatar 入りのプロジェクト）",
+  "runner": "tools/shots/r3_queue.sh + tools/shots/r3_finish.py（R3_PROJECT=VRChat SDK + Modular Avatar 入りのプロジェクト） + tools/shots/r5_rebadge.py（R5: Unity を起動せず、生の画像と印の記録から番号だけ描き直し）",
   "case": "C2",
   "product_version": "0.1.0",
   "product_commit": "9dc45be",
   "manual_commit": "fbf0ebb",
   "shot_date": "2026-10-30",
   "size": [
-   1194,
-   240
+   1196,
+   546
   ],
   "used_in_manual": true,
-  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）"
+  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）",
+  "note": "R5 で切り出しを上に広げ、［詳細設定］の見出しに番号 1 を足した"
  },
  {
   "file": "04_10_cleanup.png",
@@ -643,7 +654,7 @@
   "scenario": [
    "tools/shots/scenarios/r3_c2_chain.json"
   ],
-  "runner": "tools/shots/r3_queue.sh + tools/shots/r3_finish.py",
+  "runner": "tools/shots/r3_queue.sh + tools/shots/r3_finish.py + tools/shots/r5_rebadge.py（R5: Unity を起動せず、生の画像と印の記録から番号だけ描き直し）",
   "case": "C2",
   "product_version": "0.1.0",
   "product_commit": "aff9f66",
@@ -654,7 +665,8 @@
    126
   ],
   "used_in_manual": true,
-  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）"
+  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）",
+  "note": "R5 で番号だけを手順に合わせて描き直した"
  },
  {
   "file": "04_10_delete_result.png",
@@ -663,7 +675,7 @@
   "scenario": [
    "tools/shots/scenarios/r3_c2_chain.json"
   ],
-  "runner": "tools/shots/r3_queue.sh + tools/shots/r3_finish.py",
+  "runner": "tools/shots/r3_queue.sh + tools/shots/r3_finish.py + tools/shots/r5_rebadge.py（R5: Unity を起動せず、生の画像と印の記録から番号だけ描き直し）",
   "case": "C2",
   "product_version": "0.1.0",
   "product_commit": "aff9f66",
@@ -674,7 +686,8 @@
    1071
   ],
   "used_in_manual": true,
-  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）"
+  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）",
+  "note": "R5 で番号だけを手順に合わせて描き直した"
  },
  {
   "file": "04_10_keep_record.png",
@@ -683,7 +696,7 @@
   "scenario": [
    "tools/shots/scenarios/r3_c2_chain.json"
   ],
-  "runner": "tools/shots/r3_queue.sh + tools/shots/r3_finish.py",
+  "runner": "tools/shots/r3_queue.sh + tools/shots/r3_finish.py + tools/shots/r5_rebadge.py（R5: Unity を起動せず、生の画像と印の記録から番号だけ描き直し）",
   "case": "C2",
   "product_version": "0.1.0",
   "product_commit": "aff9f66",
@@ -694,7 +707,8 @@
    604
   ],
   "used_in_manual": true,
-  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）"
+  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）",
+  "note": "R5 で番号だけを手順に合わせて描き直した"
  },
  {
   "file": "04_10_new_result.png",
@@ -703,7 +717,7 @@
   "scenario": [
    "tools/shots/scenarios/r3_c2_chain.json"
   ],
-  "runner": "tools/shots/r3_queue.sh + tools/shots/r3_finish.py",
+  "runner": "tools/shots/r3_queue.sh + tools/shots/r3_finish.py + tools/shots/r5_rebadge.py（R5: Unity を起動せず、生の画像と印の記録から番号だけ描き直し）",
   "case": "C2",
   "product_version": "0.1.0",
   "product_commit": "9dc45be",
@@ -714,7 +728,8 @@
    424
   ],
   "used_in_manual": true,
-  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）"
+  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）",
+  "note": "R5 で番号だけを手順に合わせて描き直した"
  },
  {
   "file": "04_10_remove_button.png",
@@ -723,7 +738,7 @@
   "scenario": [
    "tools/shots/scenarios/r3_c2_chain.json"
   ],
-  "runner": "tools/shots/r3_queue.sh + tools/shots/r3_finish.py",
+  "runner": "tools/shots/r3_queue.sh + tools/shots/r3_finish.py + tools/shots/r5_rebadge.py（R5: Unity を起動せず、生の画像と印の記録から番号だけ描き直し）",
   "case": "C2",
   "product_version": "0.1.0",
   "product_commit": "aff9f66",
@@ -734,7 +749,8 @@
    950
   ],
   "used_in_manual": true,
-  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）"
+  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）",
+  "note": "R5 で番号だけを手順に合わせて描き直した"
  },
  {
   "file": "05_1_window_top.png",
@@ -754,7 +770,8 @@
    1130
   ],
   "used_in_manual": true,
-  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）"
+  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）",
+  "note": "製品の直し（空の欄の案内を白いふきだしに）のあとに撮り直す予定（同じファイル名）"
  },
  {
   "file": "05_2_window_bottom.png",
@@ -1149,5 +1166,173 @@
   ],
   "used_in_manual": true,
   "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）"
+ },
+ {
+  "file": "03_05_convert_button_s2.png",
+  "source": "cloud-editor",
+  "kind": "editor",
+  "scenario": [
+   "tools/shots/scenarios/r2_ch03_c2.json"
+  ],
+  "runner": "tools/shots/r2_queue.sh + tools/shots/r2_finish.py + tools/shots/r5_rebadge.py（R5: Unity を起動せず、生の画像と印の記録から番号だけ描き直し）",
+  "case": "C2",
+  "product_version": "0.1.0",
+  "product_commit": "57b7c48",
+  "manual_commit": "7a41577",
+  "shot_date": "2026-10-29",
+  "size": [
+   1194,
+   306
+  ],
+  "used_in_manual": true,
+  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）",
+  "note": "03_05 の写し。番号を 2 に（やり直しの章「設定を変えて、変換し直す」の手順 2）"
+ },
+ {
+  "file": "03_05_convert_button_s4.png",
+  "source": "cloud-editor",
+  "kind": "editor",
+  "scenario": [
+   "tools/shots/scenarios/r2_ch03_c2.json"
+  ],
+  "runner": "tools/shots/r2_queue.sh + tools/shots/r2_finish.py + tools/shots/r5_rebadge.py（R5: Unity を起動せず、生の画像と印の記録から番号だけ描き直し）",
+  "case": "C2",
+  "product_version": "0.1.0",
+  "product_commit": "57b7c48",
+  "manual_commit": "7a41577",
+  "shot_date": "2026-10-29",
+  "size": [
+   1194,
+   306
+  ],
+  "used_in_manual": true,
+  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）",
+  "note": "03_05 の写し。番号を 4 に（シェイプキー・座ったときのスカート・Modular Avatar の章の手順 4）"
+ },
+ {
+  "file": "03_05_convert_button_s5.png",
+  "source": "cloud-editor",
+  "kind": "editor",
+  "scenario": [
+   "tools/shots/scenarios/r2_ch03_c2.json"
+  ],
+  "runner": "tools/shots/r2_queue.sh + tools/shots/r2_finish.py + tools/shots/r5_rebadge.py（R5: Unity を起動せず、生の画像と印の記録から番号だけ描き直し）",
+  "case": "C2",
+  "product_version": "0.1.0",
+  "product_commit": "57b7c48",
+  "manual_commit": "7a41577",
+  "shot_date": "2026-10-29",
+  "size": [
+   1194,
+   306
+  ],
+  "used_in_manual": true,
+  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）",
+  "note": "03_05 の写し。番号を 5 に（食い込みの章の手順 5、やり直しの章「前のものを残して、変換し直す」の手順 5）"
+ },
+ {
+  "file": "03_05_convert_button_s7.png",
+  "source": "cloud-editor",
+  "kind": "editor",
+  "scenario": [
+   "tools/shots/scenarios/r2_ch03_c2.json"
+  ],
+  "runner": "tools/shots/r2_queue.sh + tools/shots/r2_finish.py + tools/shots/r5_rebadge.py（R5: Unity を起動せず、生の画像と印の記録から番号だけ描き直し）",
+  "case": "C2",
+  "product_version": "0.1.0",
+  "product_commit": "57b7c48",
+  "manual_commit": "7a41577",
+  "shot_date": "2026-10-29",
+  "size": [
+   1194,
+   306
+  ],
+  "used_in_manual": true,
+  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）",
+  "note": "03_05 の写し。番号を 7 に（一部だけ形を変えたくないの章の手順 7）"
+ },
+ {
+  "file": "04_08_pose_table.png",
+  "source": "cloud-editor",
+  "kind": "editor",
+  "scenario": [
+   "tools/shots/scenarios/r2_screen_c1.json"
+  ],
+  "runner": "tools/shots/r2_queue.sh + tools/shots/r2_finish.py + tools/shots/r5_rebadge.py（R5: Unity を起動せず、生の画像と印の記録から番号だけ描き直し）",
+  "case": "C1",
+  "product_version": "0.1.0",
+  "product_commit": "9dc45be",
+  "manual_commit": "fbf0ebb",
+  "shot_date": "2026-10-30",
+  "size": [
+   1160,
+   810
+  ],
+  "used_in_manual": true,
+  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）",
+  "note": "04_04_pose_table の写し。「座り」の［表示］だけに番号 5（座ったときのスカートの章の手順 5）"
+ },
+ {
+  "file": "04_10_undo_redo.png",
+  "source": "cloud-editor",
+  "kind": "editor",
+  "scenario": [
+   "tools/shots/scenarios/r2_ch03_c2.json"
+  ],
+  "runner": "tools/shots/r2_queue.sh + tools/shots/r2_finish.py + tools/shots/r5_rebadge.py（R5: Unity を起動せず、生の画像と印の記録から番号だけ描き直し）",
+  "case": "C2",
+  "product_version": "0.1.0",
+  "product_commit": "57b7c48",
+  "manual_commit": "7a41577",
+  "shot_date": "2026-10-29",
+  "size": [
+   1574,
+   840
+  ],
+  "used_in_manual": true,
+  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）",
+  "note": "03_09_undo_redo の写し。左の枠に番号 1（やり直しの章「すぐに取り消す」の手順 1）、右は枠だけ"
+ },
+ {
+  "file": "zukan_06_mask_options.png",
+  "source": "cloud-editor",
+  "kind": "editor",
+  "scenario": [
+   "tools/shots/scenarios/r3_mask_c3.json"
+  ],
+  "runner": "tools/shots/r3_queue.sh + tools/shots/r3_finish.py + tools/shots/r5_rebadge.py（R5: Unity を起動せず、生の画像と印の記録から番号だけ描き直し）",
+  "case": "C3",
+  "product_version": "0.1.0",
+  "product_commit": "aff9f66",
+  "manual_commit": "76a52f3",
+  "shot_date": "2026-10-30",
+  "size": [
+   1280,
+   950
+  ],
+  "used_in_manual": true,
+  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）",
+  "note": "05_4_mask_inspector の写し。図鑑 06 のカード用に、［マテリアルで指定］［マスク画像で指定］［ブラシで指定］の 3 つに番号の無い枠"
+ },
+ {
+  "file": "zukan_07_physbone_option.png",
+  "source": "cloud-editor",
+  "kind": "editor",
+  "scenario": [
+   "tools/shots/scenarios/r3_ma_c2.json"
+  ],
+  "runner": "tools/shots/r3_queue.sh + tools/shots/r3_finish.py（R3_PROJECT=VRChat SDK + Modular Avatar 入りのプロジェクト） + tools/shots/r5_rebadge.py（R5: Unity を起動せず、生の画像と印の記録から番号だけ描き直し）",
+  "case": "C2",
+  "product_version": "0.1.0",
+  "product_commit": "9dc45be",
+  "manual_commit": "fbf0ebb",
+  "shot_date": "2026-10-30",
+  "size": [
+   1160,
+   226
+  ],
+  "used_in_manual": true,
+  "processing": "Unity の窓の実撮影を、切り出し・組み合わせたあと、赤い枠と番号の丸を tools/shots の annotate スクリプト で描いた物（印の位置は Unity が記録した部品の四角）",
+  "note": "05_3_advanced の生の画像から切り出し。図鑑 07 のカード用に、［PhysBone を引き継ぐ（VRChat）］だけに番号の無い枠"
  }
 ]
