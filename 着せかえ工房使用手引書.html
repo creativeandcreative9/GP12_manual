@@ -1858,6 +1858,8 @@ th{background:var(--panel)}
     var items=[].filter.call(ol.children,function(c){return c.tagName==='LI'});
     if(!items.length||ol.closest('li'))return;
     ol.classList.add('steps');
+    /* CSS の番号は counter で付けるので、<ol start> の続き番号はここで渡す */
+    if(ol.start>1)ol.style.counterReset='step '+(ol.start-1);
     var sec=ol.closest('section');
     items.forEach(function(li,i){
       var id=(sec?sec.id:'')+':'+i+':'+li.textContent.trim().slice(0,24);
