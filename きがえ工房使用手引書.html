@@ -683,11 +683,11 @@ th{background:var(--panel)}
 <section class="chapter" id="ch-02_入れ方"><h1>入れ方</h1>
 <p>着せかえ工房を Unity に入れます。手に入れる、Unity に入れる、入ったことを確かめる、の順です。Unity がはじめての人は、先に「<a href="#ch-02_0_Unityの基本の操作">Unity の基本の操作</a>」を読みます。</p>
 <h2>手に入れる</h2>
-<p>BOOTH で買います。ZIP のファイルをダウンロードします。いまの版は 1.0.0 です。</p>
+<p>BOOTH で買います。ZIP のファイルをダウンロードします。この手引書の対象は 0.1.2 です。</p>
 <p>ZIP を解凍します。Windows では、ZIP を右クリックします。「すべて展開」を選びます。Mac では、ZIP をダブルクリックします。中に unitypackage（Unity に入れるファイル）があります。名前は <code>KisekaeKobo.unitypackage</code> です。</p>
 <h2>Unity に入れる</h2>
 <p>先に、使うプロジェクトを Unity で開きます。開き方は、「<a href="#ch-02_0_Unityの基本の操作">Unity の基本の操作</a>」にあります。Unity は、開いたままにします。</p>
-<p>Import先は <code>Assets/GP12_KigaeKoubou</code> です。以前の版が入っている場合は、先に「<a href="#ch-02b_新しい版に入れ替える">新しい版に入れ替える</a>」の手順で旧フォルダを整理します。</p>
+<p>Import先は <code>Assets/GP12_KigaeKoubo</code> です。以前の版が入っている場合は、先に「<a href="#ch-02b_新しい版に入れ替える">新しい版に入れ替える</a>」の手順で旧フォルダを整理します。</p>
 <p>unitypackage は、パソコンのフォルダの画面にあります。Windows ならエクスプローラー、Mac なら Finder です。そこで、手順 1 のダブルクリックをします。</p>
 <ol>
 <li>
@@ -705,9 +705,9 @@ th{background:var(--panel)}
 <h2>入ったことを確かめる</h2>
 <ol start="4">
 <li>
-<p>Project ウィンドウの左の一覧で、「Assets」を押します。右に「GP12_KigaeKoubou」のフォルダが出ます。</p>
-<p><img src="images/02_02_project_folder.png" alt="Unity の Project ウィンドウ。左の一覧で Assets が選ばれ、右に「KisekaeKobo」のフォルダが出ていて、赤い枠で囲まれている" loading="lazy" /></p>
-<p>画像は以前の版のフォルダ名「KisekaeKobo」です。現在の導入先は「GP12_KigaeKoubou」です。</p>
+<p>Project ウィンドウの左の一覧で、「Assets」を押します。右に「GP12_KigaeKoubo」のフォルダが出ます。見つけにくいときは、右上の検索欄に「GP12_KigaeKoubo」と入れます。</p>
+<p><img src="images/02_02_koubo_folders_v012.png" alt="Unity の Project ウィンドウで GP12_KigaeKoubo を検索した例。製品フォルダ GP12_KigaeKoubo と、変換結果フォルダ GP12_KigaeKoubo_Converted が並んでいる" loading="lazy" /></p>
+<p>画像は、すでに変換した結果があるプロジェクトの例です。「GP12_KigaeKoubo_Converted」は変換結果の保存先です。入れた直後は、この結果フォルダがなくても問題ありません。</p>
 </li>
 <li>
 <p>メニューバーの［Tools &gt; Kigae Koubo］を選びます。</p>
@@ -738,9 +738,9 @@ th{background:var(--panel)}
 <p>先にプロジェクトをバックアップします。保存した衣装などをツールのフォルダ内に置いている場合は、フォルダの外へ移しておきます。</p>
 <ol>
 <li>
-<p>Project ウィンドウの左の一覧で、「GP12_KigaeKoubou」を選びます。以前の版が「KisekaeKobo」に入っているときは、その旧フォルダを選びます。</p>
+<p>Project ウィンドウの左の一覧で、「GP12_KigaeKoubo」を選びます。以前の版が「GP12_KigaeKoubou」や「KisekaeKobo」に入っているときは、その旧フォルダを選びます。変換結果の「GP12_KigaeKoubo_Converted」や「GP12_KigaeKobo_Converted」は選ばないでください。</p>
 <p><img src="images/02_04_select_folder.png" alt="Unity の Project ウィンドウ。左の一覧で「KisekaeKobo」のフォルダが選ばれていて、赤い枠で囲まれている。右には、その中のフォルダが並んでいる" loading="lazy" /></p>
-<p>画像は以前の版のフォルダ名「KisekaeKobo」です。現在の導入先は「GP12_KigaeKoubou」です。</p>
+<p>画像は以前の版のフォルダ名「KisekaeKobo」です。現在の導入先は「GP12_KigaeKoubo」です。</p>
 </li>
 <li>
 <p>キーボードの Delete キーを押します。</p>
@@ -753,8 +753,9 @@ th{background:var(--panel)}
 <h2>新しい版を入れる</h2>
 <p>新しい版は、「<a href="#ch-02_入れ方">入れ方</a>」の章と同じに入れます。入れ直したあと、赤い「CS2001」が出ることがあります。そのときは、Unity を開き直します。くわしくは、「<a href="#ch-06_困ったとき">困ったとき</a>」にあります。</p>
 <h2>変換の結果は残ります</h2>
-<p>変換の結果は、別のフォルダに入ります。名前は「GP12_KigaeKobo_Converted」です。このフォルダは、消さないでください。入れ替えても、前の変換の結果は消えません。</p>
-<p>以前の版でできた <code>Assets/KisekaeKobo_Converted</code> などのフォルダも、名前を変えずに残してください。保存済みの結果はそのまま使えます。新しい版を入れるだけで、旧フォルダが自動で移動することはありません。新しく変換した結果は、新しい保存先に入ります。</p>
+<p>0.1.2 で、製品フォルダと新しい変換結果の保存先の綴りを「KigaeKoubo」に揃えました。製品フォルダだけを入れ替えます。既存の変換結果フォルダは手動で名前を変えず、そのまま残します。</p>
+<p>変換の結果は、別のフォルダに入ります。名前は「GP12_KigaeKoubo_Converted」です。このフォルダは、消さないでください。入れ替えても、前の変換の結果は消えません。</p>
+<p>以前の版でできた <code>Assets/GP12_KigaeKobo_Converted</code>・<code>Assets/KisekaeKobo_Converted</code> などのフォルダも、名前を変えずに残してください。保存済みの結果はそのまま使えます。新しい版を入れるだけで、旧フォルダが自動で移動することはありません。新しく変換した結果は、新しい保存先に入ります。</p>
 </section>
 <section class="chapter" id="ch-03_はじめての練習"><h1>はじめての練習</h1>
 <p>変換元のアバターが着ている衣装を、変換先のアバターに着せます。選ぶのは、［変換元アバター］、［変換先アバター］、［衣装］の 3 つです。［衣装］には、変換元のアバターそのものを入れます。すると、着ている服をまとめて変換します。</p>
@@ -1400,7 +1401,7 @@ th{background:var(--panel)}
 <section class="chapter" id="ch-04_10b_変換で作ったファイルを片付けたい"><h1>変換で作ったファイルを片付けたい</h1>
 <h2>使わなくなったファイルを、消したい</h2>
 <!-- 得H4 -->
-<p>変換すると、メッシュ（体や服の形そのもの）などのファイルができます。ファイルは、［保存先フォルダ］に入ります。はじめの保存先は、<code>Assets/GP12_KigaeKobo_Converted</code> です。きがえ工房の本体フォルダの外にあるので、入れ直しても消えません。</p>
+<p>変換すると、メッシュ（体や服の形そのもの）などのファイルができます。ファイルは、［保存先フォルダ］に入ります。はじめの保存先は、<code>Assets/GP12_KigaeKoubo_Converted</code> です。きがえ工房の本体フォルダの外にあるので、入れ直しても消えません。</p>
 <p>使われなくなったファイルは、自動で片付きます。今すぐ片付けることもできます。</p>
 <h3>自動の片付け</h3>
 <p>ウィンドウのいちばん下に、「変換で作ったファイルの片付け」があります。その下の［使われなくなった、変換で作ったファイルを自動で片付ける］が、自動の片付けです。</p>
@@ -1561,7 +1562,7 @@ th{background:var(--panel)}
 <h2>保存先と、はじめの値</h2>
 <ul>
 <li>⑫［保存先フォルダ］: 変換の結果を入れる場所です。</li>
-<li>はじめの場所は、<code>Assets/GP12_KigaeKobo_Converted</code> です。</li>
+<li>はじめの場所は、<code>Assets/GP12_KigaeKoubo_Converted</code> です。</li>
 <li>⑬［設定を既定値に戻す］: 設定を、はじめに戻します。</li>
 <li>こまったときに、押します。</li>
 <li>［保存先フォルダ］だけは、戻りません。</li>
@@ -1630,7 +1631,7 @@ th{background:var(--panel)}
 <h2>メニューに［Tools &gt; Kigae Koubo］が出ない</h2>
 <ul>
 <li>どうなっている: 入っていないか、ほかのエラーで読めません。</li>
-<li>どうすれば: Project ウィンドウの「Assets」を見ます。「GP12_KigaeKoubou」が無ければ、もう一度入れます。</li>
+<li>どうすれば: Project ウィンドウの「Assets」を見ます。「GP12_KigaeKoubo」が無ければ、もう一度入れます。</li>
 <li>あれば、Console の赤いエラーを読みます。Console は［Window &gt; General &gt; Console］で出ます。</li>
 </ul>
 <h2>入れ直したあと、赤い「CS2001」が出る</h2>
