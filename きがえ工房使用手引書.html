@@ -687,6 +687,7 @@ th{background:var(--panel)}
 <p>ZIP を解凍します。Windows では、ZIP を右クリックします。「すべて展開」を選びます。Mac では、ZIP をダブルクリックします。中に unitypackage（Unity に入れるファイル）があります。名前は <code>KisekaeKobo.unitypackage</code> です。</p>
 <h2>Unity に入れる</h2>
 <p>先に、使うプロジェクトを Unity で開きます。開き方は、「<a href="#ch-02_0_Unityの基本の操作">Unity の基本の操作</a>」にあります。Unity は、開いたままにします。</p>
+<p>Import先は <code>Assets/GP12_KigaeKoubou</code> です。以前の版が入っている場合は、先に「<a href="#ch-02b_新しい版に入れ替える">新しい版に入れ替える</a>」の手順で旧フォルダを整理します。</p>
 <p>unitypackage は、パソコンのフォルダの画面にあります。Windows ならエクスプローラー、Mac なら Finder です。そこで、手順 1 のダブルクリックをします。</p>
 <ol>
 <li>
@@ -704,8 +705,9 @@ th{background:var(--panel)}
 <h2>入ったことを確かめる</h2>
 <ol start="4">
 <li>
-<p>Project ウィンドウの左の一覧で、「Assets」を押します。右に「KisekaeKobo」のフォルダが出ます。</p>
+<p>Project ウィンドウの左の一覧で、「Assets」を押します。右に「GP12_KigaeKoubou」のフォルダが出ます。</p>
 <p><img src="images/02_02_project_folder.png" alt="Unity の Project ウィンドウ。左の一覧で Assets が選ばれ、右に「KisekaeKobo」のフォルダが出ていて、赤い枠で囲まれている" loading="lazy" /></p>
+<p>画像は以前の版のフォルダ名「KisekaeKobo」です。現在の導入先は「GP12_KigaeKoubou」です。</p>
 </li>
 <li>
 <p>メニューバーの［Tools &gt; Kigae Koubo］を選びます。</p>
@@ -733,10 +735,12 @@ th{background:var(--panel)}
 <section class="chapter" id="ch-02b_新しい版に入れ替える"><h1>新しい版に入れ替える</h1>
 <p>新しい版を入れるときは、古いフォルダを先に消します。消さないと、いらなくなったファイルが残ることがあります。はじめて入れる人は、この章はいりません。</p>
 <h2>古いフォルダを消す</h2>
+<p>先にプロジェクトをバックアップします。保存した衣装などをツールのフォルダ内に置いている場合は、フォルダの外へ移しておきます。</p>
 <ol>
 <li>
-<p>Project ウィンドウの左の一覧で、「KisekaeKobo」を選びます。</p>
+<p>Project ウィンドウの左の一覧で、「GP12_KigaeKoubou」を選びます。以前の版が「KisekaeKobo」に入っているときは、その旧フォルダを選びます。</p>
 <p><img src="images/02_04_select_folder.png" alt="Unity の Project ウィンドウ。左の一覧で「KisekaeKobo」のフォルダが選ばれていて、赤い枠で囲まれている。右には、その中のフォルダが並んでいる" loading="lazy" /></p>
+<p>画像は以前の版のフォルダ名「KisekaeKobo」です。現在の導入先は「GP12_KigaeKoubou」です。</p>
 </li>
 <li>
 <p>キーボードの Delete キーを押します。</p>
@@ -1625,7 +1629,7 @@ th{background:var(--panel)}
 <h2>メニューに［Tools &gt; Kigae Koubo］が出ない</h2>
 <ul>
 <li>どうなっている: 入っていないか、ほかのエラーで読めません。</li>
-<li>どうすれば: Project ウィンドウの「Assets」を見ます。「KisekaeKobo」が無ければ、もう一度入れます。</li>
+<li>どうすれば: Project ウィンドウの「Assets」を見ます。「GP12_KigaeKoubou」が無ければ、もう一度入れます。</li>
 <li>あれば、Console の赤いエラーを読みます。Console は［Window &gt; General &gt; Console］で出ます。</li>
 </ul>
 <h2>入れ直したあと、赤い「CS2001」が出る</h2>
