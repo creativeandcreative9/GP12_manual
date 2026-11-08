@@ -1,654 +1,479 @@
-<!doctype html>
-<html lang="ja">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>きがえ工房 使用手引書</title>
-<style>
-:root{--bg:#fbfaf7;--fg:#22252a;--muted:#5d6570;--line:#dcd8cf;--panel:#f2efe8;--accent:#0b6b5d;--accent-fg:#fff;--done:#8a929c}
-@media (prefers-color-scheme:dark){:root{--bg:#16181b;--fg:#e8e6e1;--muted:#a3abb4;--line:#33373d;--panel:#202327;--accent:#5fc9b7;--accent-fg:#0d1512;--done:#78808a}}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:"Yu Gothic UI","Hiragino Sans","Meiryo",system-ui,sans-serif;font-size:17px;line-height:1.85}
-.layout{display:flex;align-items:flex-start;max-width:1180px;margin:0 auto}
-nav.toc{position:sticky;top:0;align-self:flex-start;width:290px;flex:none;height:100vh;overflow-y:auto;padding:20px 16px 40px;border-right:1px solid var(--line);font-size:14.5px;line-height:1.5}
-nav.toc h2{font-size:15px;margin:0 0 4px;border:0;padding:0}
-nav.toc a{display:block;padding:5px 8px;border-radius:6px;color:var(--fg);text-decoration:none}
-nav.toc a:hover{background:var(--panel)}
-nav.toc a.on{background:var(--accent);color:var(--accent-fg)}
-nav.toc .grp{margin:14px 0 2px 8px;font-size:12.5px;color:var(--muted);letter-spacing:.04em}
-main{flex:1;min-width:0;padding:8px 28px 120px;max-width:820px}
-section.chapter{padding:34px 0 18px;border-bottom:1px solid var(--line);scroll-margin-top:0}
-h1{font-size:30px;line-height:1.35;margin:.2em 0 .5em}
-h2{font-size:22px;margin:1.9em 0 .4em;padding-left:12px;border-left:5px solid var(--accent);line-height:1.4}
-h3{font-size:18px;margin:1.5em 0 .3em}
-p{margin:.7em 0}
-a{color:var(--accent)}
-code{background:var(--panel);padding:.1em .4em;border-radius:5px;font-size:.92em}
-img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:8px;display:block;margin:12px 0;cursor:zoom-in;background:var(--panel)}
-ol,ul{padding-left:1.5em}
-li{margin:.5em 0}
-ol.steps{counter-reset:step;padding-left:0;list-style:none}
-ol.steps>li.step{position:relative;padding:10px 12px 10px 3em;border:1px solid var(--line);border-radius:10px;background:var(--panel);counter-increment:step}
-ol.steps>li.step::before{content:counter(step);position:absolute;left:10px;top:12px;width:1.7em;height:1.7em;border-radius:50%;background:var(--accent);color:var(--accent-fg);font-weight:700;text-align:center;line-height:1.7em;font-size:.95em}
-li.step.done{opacity:.6}
-li.step.done::before{content:"✓";background:var(--done)}
-li.step .tick{float:right;margin:0 0 4px 8px;font:inherit;font-size:12.5px;border:1px solid var(--line);background:var(--bg);color:var(--muted);border-radius:999px;padding:0 10px;line-height:1.8;cursor:pointer}
-table{border-collapse:collapse;width:100%;margin:14px 0;font-size:15px;line-height:1.6;display:block;overflow-x:auto}
-th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
-th{background:var(--panel)}
-.top{position:fixed;right:16px;bottom:16px;display:flex;gap:8px;z-index:5}
-.top button,.top a{background:var(--accent);color:var(--accent-fg);border:0;border-radius:999px;padding:9px 16px;font:inherit;font-size:14px;text-decoration:none;cursor:pointer;box-shadow:0 2px 8px #0003}
-.menu-btn{display:none}
-#lightbox{position:fixed;inset:0;background:#000d;display:none;align-items:center;justify-content:center;z-index:20;cursor:zoom-out}
-#lightbox img{max-width:96vw;max-height:94vh;border:0;margin:0;cursor:zoom-out}
-#lightbox.on{display:flex}
-@media (max-width:860px){
-  nav.toc{position:fixed;left:0;top:0;z-index:10;background:var(--bg);transform:translateX(-100%);transition:transform .2s;width:min(86vw,320px);box-shadow:0 0 20px #0005}
-  nav.toc.open{transform:none}
-  .menu-btn{display:inline-block}
-  main{padding:8px 16px 120px}
-  body{font-size:16.5px}
-}
-@media print{nav.toc,.top{display:none}.layout{display:block}section.chapter{break-before:page}img{cursor:auto}li.step .tick{display:none}}
-.zukan-card{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:2px 16px 10px;margin:18px 0}
-.zukan-card>h2{margin-top:.7em}
-.zukan-card>h3{margin-top:.7em}
-.zukan-card img{background:var(--bg)}
-.zukan-card table{background:var(--bg)}
-.zukan-hero{border:2px solid var(--accent)}
-.zukan-where{font-size:15px;border-top:1px dashed var(--line);padding-top:8px}
-.zukan-limit{font-size:15px;color:var(--muted)}
-.zukan-mark{display:inline-block;font-size:12.5px;line-height:1.8;border:1px solid var(--line);border-radius:999px;padding:0 10px;color:var(--muted);margin:2px 0 4px;background:var(--bg)}
-.zukan-mini{padding:0 14px 4px}
-.zukan-mini>h3{font-size:16.5px}
-.zukan-card td:first-child{white-space:nowrap}
-</style>
-</head>
-<body>
-<div class="layout">
-<nav class="toc" aria-label="目次"><h2>きがえ工房 使用手引書</h2><div class="grp">はじめに</div><a href="#ch-index">きがえ工房 使用手引書</a><a href="#ch-01_はじめに">はじめに</a><div class="grp">できること図鑑</div><a href="#ch-zukan_01_3つ選んで変換するだけ">2 つ選んで、変換するだけ</a><a href="#ch-zukan_02_体型や頭身の違うアバターへ">体型や頭身の違うアバターへ</a><a href="#ch-zukan_03_着せたあとを自動で確かめる">着せたあとを、自動で確かめる</a><a href="#ch-zukan_04_動いたときの服">動いたときの服</a><a href="#ch-zukan_05_体と服が一体のアバターにも">体と服が一体のアバターにも</a><a href="#ch-zukan_06_一部だけ設定を変える">一部だけ、設定を変える</a><a href="#ch-zukan_07_仕掛けや揺れ物も引き継ぐ">仕掛けや揺れ物も、引き継ぐ</a><a href="#ch-zukan_08_安心して試せる">安心して試せる</a><a href="#ch-zukan_09_苦手なこと">苦手なこと</a><a href="#ch-zukan_10_悩みから探す">悩みから探す</a><div class="grp">入れ方・はじめての練習</div><a href="#ch-02_0_Unityの基本の操作">Unity の基本の操作</a><a href="#ch-02_入れ方">入れ方</a><a href="#ch-02b_新しい版に入れ替える">新しい版に入れ替える</a><a href="#ch-03_はじめての練習">はじめての練習</a><a href="#ch-03b_練習の結果を見る・取り消す">練習の結果を見る・取り消す</a><div class="grp">やりたいことから探す</div><a href="#ch-04_01_衣装のPrefabを着せたい">衣装の Prefab を着せたい</a><a href="#ch-04_02_重ね着の衣装を着せたい">重ね着の衣装を着せたい</a><a href="#ch-04_03_食い込みやぶかぶかを直したい">食い込みやぶかぶかを直したい</a><a href="#ch-04_04_貫通の場所を確かめたい">貫通の場所を確かめたい</a><a href="#ch-04_04b_貫通の数を読みたい">貫通の数を読みたい</a><a href="#ch-04_05_体と服が一体のアバターに着せたい">体と服が一体のアバターに着せたい</a><a href="#ch-04_06_一部だけ形を変えたくない">一部だけ、形を変えたくない</a><a href="#ch-04_06b_ブラシで塗って指定したい">ブラシで塗って、場所を決めたい</a><a href="#ch-04_07_体のシェイプキーについてこさせたい">体のシェイプキーに、ついてこさせたい</a><a href="#ch-04_08_座ったときのスカートを直したい">座ったときのスカートを直したい</a><a href="#ch-04_09_ModularAvatarやPhysBoneと使いたい">Modular Avatar や PhysBone と使いたい</a><a href="#ch-04_10_やり直したい">取り消したい・変換し直したい</a><a href="#ch-04_10b_変換で作ったファイルを片付けたい">変換で作ったファイルを片付けたい</a><a href="#ch-04_11_変換した服をさらに移す">変換した服を、さらに別のアバターへ移す</a><div class="grp">画面の説明</div><a href="#ch-05_1_上部と下部">画面の説明（上部と下部）</a><a href="#ch-05_2_かんたん">画面の説明（かんたん）</a><a href="#ch-05_3_衣装変換">画面の説明（衣装変換）</a><a href="#ch-05_4_貫通確認">画面の説明（貫通確認）</a><a href="#ch-05_5_貫通対策">画面の説明（貫通対策）</a><a href="#ch-05_6_微調整">画面の説明（微調整）</a><a href="#ch-05_7_VRChat連携">画面の説明（VRChat連携）</a><a href="#ch-05_8_ツール設定">画面の説明（ツール設定）</a><a href="#ch-05_4_画面の説明_部分ごとの設定">部分ごとの設定（Inspector）</a><div class="grp">困ったとき・言葉・クレジット</div><a href="#ch-06_困ったとき">困ったとき</a><a href="#ch-06b_着せたあとに困ったとき">着せたあとに困ったとき</a><a href="#ch-07_言葉の一覧">言葉の一覧</a><a href="#ch-08_クレジット">クレジット</a></nav>
-<main>
-<section class="chapter" id="ch-index"><h1>きがえ工房 使用手引書</h1>
-<p>きがえ工房は、Unity で使う道具です。ほかのアバター用の衣装を、自分のアバターに合わせて着せます。</p>
-<ul>
-<li>版: 1.14.0</li>
-<li>日付: 2026-11-06</li>
-</ul>
-<p>はじめての人は、「はじめに」、「Unity の基本の操作」、「入れ方」、「はじめての練習」の順に読みます。買う前の人は、「できること図鑑」で、できることと苦手なことを確かめられます。</p>
-<h2>この手引書の読み方</h2>
-<ul>
-<li>画面に出る名前は、［この設定で変換］のように、かっこで囲んで書きます。</li>
-<li>手順の番号のよこにある「できた」を押すと、読んだ印が付きます。</li>
-<li>印は、いま読んでいるブラウザにだけ残ります。</li>
-<li>写真を押すと、大きく見られます。</li>
-</ul>
-<h2>目次</h2>
-<h3>はじめに</h3>
-<ul>
-<li><a href="#ch-01_はじめに">はじめに</a></li>
-</ul>
-<h3>できること図鑑</h3>
-<ul>
-<li><a href="#ch-zukan_01_3つ選んで変換するだけ">2 つ選んで、変換するだけ</a></li>
-<li><a href="#ch-zukan_02_体型や頭身の違うアバターへ">体型や頭身の違うアバターへ</a></li>
-<li><a href="#ch-zukan_03_着せたあとを自動で確かめる">着せたあとを、自動で確かめる</a></li>
-<li><a href="#ch-zukan_04_動いたときの服">動いたときの服</a></li>
-<li><a href="#ch-zukan_05_体と服が一体のアバターにも">体と服が一体のアバターにも</a></li>
-<li><a href="#ch-zukan_06_一部だけ設定を変える">一部だけ、設定を変える</a></li>
-<li><a href="#ch-zukan_07_仕掛けや揺れ物も引き継ぐ">仕掛けや揺れ物も、引き継ぐ</a></li>
-<li><a href="#ch-zukan_08_安心して試せる">安心して試せる</a></li>
-<li><a href="#ch-zukan_09_苦手なこと">苦手なこと</a></li>
-<li><a href="#ch-zukan_10_悩みから探す">悩みから探す</a></li>
-</ul>
-<h3>入れ方・はじめての練習</h3>
-<ul>
-<li><a href="#ch-02_0_Unityの基本の操作">Unity の基本の操作</a></li>
-<li><a href="#ch-02_入れ方">入れ方</a></li>
-<li><a href="#ch-02b_新しい版に入れ替える">新しい版に入れ替える</a></li>
-<li><a href="#ch-03_はじめての練習">はじめての練習</a></li>
-<li><a href="#ch-03b_練習の結果を見る・取り消す">練習の結果を見る・取り消す</a></li>
-</ul>
-<h3>画面の説明</h3>
-<ul><li><a href="#ch-05_1_上部と下部">画面の説明（上部と下部）</a></li>
-<li><a href="#ch-05_2_かんたん">画面の説明（かんたん）</a></li>
-<li><a href="#ch-05_3_衣装変換">画面の説明（衣装変換）</a></li>
-<li><a href="#ch-05_4_貫通確認">画面の説明（貫通確認）</a></li>
-<li><a href="#ch-05_5_貫通対策">画面の説明（貫通対策）</a></li>
-<li><a href="#ch-05_6_微調整">画面の説明（微調整）</a></li>
-<li><a href="#ch-05_7_VRChat連携">画面の説明（VRChat連携）</a></li>
-<li><a href="#ch-05_8_ツール設定">画面の説明（ツール設定）</a></li>
-<li><a href="#ch-05_4_画面の説明_部分ごとの設定">部分ごとの設定（Inspector）</a></li>
-</ul>
-<h3>困ったとき・言葉・クレジット</h3>
-<ul>
-<li><a href="#ch-06_困ったとき">困ったとき</a></li>
-<li><a href="#ch-06b_着せたあとに困ったとき">着せたあとに困ったとき</a></li>
-<li><a href="#ch-07_言葉の一覧">言葉の一覧</a></li>
-<li><a href="#ch-08_クレジット">クレジット</a></li>
-</ul>
-<h2>やりたいことから探す</h2><ul><li><a href="#ch-04_04_貫通の場所を確かめたい">腕を上げると脇から肌が出る</a></li><li><a href="#ch-04_08_座ったときのスカートを直したい">座るとスカートに脚が刺さる</a></li><li><a href="#ch-05_5_貫通対策">膝の先だけ突き抜ける</a></li><li><a href="#ch-04_07_体のシェイプキーについてこさせたい">胸を大きくしたら服がついてこない</a></li><li><a href="#ch-05_7_VRChat連携">スカートが揺れない</a></li><li><a href="#ch-05_3_衣装変換">骨が対応しないと警告が出た</a></li><li><a href="#ch-05_8_ツール設定">保存先を変えたい</a></li></ul><p><a href="#ch-04_11_変換した服をさらに移す">変換した服を、さらに別のアバターへ移す</a></p>
-<ul>
-<li><a href="#ch-04_01_衣装のPrefabを着せたい">衣装の Prefab を着せたい</a></li>
-<li><a href="#ch-04_02_重ね着の衣装を着せたい">重ね着の衣装を着せたい</a></li>
-<li><a href="#ch-04_03_食い込みやぶかぶかを直したい">食い込みやぶかぶかを直したい</a></li>
-<li><a href="#ch-04_04_貫通の場所を確かめたい">貫通の場所を確かめたい</a></li>
-<li><a href="#ch-04_04b_貫通の数を読みたい">貫通の数を読みたい</a></li>
-<li><a href="#ch-04_05_体と服が一体のアバターに着せたい">体と服が一体のアバターに着せたい</a></li>
-<li><a href="#ch-04_06_一部だけ形を変えたくない">一部だけ、形を変えたくない</a></li>
-<li><a href="#ch-04_06b_ブラシで塗って指定したい">ブラシで塗って、場所を決めたい</a></li>
-<li><a href="#ch-04_07_体のシェイプキーについてこさせたい">体のシェイプキーに、ついてこさせたい</a></li>
-<li><a href="#ch-04_08_座ったときのスカートを直したい">座ったときのスカートを直したい</a></li>
-<li><a href="#ch-04_09_ModularAvatarやPhysBoneと使いたい">Modular Avatar や PhysBone と使いたい</a></li>
-<li><a href="#ch-04_10_やり直したい">取り消したい・変換し直したい</a></li>
-<li><a href="#ch-04_10b_変換で作ったファイルを片付けたい">変換で作ったファイルを片付けたい</a></li>
-</ul>
-</section>
-<section class="chapter" id="ch-01_はじめに"><h1>はじめに</h1>
-<h2>きがえ工房でできること</h2>
-<p>きがえ工房は、Unity で使うものです。ほかのアバター（3D のキャラクター）用の衣装（アバターが着る服）を、自分のアバターに着せられます。</p>
-<div class="zukan-card zukan-hero">
-<!-- 得B1 得B2 -->
-<h3>頭身の違うアバターにも、衣装を合わせられる。</h3>
-<p>背が低くて頭が大きいアバターにも、服を着せたい。体に合うように、服の形を整えてくれます。</p>
-<p><img src="images/zukan_00_hero_compare.png" data-compare alt="同じカメラで撮った、変換前と変換後の並べ画像。左は、元アバターが制服を着た姿。右は、背が低く頭の大きい変換先のアバターが、変換した制服を着た姿" loading="lazy" /></p>
-<p>左が変換前、右が変換後です。変換後の脚は、仮の肌（元の服を隠したところに出す、肌の色の面）で、おぎなっています。仮の肌は、試しの機能です。かかった時間は、およそ 30 秒でした。どう測ったかは、下の「かかる時間」にあります。</p>
-<p class="zukan-where">くわしいやり方は、「<a href="#ch-03_はじめての練習">はじめての練習</a>」の章にあります。</p>
-<p class="zukan-limit">気をつけること: 貫通（衣装が体に入ったところ）が、すべて消えるわけではありません。</p>
-<p class="zukan-mark">実アバターで確認済み</p>
-</div>
-<div class="zukan-card">
-<!-- 得A1 -->
-<h3>市販の衣装を、自分のアバターに着せられる。</h3>
-<p>ほかのアバター用の衣装は、そのままでは着せられない。選ぶのは、衣装と変換先アバター（着せたいアバター）の 2 つです。［この設定で変換］を押します。元アバター（衣装がもともと合っているアバター）は、自動で調べます。骨（動きのもとになるところ）の位置合わせは、いりません。</p>
-<p><img src="images/zukan_07_c3_compare.png" data-compare alt="変換前と変換後の並べ画像。左は、元アバターが市販の衣装（カーディガンとスカート）を着た姿。右は、体型の違う変換先のアバターが、同じ衣装を着た姿。正面から撮影" loading="lazy" /></p>
-<p>並べ方は、上と同じです。</p>
-<p class="zukan-where">くわしいやり方は、「<a href="#ch-03_はじめての練習">はじめての練習</a>」の章にあります。</p>
-<p class="zukan-limit">気をつけること: どの衣装でもうまくいく、とは言えません。確かめたのは、アバターと衣装の 6 組だけです。元アバターを自動で見つけられたときの結果です。</p>
-<p class="zukan-mark">実アバターで確認済み</p>
-</div>
-<div class="zukan-card">
-<!-- 得C2 得C3 -->
-<h3>変換で増えた貫通を、数で分けて読める。</h3>
-<p>着せたあとに、自動チェックが始まります。新しく増えた数と、元から入っていた数が別に出ます。［貫通確認］では、場所を色で見られます。</p>
+<!DOCTYPE html>
 
-<p class="zukan-where">くわしいやり方は、「<a href="#ch-04_04_貫通の場所を確かめたい">貫通の場所を確かめたい</a>」の章にあります。</p>
-<p class="zukan-limit">気をつけること: 体と服が一体（1 つのパーツになっている）のアバターがあります。その服の下の体は、おしはかって測ります。ずれることがあります。</p>
-<p class="zukan-mark">実アバターで確認済み</p>
-</div>
-<p>ほかにできることは、「<a href="#ch-zukan_01_3つ選んで変換するだけ">できること図鑑</a>」にまとめました。</p>
-<h2>安心して試せます</h2>
-<p><strong>元の服とアバターのデータは、そのまま残ります。あとから戻すこともできます。</strong></p>
-<p>変換では、元の服やアバターのファイルを書きかえません。</p>
+<html lang="ja"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="#5444aa" name="theme-color"/><meta content="きがえ工房の使い方。変換プロファイル不要で、衣装とアバターの1組を無料体験。8ポーズ検査、座りスカート補助、メッシュ工房での仕上げ、3D 創作スタジオ Pro の導入を案内します。" name="description"/><title>きがえ工房｜1組無料ではじめる着せ替え・使用手引書</title><style>
+:root{--ink:#222b47;--muted:#5b6481;--paper:#f5f7fc;--surface:#fff;--line:#d9deec;--violet:#5444aa;--blue:#347f9a;--mint:#e5f2ee;--accent:#5444aa;--panel:#eef1f8;--bg:#fff;--fg:#222b47;--accent-fg:#fff;--done:#62758a}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:86px}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.85 "Yu Gothic UI","Hiragino Kaku Gothic ProN","Meiryo",sans-serif;overflow-wrap:anywhere}a{color:var(--violet);text-underline-offset:4px}a:hover{color:var(--blue)}a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #da9e42;outline-offset:5px}h1,h2,h3,p{margin:0}p+p{margin-top:.8em}h1,h2{font-family:"Yu Gothic","Hiragino Sans",sans-serif;font-weight:800;letter-spacing:-.035em;line-height:1.38}h1{font-size:clamp(34px,4vw,58px)}h2{font-size:clamp(26px,3vw,38px)}h3{font-size:21px;line-height:1.55}img{display:block;max-width:100%;height:auto;border-radius:10px}figure{margin:0}figcaption{font-size:13px;color:var(--muted);margin-top:10px;line-height:1.65}button,summary{font:inherit}button{cursor:pointer}code{font-size:.9em;padding:.12em .35em;background:var(--panel);border-radius:4px;overflow-wrap:anywhere}ol,ul{padding-left:1.5em}li{margin:.55em 0}table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.7}th,td{padding:14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:var(--panel)}.table-wrap{overflow-x:auto;margin:24px 0}.skip{position:absolute;left:20px;top:-100px;z-index:100;background:white;padding:12px}.skip:focus{top:10px}.masthead{height:76px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 max(24px,calc((100vw - 1280px)/2));position:sticky;top:0;z-index:10}.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);font-weight:bold;line-height:1.4}.brand-mark{display:grid;place-items:center;background:var(--violet);color:#fff;width:42px;height:42px;border-radius:50% 50% 8px 8px;font-size:25px}.brand small{display:block;font-size:10px;letter-spacing:.14em;color:var(--muted)}.masthead nav{display:flex;gap:24px;font-size:13px;font-weight:700}.masthead nav a{text-decoration:none}.page{max-width:1280px;margin:auto;padding:0 32px}.hero{padding:38px 0 0}.eyebrow{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--violet);margin-bottom:10px}.hero-heading{display:flex;justify-content:space-between;gap:30px;align-items:flex-start}.hero-heading h1{max-width:830px}.hero-note{max-width:230px;font-size:14px;padding-top:12px;color:var(--muted)}.hero-lede{font-size:18px;margin-top:16px;max-width:900px}.value-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:24px 0}.value-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px;position:relative;overflow:hidden;min-height:240px}.value-card::before{content:"";position:absolute;top:0;left:20px;width:40px;height:4px;background:var(--violet)}.value-card h2{font-size:23px;letter-spacing:-.02em;margin:9px 0 12px}.value-card p{font-size:14px;line-height:1.75;color:var(--muted)}.value-tag{font-size:11px;font-weight:800;color:var(--blue)}.value-card a{font-size:13px;display:inline-block;margin-top:12px}.value-card.pro{background:#edf0ff;border-color:#c4c9ed}.hero-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.button{display:inline-flex;align-items:center;justify-content:center;padding:12px 22px;background:var(--violet);color:white;border:1px solid var(--violet);border-radius:8px;font-weight:700;text-decoration:none;line-height:1.6}.button:hover{background:#403583;color:white}.button.secondary{background:transparent;color:var(--violet)}.hero-proof{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:40px;align-items:center;margin-top:38px;border-top:1px solid var(--line);padding-top:30px}.hero-proof img{width:100%;border-radius:8px}.hero-proof h2{font-size:30px;margin-bottom:16px}.measuring-rule{height:14px;margin:32px 0 0;background:repeating-linear-gradient(90deg,var(--violet) 0,var(--violet) 1px,transparent 1px,transparent 16px);border-bottom:1px solid var(--violet);opacity:.35}.layer{padding:64px 0;border-bottom:1px solid var(--line)}.section-heading{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:end;margin-bottom:28px}.section-heading p{color:var(--muted)}.steps-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.start-step{background:white;padding:24px;border-radius:12px;border:1px solid var(--line)}.step-number{font:700 42px/1 Georgia,serif;color:#b9b0dd;display:block;margin-bottom:16px}.start-step h3{margin-bottom:12px}.start-step p{font-size:15px}.start-step img{margin-top:20px;width:100%;max-height:270px;object-fit:contain;background:#343434}.note{padding:20px 24px;background:var(--mint);border-left:4px solid #458273;border-radius:0 8px 8px 0;margin:24px 0;font-size:15px}.note p{margin-top:6px}.edition-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.edition-card{padding:30px;border:1px solid var(--line);border-radius:12px;background:white}.edition-card.pro{background:#ececfa;border-color:#bcb8df}.edition-card h3{font-size:29px}.price{font:700 42px/1.5 Georgia,serif;letter-spacing:-.04em}.price small{font:14px "Meiryo",sans-serif;letter-spacing:0}.edition-card .button{margin-top:12px}.license-steps{background:white;border:1px solid var(--line);border-radius:12px;padding:28px;margin-top:24px}.license-steps h3{margin-bottom:12px}.recipe-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:28px}.recipe-nav a{padding:18px 20px;border:1px solid var(--line);border-radius:8px;background:#fff;text-decoration:none;font-weight:700;font-size:15px}.recipe-nav a small{display:block;font-weight:400;color:var(--muted);margin-top:4px}.manual-detail{border:1px solid var(--line);background:#fff;border-radius:8px;margin:10px 0;scroll-margin-top:90px}.manual-detail>summary{padding:20px 24px;font-weight:700;cursor:pointer;line-height:1.6}.manual-detail[open]>summary{border-bottom:1px solid var(--line);color:var(--violet)}.chapter-body{padding:24px 32px;max-width:960px;margin:auto}.chapter-body h2{font-size:26px;margin:12px 0 18px}.chapter-body h3{margin:26px 0 12px}.chapter-body p{margin:12px 0}.chapter-body img{margin:20px auto;max-height:760px;width:auto;cursor:zoom-in;border:1px solid var(--line)}.chapter-body table{display:block;overflow-x:auto}.chapter-body ol{margin:20px 0}.chapter-body a{overflow-wrap:anywhere}.chapter-body .zukan-card{margin:22px 0}.anchor-alias{display:block;scroll-margin-top:100px}.reference-nav{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}.reference-nav a{padding:8px 16px;background:#e7eaf4;border-radius:6px;text-decoration:none;font-size:14px}.method-table td:first-child{min-width:140px}.closing{padding:50px 0;text-align:center}.closing h2{margin-bottom:18px}.footer{display:flex;justify-content:space-between;gap:20px;font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding:24px 0 36px}.lightbox{position:fixed;inset:0;background:#10172be8;display:none;align-items:center;justify-content:center;z-index:30;padding:30px}.lightbox.on{display:flex}.lightbox img{max-width:96vw;max-height:90vh;object-fit:contain}.lightbox button{position:absolute;right:16px;top:12px;background:white;border:0;border-radius:6px;padding:8px 14px}.no-js{font-size:13px}.chapter-body ol.steps{list-style:decimal}.tick{font-size:12px;float:right;background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:2px 8px;color:var(--muted);margin-left:10px}.step.done{opacity:.65}.mobile-contents{display:none}
+@media(max-width:1000px){.value-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.value-card{min-height:220px}.masthead nav{gap:16px}.hero-note{display:none}.steps-grid{gap:12px}.start-step{padding:20px}.recipe-nav{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){html{scroll-padding-top:74px}.masthead{height:66px;padding:0 18px}.brand{font-size:14px}.brand-mark{width:36px;height:36px;font-size:22px}.masthead nav{display:none}.mobile-contents{display:block;font-size:12px}.page{padding:0 18px}.hero{padding-top:28px}.hero-lede{font-size:16px}.value-grid{gap:10px;margin-top:22px}.value-card{padding:16px 13px;min-height:0}.value-card h2{font-size:19px;margin-top:8px}.value-card p{font-size:13px;line-height:1.75}.value-tag{font-size:10px}.value-card a{font-size:12px}.hero-actions .button{width:100%}.hero-proof{grid-template-columns:1fr;gap:22px;margin-top:26px}.hero-proof h2{font-size:26px}.section-heading{grid-template-columns:1fr;gap:14px}.layer{padding:40px 0}.steps-grid,.edition-grid{grid-template-columns:1fr}.start-step{padding:24px}.step-number{font-size:32px;float:left;margin-right:14px}.start-step h3{min-height:38px}.start-step img{max-height:330px}.recipe-nav{grid-template-columns:1fr;gap:8px}.manual-detail>summary{padding:17px 18px;font-size:15px}.chapter-body{padding:18px}.chapter-body h2{font-size:23px}.note{padding:18px}.license-steps,.edition-card{padding:22px}.footer{display:block}.footer a{display:inline-block;margin-top:14px}th,td{padding:10px;font-size:13px}.section-heading h2{font-size:29px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+@media print{.masthead,.hero-actions,.lightbox,.tick{display:none}.page{max-width:none}.manual-detail>.chapter-body{display:block}.value-grid{grid-template-columns:repeat(2,1fr)}.layer{break-before:page}body{background:white}}
+
+.capture-frame{aspect-ratio:1.1;overflow:hidden;border-radius:10px;background:#e7edf2}.capture-frame>img{width:100%;height:100%;object-fit:cover;object-position:center 62%;border-radius:0}
+
+.hero-proof.showcase{display:block}.showcase-head{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-bottom:26px}.showcase-head p:last-child{color:var(--muted)}.showcase-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:20px}.showcase-photo{height:510px;overflow:hidden;background:#e7edf2;border-radius:10px}.showcase-photo img{width:100%;height:100%;object-fit:contain;border-radius:0}.showcase-photo img.photo-manuka{transform:scale(1.3);transform-origin:50% 72%}.showcase-grid figcaption{padding:4px 2px}.showcase-grid figcaption strong{display:block;font-size:17px;color:var(--ink)}.showcase-grid figcaption span{display:block;margin-top:3px}.showcase-caption{font-size:14px;color:var(--muted);margin-top:20px!important}.showcase-photo:focus-within{outline:3px solid #da9e42;outline-offset:4px}
+@media(max-width:640px){.showcase-head{grid-template-columns:1fr;gap:8px}.showcase-photo{height:420px}.showcase-grid{gap:24px}.showcase-grid figcaption strong{font-size:16px}}
+
+.chapter-body .fused-example{max-width:620px;margin:28px auto}.chapter-body .fused-example img{width:100%;max-height:760px;object-fit:contain;background:#e7edf2}
+</style></head><body><a class="skip" href="#main">本文へ移動</a><header class="masthead"><a class="brand" href="#ch-index"><span aria-hidden="true" class="brand-mark">き</span><span>きがえ工房<small>3D CREATIVE STUDIO</small></span></a><nav aria-label="主な目次"><a href="#quickstart">はじめの1組</a><a href="#editions">無料 / Pro</a><a href="#recipes">仕上げのレシピ</a><a href="#reference">画面とFAQ</a></nav><a class="mobile-contents" href="#reference">手順・FAQ ↓</a></header><main class="page" id="main"><section class="hero" id="ch-index"><p class="eyebrow">きがえ工房 / 3D 創作スタジオ 使用手引書</p><div class="hero-heading"><h1>着せて、動かして、<br/>好きなところまで<span style="display:inline-block">仕上げる。</span></h1><p class="hero-note">変換プロファイル不要。<br/>元アバターがなくても、<br/>骨付き衣装の Prefab から。</p></div><p class="hero-lede">非対応の衣装を、自分のアバターへ。<strong>まず1組を無料で。</strong><br/>自動変換から細部の調整、作業の保存まで、Unity の中でつながります。</p>
+<div aria-label="きがえ工房を選ぶ4つの価値" class="value-grid">
+<article class="value-card" id="value-poses"><span class="value-tag">動いたときまで見る</span><h2>8ポーズ自動検査<br/>＋ 座りスカート補助</h2><p>貫通しやすい姿勢を見つける。元アバターを使う変換では、座ったときのスカートを支える補助ボーンも自動生成できます。</p><a href="#ch-04_08_座ったときのスカートを直したい">座った姿を整える →</a></article>
+<article class="value-card" id="value-transfer"><span class="value-tag">手元の素材に合わせる</span><h2>素体を転写。<br/>Prefab単体も。</h2><p>元アバターがあれば素体差分を使って精密に合わせ、なければ衣装を自動解析。変換プロファイルの追加購入は不要です。</p><a href="#ch-04_01_衣装のPrefabを着せたい">衣装の選び方 →</a></article>
+<article class="value-card" id="value-mesh"><span class="value-tag">最後の細部を仕上げる</span><h2>気になる1mmを<br/>メッシュ工房へ</h2><p>上部の工房切り替えから、無料同梱のメッシュ工房へ。残った食い込みや形を、Unity 内で調整します。</p><a href="#mesh-recipe">仕上げの流れ →</a></article>
+<article class="value-card pro" id="value-save"><span class="value-tag">PRO / 作業案を残す</span><h2>保存スロットを<br/>無制限に。</h2><p>シーンと対応工房の作業を保存呼出し工房へ。複数の案を残し、保存した状態へ戻れます。無料版は1スロット。</p><a href="#editions">無料版とProを見る →</a></article>
+</div><div class="hero-actions"><a class="button" href="#quickstart">無料で1組、着せてみる ↓</a><a class="button secondary" href="#editions">Pro の内容を見る · ¥2,500</a></div>
+<div class="hero-proof showcase"><div class="showcase-head"><div><p class="eyebrow">衣装 ＋ 着せたいアバター</p><h2>選ぶのは2つ。<br/>仕上げ方は、ひとつずつ。</h2></div><p>2026-11-09 に Unity で変換した作例です。標準設定から始めて、自動チェックと見た目を確認し、気になる場所を調整します。仕上がりは衣装・体型・姿勢によって変わります。</p></div><div class="showcase-grid" id="conversion-gallery"><figure><div class="showcase-photo"><img alt="MANUKAにHINOshopのReTulpeを合わせたUnity実機の静止作例" class="photo-manuka" height="1600" loading="lazy" src="images/gp12-manuka-retulpe-20261109.png" width="1200"/></div><figcaption><strong>MANUKA × ReTulpe</strong><span>衣装：HINOshop</span></figcaption></figure><figure><div class="showcase-photo"><img alt="TsubomiにMANUKA初期衣装を合わせたUnity実機の静止作例。上着、エプロン、靴まで着せた全身" height="1600" loading="lazy" src="images/gp12-tsubomi-manuka-outfit-20261109.png" width="1200"/></div><figcaption><strong>Tsubomi × MANUKA 初期衣装</strong><span>衣装：진권（ジンゴ）</span></figcaption></figure></div><p class="showcase-caption">アバター・衣装は製品に同梱していません。素材の帰属は<a href="#ch-08_クレジット">クレジット</a>をご覧ください。同じ衣装セットと同じアバターなら、無料のまま何度でも調整できます。</p></div><div aria-hidden="true" class="measuring-rule"></div></section>
+<section class="layer" id="quickstart"><div class="section-heading"><div><p class="eyebrow">はじめの1組</p><h2>入れる。選ぶ。<br/>着せた姿を見る。</h2></div><p>手持ちの衣装とアバターで始めましょう。変換プロファイルの準備は要りません。元アバターが手元にあれば、素体を使った変換に活用します。</p></div><div class="steps-grid"><article class="start-step"><span class="step-number">1</span><h3>無料の本体を入れる</h3><p><a href="https://appluna.booth.pm/items/9071749">BOOTH の無料ページ</a>で3D 創作スタジオを取得。Unity に本体の unitypackage を取り込み、一覧はすべてチェックしたまま［Import］します。</p><p>［Tools &gt; Kigae Koubo &gt; Open］を開きます。</p><a href="#ch-02_入れ方">入れ方を詳しく見る →</a></article><article class="start-step"><span class="step-number">2</span><h3>衣装とアバターを選ぶ</h3><p>［衣装］へ衣装の Prefab またはシーンの衣装を、［変換先アバター］へ Hierarchy のアバターを入れます。［この設定で変換］を押し、処理が終わるまで待ちます。</p><figure class="current-ui"><img alt="ReTulpe衣装Prefabと、変換先MANUKAを指定する入力欄" height="1072" loading="lazy" src="images/gp12-ui-inputs-20261109.png" width="1435"/><figcaption>写真は［くわしく］で入力した例です。元アバターがない場合の案内が出ています。</figcaption></figure></article><article class="start-step"><span class="step-number">3</span><h3>結果を見て、整える</h3><p>［Scene で見る］で仕上がりを確認します。食い込みが気になるときは、［貫通対策］ですき間を調整して再変換。［貫通確認］では8ポーズの結果を見られます。</p><img alt="貫通確認の8ポーズの結果表" height="778" loading="lazy" src="images/screen_07_check.png" width="1540"/></article></div><aside class="note"><strong>無料の1組は、納得するまで調整できます。</strong><p>最初に変換が成功した「衣装セット × 変換先アバター」が登録されます。同じ組のすき間・部分マスク・姿勢補正の変更、同じセット内の衣装だけに絞った再調整は何度でも無料です。変換に失敗した場合は枠を消費しません。別衣装の追加や差し替え、別アバターへの変換は Pro の対象です。</p></aside><p><a href="#ch-03_はじめての練習">画面ごとの詳しい練習手順へ →</a></p></section><section class="layer" id="editions"><div class="section-heading"><div><p class="eyebrow">無料で確かめて、続きをPROで</p><h2>次の衣装も。<br/>次の作業案も。</h2></div><p>3D 創作スタジオ Pro は買い切り ¥2,500。きがえ工房の2組目以降と、保存呼出し工房の2スロット目以降を、ひとつのキーで解放します。</p></div><div class="edition-grid"><article class="edition-card"><p class="eyebrow">FREE / 最初の1組を試す</p><h3>3D 創作スタジオ</h3><p class="price">¥0</p><ul><li>きがえ工房：1組の変換と、同じ組の再調整</li><li>保存呼出し工房：1スロットを上書きして利用</li><li>ポーズ・色ツヤ・メッシュ・ボーン工房の機能</li></ul><a class="button secondary" href="https://appluna.booth.pm/items/9071749">無料の本体をダウンロード ↗</a></article><article class="edition-card pro"><p class="eyebrow">PRO / 衣装と作業案を増やす</p><h3>3D 創作スタジオ Pro</h3><p class="price">¥2,500 <small>買い切り</small></p><ul><li>きがえ工房：衣装・アバターの組数を無制限に</li><li>保存呼出し工房：保存スロット数を無制限に</li><li>変換プロファイルの追加購入は不要</li></ul><a class="button" href="https://appluna.booth.pm/items/9114686">Proキーの購入ページを見る ↗</a></article></div><div class="table-wrap"><table><caption>無料版と Pro 版の違い</caption><thead><tr><th scope="col">できること</th><th scope="col">無料版</th><th scope="col">Pro</th></tr></thead><tbody><tr><th scope="row">8ポーズ検査／元アバター利用時のスカート補助・素体転写</th><td>最初の1組で使える</td><td>組数の制限なし</td></tr><tr><th scope="row">衣装Prefab単体からの変換</th><td>最初の1組で使える</td><td>組数の制限なし</td></tr><tr><th scope="row">同じ組の再変換・調整</th><td>何度でも</td><td>何度でも</td></tr><tr><th scope="row">別衣装の追加・別アバターへの変換</th><td>Pro の案内</td><td>使える</td></tr><tr><th scope="row">メッシュ工房など4工房</th><td>使える</td><td>使える</td></tr><tr><th scope="row">保存呼出し工房</th><td>1スロット</td><td>スロット数の制限なし</td></tr></tbody></table></div><p>Pro は利用枠を広げるものです。無料の1組で、使いたい衣装との相性や仕上がりを確認してから購入できます。保存容量はパソコンの空き容量に依存します。</p><div class="license-steps" id="pro-install"><h3>購入したら、キーを Import</h3><ol><li>BOOTH の購入ページから <code>3D_CreativeStudio_Pro_Key.zip</code> をダウンロードし、展開します。</li><li>無料の本体を入れたプロジェクトで <code>3D_CreativeStudio_Pro_Key.unitypackage</code> を開き、すべてチェックしたまま［Import］します。</li><li>読み込み後に工房を開き直し、きがえ工房の2組目、保存呼出し工房の2スロット目を利用します。</li></ol><p>キーは <code>Assets/Koubo_Pro</code> に入ります。本体の更新時もこのフォルダを残してください。本体の版ごとにキーを取り直す必要はありません。キーを削除した場合は、購入済みファイルを再度 Import します。</p><p><a href="https://creativeandcreative9.github.io/GP25_manual/#limits">保存呼出し工房で戻るもの・戻らないものを見る →</a></p></div></section><section class="layer" id="recipes"><div class="section-heading"><div><p class="eyebrow">もっときれいに仕上げる</p><h2>気になる場所から、<br/>レシピをひらく。</h2></div><p>最初からすべての設定を覚えなくても大丈夫です。形を見ながら、一つずつ試せます。見出しを押すと詳しい手順が開きます。</p></div><div class="recipe-nav"><a href="#ch-04_01_衣装のPrefabを着せたい">衣装 Prefab から着せたい<small>元アバターなしで始める</small></a><a href="#ch-04_02_重ね着の衣装を着せたい">シャツと上着を重ねたい<small>衣装セットの順番と無料枠</small></a><a href="#ch-04_03_食い込みやぶかぶかを直したい">食い込み・ぶかぶかを直したい<small>すき間から合わせる</small></a><a href="#ch-04_08_座ったときのスカートを直したい">座ったスカートを整えたい<small>補助ボーンと8ポーズ確認</small></a><a href="#ch-04_06_一部だけ形を変えたくない">飾りの形を保ちたい<small>マテリアル・マスク・ブラシ</small></a><a href="#mesh-recipe">メッシュ工房で仕上げたい<small>残った細部の手直し</small></a></div><details class="manual-detail" id="mesh-recipe"><summary>メッシュ工房で、残った細部を仕上げる</summary><div class="chapter-body"><ol><li>きがえ工房の変換結果を Scene ビューで確認し、調整する衣装を選びます。</li><li>上部の切り替え帯から［メッシュ工房］を開きます。対象の衣装を確認し、気になる場所を選んで形を調整します。</li><li>動かしたときの見た目を確認します。別案を試す前に保存呼出し工房へ状態を残すと、保存した時点へ戻せます。</li></ol><p>きがえ工房で再変換すると、メッシュ工房で調整した結果とは別の変換結果になることがあります。先にきがえ工房の設定を固めてから、細部を仕上げてください。</p><p><a href="https://creativeandcreative9.github.io/GP13_manual/">メッシュ工房の詳しい使い方 →</a> ／ <a href="https://creativeandcreative9.github.io/GP25_manual/">保存呼出し工房の使い方 →</a></p></div></details><details class="manual-detail" id="ch-04_01_衣装のPrefabを着せたい"><summary>衣装の Prefab を着せたい</summary><div class="chapter-body">
+<h2>まだ着せていない衣装の Prefab を、アバターに着せたい</h2>
+<!-- 得A4 得A5 得A6 -->
+<p>服のPrefabだけでも使えます。着せていない Prefab も、そのまま［衣装］の欄に入れられます。元アバターは、選びません。自動で調べます。見つからないときは、衣装から合わせます。このとき、［補助の骨を作る］は使われません。［ポーズを考えてウェイトを調整する］も同じです。骨の名前のつけ方が違っても、よくある名前なら、自動で合わせます。</p>
+<p>先に、「<a href="#ch-03_はじめての練習">はじめての練習</a>」の手順 1・2・4 をやります。［衣装］の欄だけが、違います。練習の衣装が残っていたら、先に［この変換を取り除く］で取り除きます。</p>
+<ol>
+<li>
+<p>Project ウィンドウで、衣装の Prefab を探します。Prefab は、青い箱のアイコンです。</p>
+</li>
+<li>
+<p>Prefab を、［衣装］の欄へドラッグします。［衣装］の案内が消えて、［この設定で変換］ボタンが使えます。</p>
+<p><img alt="衣装のPrefabを入れた入力例。衣装と変換先アバターの欄、元アバター未検出の案内。" height="1174" loading="lazy" src="images/screen_17_prefab.png" width="1190"/></p>
+</li>
+<li>
+<p>［この設定で変換］ボタンを押します。変換のあいだは、Unity が止まったように見えます。終わるまで、待ちます。</p>
+</li>
+<li>
+<p>ヒエラルキーで、着せたいアバターの下を見ます。選んだ衣装の名前が分かる行が、できています。</p>
+<p><img alt="ReTulpeを着せたアバターが並ぶHierarchyの例。使わない元衣装の行は非表示になっています" height="1174" loading="lazy" src="images/screen_22_original_hidden.png" width="1190"/></p>
+</li>
+</ol>
+<p>Prefab がたくさんあって探しにくいときは、検索の欄が便利です。ドラッグできないときは、［衣装］の欄の右の丸いボタンで、Prefab を選べます。Prefab は、ヒエラルキーに置かなくてかまいません。できた衣装が見えないときは、着せたいアバターの左の ▶ を押すと、開きます。</p>
+<p>元の Prefab のファイルも、アバターも、変わりません。できた衣装は、元の服のコピーです。中の並び方や、付いている設定は、残ります。変わるのは、形と、骨の位置と、ウェイトです。ウェイトは、衣装が、骨の動きにどれだけついていくかの割合です。補助の骨（スカートに脚が入りにくくなるように、足す骨）が増えることもあります。ほかの衣装も、同じやり方で着せられます。うまくいかなかったときは、すぐに Ctrl+Z を押します。取り消せます。</p>
+<p>名前から、元のアバターと選んだ衣装が分かります。同じ名前の別のものがあるときだけ、見分ける印が付きます。</p>
+<p>重ねて着せるときは、「<a href="#ch-04_02_重ね着の衣装を着せたい">重ね着の衣装を着せたい</a>」の章を見ます。</p>
+<h3>気をつけること</h3>
 <ul>
-<li>すぐなら、Ctrl+Z で変換を取り消せます。</li>
-<li>あとからなら、［この変換を取り除く］を使えます。着せ直した衣装と、アバターに足した物を、まとめて外します。Unity を開き直したあとでも使えます。</li>
-<li>ひとつながりの元の服を隠したときも、戻せます。［元の服を表示に戻す］を使います。</li>
+<li>骨で動かないものは、変換できません。</li>
+<li>Prefab の位置や向き、大きさを変えていると、ずれて読まれることがあります。大きくずれていると、「元アバターの体から大きく離れています」という警告が出ます。</li>
+<li>Prefab に部分ごとの設定を直接付けると、そのファイルが変わります。くわしいやり方は、「<a href="#ch-04_06_一部だけ形を変えたくない">一部だけ、形を変えたくない</a>」の章にあります。</li>
 </ul>
-<p>Ctrl+Z で戻せないこともあります。［いま片付ける...］で消したファイルは、戻りません。Prefabへ部分の設定を足すときも、戻せません。</p>
-<h2>必要なもの</h2>
+<h3>うまくいかないとき</h3>
 <ul>
-<li>Unity 2022.3.22f1。確かめた環境は、「入れ方」の章にあります。</li>
-<li>着せたいアバターと、ほかのアバター用の衣装。</li>
-<li>VRChat SDK（VRChat で使うもの）は、なくても使えます。</li>
-<li>Modular Avatar（衣装をつけるのに使うもの）も、なくても使えます。</li>
+<li>「名前で対応しませんでした」と出たら、骨を補います。くわしくの［衣装変換］を開きます。［自動判定の確認と修正］の中です。［骨の部位の補正（任意）］で直せます。</li>
+<li>［この設定で変換］ボタンが灰色のまま。赤いエラーのあとの「→」に、直し方があります。</li>
+<li>変換が、なかなか終わらない。重い衣装は、時間がかかります。終わるまで、待ってください。</li>
 </ul>
-<p>BOOTH のお店で、買うことができます。</p>
-<h2>かかる時間</h2>
-<p>時間は、衣装とパソコンで変わります。元アバターが見つかった6組で測りました。およそ30秒から4分半でした。測ったのは、GPU のない Linux の Unity です。</p>
-<h2>先に知っておく言葉</h2>
-<ul>
-<li>貫通（衣装が体に入ったところ）。</li>
-<li>Prefab（パーツをまとめた Unity のファイル）。</li>
-</ul>
-<p>ほかの言葉は、「<a href="#ch-07_言葉の一覧">言葉の一覧</a>」にもあります。</p>
-</section>
-<section class="chapter" id="ch-zukan_01_3つ選んで変換するだけ"><h1>2 つ選んで、変換するだけ</h1>
-<p>ほかのアバター用の衣装は、そのままでは着せることができません。きがえ工房なら、2 つを選ぶだけで、自分のアバターに合うようにしてくれます。</p>
-<div class="zukan-card" id="card-得A1">
-<!-- 得A1 -->
-<h2>選んで押すだけで、衣装が着られる。</h2>
-<p>ほかのアバター用の衣装を、自分のアバターに着せてみたい。選ぶのは、衣装と着せたいアバターの 2 つだけです。そのあと、［この設定で変換］を押します。元アバターは、自動で調べます。見つからないときは、衣装から合わせます。骨の位置合わせは、しなくてかまいません。ほとんどの衣装は、はじめの設定のままで変換することができます。あとは、できあがるのを待つだけです。画像の番号は、1 が［衣装］、2 が［変換先アバター（衣装を着せたいアバター）］です。その下に、元アバターを見つけた案内が出ます。実行ボタンは、下の欄にあります。</p>
-<p><img src="images/screen_03_inputs.png" alt="かんたんの入力。番号1は衣装、2は変換先アバター。その下に元アバターを見つけた案内がある。" loading="lazy" /></p>
-<p class="zukan-where">くわしいやり方は、「<a href="#ch-03_はじめての練習">はじめての練習</a>」の章にあります。</p>
-<p class="zukan-mark">実アバターで確認済み</p>
-</div>
-<div class="zukan-card" id="card-得A2">
-<!-- 得A2 -->
-<h2>どれが体か、自動で見つけてくれる。</h2>
-<p>素体（アバターの体の部分）がどれなのか、分からない。素体は、自動で見つけてくれます。見つからないときは、手で選ぶこともできます。どうして選んだのかも、折りたたみの中で見ることができます。</p>
-<p class="zukan-where">くわしいやり方は、「<a href="#ch-05_2_かんたん">画面の説明</a>」の章にあります。</p>
-<p class="zukan-mark">仕組みは動く</p>
-</div>
-<div class="zukan-card" id="card-得A3">
-<!-- 得A3 得A6 -->
-<h2>うまくいかないときも、直し方が分かる。</h2>
-<p>何がだめなのか分からないまま、失敗するのはこわい。骨の名前のつけ方が違っても、よくある名前なら、自動で合わせます。合わないときは、選んだらすぐ、直し方が案内に出ます。</p>
-<p class="zukan-where">くわしいやり方は、「<a href="#ch-03_はじめての練習">はじめての練習</a>」の章にあります。</p>
-<p class="zukan-mark">仕組みは動く</p>
-</div>
-<div class="zukan-card" id="card-得A4">
-<!-- 得A4 -->
-<h2>着せていない衣装の Prefab も、使える。</h2>
-<p>まだ着せていない衣装の Prefab しか、持っていない。それでも、Prefab を［衣装］の欄に入れることができます。骨は、名前で合わせます。元アバターは、いりません。</p>
-<p class="zukan-where">くわしいやり方は、「<a href="#ch-04_01_衣装のPrefabを着せたい">衣装の Prefab を着せたい</a>」の章にあります。</p>
-<p class="zukan-mark">仕組みは動く</p>
-</div>
-<div class="zukan-card" id="card-得A5">
-<!-- 得A5 -->
-<h2>着ている服を、そのまま移せる。</h2>
-<p>アバターが着ている服を、別のアバターに移したい。着ている服の行を、ヒエラルキー（Unity の左にある、シーンにあるものの一覧）から［衣装］の欄へ入れます。元アバターは、自動で調べます。アバターそのものを［衣装］に入れると、着ている服をまとめて移せます。体・顔・髪は、変換しません。</p>
-<p class="zukan-where">くわしいやり方は、「<a href="#ch-03_はじめての練習">はじめての練習</a>」の章にあります。</p>
-<p class="zukan-limit">気をつけること: 一部だけ移すときは、1 着ずつ入れます。重ねて着せたいときは、衣装の欄を増やします。</p>
-<p class="zukan-mark">実アバターで確認済み</p>
-</div>
-<div class="zukan-card" id="card-得A7">
+<figure class="current-ui"><img alt="ReTulpeのPrefabとMANUKAを入力した例" height="1072" loading="lazy" src="images/gp12-ui-inputs-20261109.png" width="1435"/><figcaption>元アバターが見つからないときも、衣装Prefabから合わせられます。使用しない設定は、各タブの案内に表示されます。</figcaption></figure></div></details><details class="manual-detail" id="ch-04_02_重ね着の衣装を着せたい"><summary>重ね着の衣装を着せたい</summary><div class="chapter-body"><aside class="note"><strong>無料体験の衣装セット</strong><p>重ね着は最初に成功した衣装セットと変換先アバターの組み合わせで登録されます。同じセット内の衣装だけに絞った再調整は無料です。成功後に別の衣装を追加する、衣装を差し替える、別アバターへ変換する場合は Pro が必要です。</p></aside>
+<h2>上着の下にシャツ、のように、重ねて着せたい</h2>
 <!-- 得A7 -->
-<h2>重ね着も、まとめて着せられる。</h2>
-<p>重ね着の衣装を、まとめて着せたい。欄を増やして、内側に着るものから、順に入れていきます。結果は、衣装ごとに、分かれて置かれます。</p>
-<p class="zukan-where">くわしいやり方は、「<a href="#ch-04_02_重ね着の衣装を着せたい">重ね着の衣装を着せたい</a>」の章にあります。</p>
-<p class="zukan-mark">仕組みは動く</p>
-</div>
-<div class="zukan-card" id="card-得A8">
-<!-- 得A8 -->
-<h2>腕の向きが違っても、そろえて変換する。</h2>
-<p>腕の向きが違うアバターでも、うまくいくのか心配になる。ポーズをそろえてから変換し、終わったら元のポーズに戻します。腕や脚の向きが大きく違うときは、そろえない場合とも比べて、形の崩れが少ないほうを使います。</p>
-<p class="zukan-where">くわしくの［微調整］の［姿勢をそろえてから変換する］です。はじめから、オンです。くわしいやり方は、「<a href="#ch-05_6_微調整">画面の説明</a>」の章にあります。</p>
-<p class="zukan-limit">気をつけること: 腕や脚の向きが大きく違うと、時間がおよそ 2 倍かかります。</p>
-<p class="zukan-mark">実アバターで確認済み</p>
-</div>
-</section>
-<section class="chapter" id="ch-zukan_02_体型や頭身の違うアバターへ"><h1>体型や頭身の違うアバターへ</h1>
-<p>体型がちがうと、ほかのアバター用の衣装は、合わないことが多いものです。きがえ工房は、着せたいアバターの体に合うように、形を直してくれます。</p>
-<div class="zukan-card" id="card-得B1">
-<!-- 得B1 -->
-<h2>体型が違っても、体に合わせて直せる。</h2>
-<p>体型がちがうアバターに着せると、ぶかぶかになったり、体に入り込んだりする。着せたいアバターの体に合うように、形を直します。体とのすき間（体と衣装の間のあき）は、めやすとして、たもちます。</p>
-<p><img src="images/zukan_02_c1_compare.png" data-compare alt="変換前と変換後の並べ画像。左は、元アバターが制服を着て、腕を横に広げた姿。右は、体型の違う変換先のアバターが、同じ制服を着て、腕を横に広げた姿" loading="lazy" /></p>
-<p><img src="images/zukan_02_c2_compare.png" data-compare alt="変換前と変換後の並べ画像。左は、元アバターが、そのアバター用の衣装（エプロン風の上着とショートパンツ）を着て、腕を横に広げた姿。右は、体型の違う変換先のアバターが、同じ衣装を着て、腕を横に広げた姿" loading="lazy" /></p>
-<p>どちらも、左が変換前、右が変換後です。上と下は、べつの組です。</p>
-<p class="zukan-where">すき間は、自分で変えることもできます。設定の［すき間の最小値 (mm)］と［元のすき間の倍率］を使います。くわしいやり方は、「<a href="#ch-04_03_食い込みやぶかぶかを直したい">食い込みやぶかぶかを直したい</a>」の章にあります。</p>
-<p class="zukan-limit">気をつけること: どの衣装でもうまくいく、とは言えません。確かめたのは、アバターと衣装の 6 組だけです。元アバターを自動で見つけられたときの結果です。</p>
-<p class="zukan-mark">実アバターで確認済み</p>
-</div>
-<div class="zukan-card" id="card-得B2">
-<!-- 得B2 -->
-<h2>頭の大きなアバターにも、着せられる。</h2>
-<p>背が低くて、頭の大きいアバターにも、衣装を着せたい。着せたいアバターの体に合うように、大きさと形を直します。頭身がちがっても、合わせることができます。気になるところは、あとで直すこともできます。</p>
-<p><img src="images/zukan_00_hero_compare.png" data-compare alt="同じカメラで撮った、変換前と変換後の並べ画像。左は、元アバターが制服を着た姿。右は、背が低く頭の大きい変換先のアバターが、変換した制服を着た姿" loading="lazy" /></p>
-<p>左が変換前、右が変換後です。変換後の脚は、仮の肌（元の服を隠したところに出す、肌の色の面）で、おぎなっています。仮の肌は、試しの機能です。</p>
-<p class="zukan-where">くわしいやり方は、「<a href="#ch-03_はじめての練習">はじめての練習</a>」の章にあります。仮の肌は、「<a href="#ch-zukan_05_体と服が一体のアバターにも">体と服が一体のアバターにも</a>」の章にあります。</p>
-<p class="zukan-limit">気をつけること: 体と服が一体のアバターは、服の下の体を、おしはかります。ほんとうの体とは、ちがうことがあります。</p>
-<p class="zukan-mark">実アバターで確認済み</p>
-</div>
-<div class="zukan-card" id="card-得B4">
-<!-- 得B4 -->
-<h2>胸の上の骨（UpperChest）の違いは、自動で合わせてくれる。</h2>
-<p>アバターによって、胸の上の骨（UpperChest）が、あったり、なかったりする。片方にしかなくても、自動で足してくれます。こちらですることは、ありません。自分で、骨を足さなくてかまいません。</p>
-<p class="zukan-where">変換の前の案内に出ますが、直さなくてかまいません。</p>
-<p class="zukan-mark">仕組みは動く</p>
-</div>
-<div class="zukan-card" id="card-得B5">
-<!-- 得B5 -->
-<h2>体を縮めるシェイプキーがあっても、合わせられる。</h2>
-<p>体を縮めるシェイプキー（形を変える設定）があると、うまく合わないのでは。縮めるキーは、0 として、合わせます。自分で、0 にしなくてかまいません。確かめるときも、同じ調べ方で数えます。</p>
-<p class="zukan-where">確かめるときの条件は、変換と同じように縮めるキーを 0 として調べます。手動で調べるときは、この条件を変えられます。くわしいやり方は、「<a href="#ch-05_4_貫通確認">画面の説明</a>」の章にあります。</p>
-<p class="zukan-limit">気をつけること: 縮めるキーとみなすのは、名前に「Shrink」か「縮」が入ったキーです。「__Shrink__」のような区切りの下に並ぶキーも、同じです。</p>
-<p class="zukan-mark">仕組みは動く</p>
-</div>
-</section>
-<section class="chapter" id="ch-zukan_03_着せたあとを自動で確かめる"><h1>着せたあとを、自動で確かめる</h1>
-<p>着せたあと、服が体に入っていないかを調べてくれます。見た目は、Sceneビューで確かめます。アバターと服を、目で見ます。</p>
-<div class="zukan-card" id="card-得C1">
-<!-- 得C1 -->
-<h2>着せ終わると、すぐ調べてくれる。</h2>
-<p>肌が服をつきぬけていないか、心配になる。ボタンを押さなくても、着せ終わると、自動チェックが始まります。止まったときと、8つのポーズで調べます。体に入り込むところが増えたか分かります。</p>
-<p class="zukan-where">まとめは、「結果」の欄に出ます。くわしいやり方は、「<a href="#ch-05_4_貫通確認">画面の説明</a>」の章にあります。</p>
-<p class="zukan-mark">実アバターで確認済み</p>
-</div>
-<div class="zukan-card" id="card-得C2">
-<!-- 得C2 得C3 -->
-<h2>増えたところと、もともとのところを分ける。</h2>
-<p>元の服でも体に入っていた頂点（形を作る点）があります。自動チェックでは、その数も出します。新しく増えた分とは分けています。どこが入ったかは、［貫通を確認］で見ます。</p>
-
-
-<p class="zukan-where">着せたすぐあとに、数が出ます。欄の名前は「結果」です。くわしい読み方は、「<a href="#ch-04_04b_貫通の数を読みたい" >数の読み方</a>」に続きます。</p>
-<p class="zukan-limit">気をつけること: 元の服にもともとある穴やめり込みは、直しません。体と服がひとつながりのアバターでは、服の下の体をおしはかって測ります。ほんとうの体とは、ちがうことがあります。</p>
-<p class="zukan-mark">実アバターで確認済み</p>
-</div>
-<div class="zukan-card" id="card-得C4">
-<!-- 得C4 -->
-<h2>座ったときも、どれくらい入り込むか分かる。</h2>
-<p>自動チェックは、8つのポーズを調べます。いちばん多いポーズの名前と割合も出します。［ポーズで確認］の表で、ポーズごとの数をくらべられます。</p>
-
-
-<p class="zukan-where">くわしいやり方は、「<a href="#ch-04_04_貫通の場所を確かめたい">貫通の場所を確かめたい</a>」の章にあります。</p>
-<p class="zukan-limit">気をつけること: 腕と胴のように、体どうしが重なるポーズの貫通は、直せません。8 つのポーズ以外は、試していません。</p>
-<p class="zukan-mark">実アバターで確認済み</p>
-</div>
-<div class="zukan-card" id="card-得C5">
-<!-- 得C5 -->
-<h2>試した6組では、止まったときのめり込みは増えなかった。</h2>
-<p>でき上がりが、気になる。試した6組は、手に入るアバターと服です。測ったのは、元アバターが見つかったときです。止まったときに増えたところは、どれも0でした。8 ポーズの貫通は、5 組で元の服より少なく、残りの 1 組も、ほぼ同じでした。</p>
-<p><img src="images/zukan_03_six_cases.png" alt="試した 6 組の、変換後の正面の姿を、3 列 2 行に並べた画像。各コマの下に、組の番号だけが書かれている" loading="lazy" /></p>
-<p>数えたのは、体の中に 1 mm より深く入った頂点（形を作る点）です。もともと入っていたところは、数えていません。体と服がひとつながりの2組は、おしはかった体で測りました。元の服は、元アバターに着せて比べました。</p>
-<p class="zukan-limit">気をつけること: 試したのは、この 6 組だけです。この8つのポーズは、服を合わせるときにも使います。画面の自動チェックとは数え方がちがうので、数は同じになりません。</p>
-<p class="zukan-mark">実アバターで確認済み</p>
-</div>
-<div class="zukan-card zukan-mini" id="card-得C6">
-<!-- 得C6 -->
-<h3>着せたらすぐに、数が見られる。</h3>
-<p>自動チェックは、着せたすぐあとに行います。開き直したあとは、［貫通確認］で調べ直せます。着せ直さなくてもかまいません。</p>
-</div>
-</section>
-<section class="chapter" id="ch-zukan_04_動いたときの服"><h1>動いたときの服</h1>
-<p>腕や脚を動かすと、服の形は、止まっているときよりくずれやすいものです。きがえ工房は、動いたときのことも考えて、形を整えます。</p>
-<div class="zukan-card" id="card-得D1">
-<!-- 得D1 -->
-<h2>動いても、衣装が体に入りにくい。</h2>
-<p>腕や脚を動かすと、体に入ったり、のびたりする。着せたいアバターの体と同じように、衣装が動くようにします。ウェイト（衣装が、骨の動きにどれだけついていくかの割合）を、体から写すからです。さけたようにのびるところは、元の服の動き方に近づけます。</p>
-<p>自動チェックは、8ポーズを調べます。［貫通確認］の［ポーズで確認］で、ポーズごとの数や割合、深さを見られます。</p>
-<p class="zukan-where">設定の［ウェイトを移す］を使います。はじめから、オンです。くわしいやり方は、「<a href="#ch-05_2_かんたん">画面の説明</a>」の章にあります。</p>
-<p class="zukan-limit">気をつけること: 腕と胴のように、体どうしが重なるポーズの貫通は、直せません。</p>
-<p class="zukan-mark">実アバターで確認済み</p>
-</div>
-<div class="zukan-card" id="card-得D3">
-<!-- 得D3 -->
-<h2>いろいろなポーズを試して、入りにくい動き方を選ぶ。</h2>
-<p>スカートの前が、脚を上げると体に入る。腕や脚を動かして、いろいろなポーズを試します。そして、スカートが体に入りにくいウェイトの候補を選びます。立った姿の形は、変えません。</p>
-<p class="zukan-where">くわしくの［貫通対策］の［ポーズを考えてウェイトを調整する］を使います。はじめから、オンです。くわしいやり方は、「<a href="#ch-05_5_貫通対策">画面の説明</a>」の章にあります。</p>
-<p class="zukan-limit">気をつけること: 選ぶのに使うのは、動く範囲に散らした、決まった 8 つのポーズです。自動チェックの 8 つのポーズとは別です。ほかの動きは、Unity のアニメーションやポーズ確認で目で確かめてください。</p>
-<p class="zukan-mark">実アバターで確認済み</p>
-</div>
-<div class="zukan-card" id="card-得D4">
-<!-- 得D4 -->
-<h2>頭の飾りが、ずれにくい。</h2>
-<p>頭の飾りが、ずれたり、ゆがんだりする。頭だけに付くパーツは、頭と髪の面、目の高さに合わせて置きます。飾りの形は、保ったまま動かします。</p>
-<p><img src="images/zukan_04_headdress_compare.png" data-compare alt="頭の拡大写真の並べ画像。左は、変換前のアバターが飾りを付けた頭。右は、変換後のアバターの頭で、同じ飾りが髪の上、目より上に付いている" loading="lazy" /></p>
-<p>左が変換前、右が変換後です。飾りは、髪の上で、目より高いところにあります。</p>
-<p class="zukan-where">設定は、いりません。変換のときに、自動で置かれます。</p>
-<p class="zukan-limit">気をつけること: 形を保つので、頭のまるみが大きく違うと、はしが少し浮くことがあります。頭の大きなアバターでは、耳飾りが大きくなり、腕を上げると肩に入ることがあります。</p>
-<p class="zukan-mark">実アバターで確認済み</p>
-</div>
-</section>
-<section class="chapter" id="ch-zukan_05_体と服が一体のアバターにも"><h1>体と服が一体のアバターにも</h1>
-<p>体と服が一体のアバターにも、着せられます。変換のあとで、元の服をどうするかも、選ぶことができます。</p>
-<div class="zukan-card" id="card-得E1">
-<!-- 得E1 -->
-<h2>体と服が一体でも、着せられる。</h2>
-<p>体と服が一体のアバターには、着せられないと思っていた。こちらで調べなくても、自動で見分けます。服の下の体を、おしはかって、合わせます。</p>
-<p class="zukan-where">くわしくの［衣装変換］にある［自動判定の確認と修正］の［体と服が一体のアバター］で、選べます。はじめは、自動です。</p>
-<p class="zukan-limit">気をつけること: おしはかった体は、ほんとうの体と、ちがうことがあります。細くおしはかると、貫通の数は、少なめに出ます。数だけでなく、シーン（アバターなどがある 3D の場所）ビューで、目でも確かめてください。服のない体が、別にあるときは、それを素体の欄に入れます。そして「推定しない」を選ぶこともできます。</p>
-<p class="zukan-mark">実アバターで確認済み</p>
-</div>
-<div class="zukan-card" id="card-得E2">
-<!-- 得E2 得E3 -->
-<h2>元の服を隠して、脚や腕も、おぎなえる。</h2>
-<p>元の服が、衣装と重なって見える。ボタンを押すと、元の服だけが、見えなくなります。隠して消えた脚や腕は、おぎなえます。</p>
-<p><img src="images/zukan_05_hide_compare.png" data-compare data-frames="3" alt="同じカメラで撮った、3 コマの並べ画像。左は、元の服が変換した衣装と重なって見える姿。中央は、元の服を隠したあとの姿で、脚が消え、変換した衣装の靴下と靴が浮いて見える。右は、仮の肌で脚を補った姿" loading="lazy" /></p>
-<p>左から、隠す前、隠したあと、仮の肌です。</p>
-<p>押したあとも、Undo（Ctrl+Z で戻す操作）で、元に戻すことができます。元の服そのものは、こわしません。</p>
-<p class="zukan-where">隠すだけのときは、結果欄の［変換先の元の服を隠す（Undoで戻す）］を押します。仮の肌（元の服を隠したところに出す、肌の色の面）も出すときは、［元の服を隠して仮の肌を表示（試験的・Undoで戻す）］を押します。どちらも、変換のあとに、押すことができます。隠した服は、［元の服を表示に戻す］でも戻せます。このボタンは、隠したときだけ出ます。くわしいやり方は、「<a href="#ch-04_05_体と服が一体のアバターに着せたい">体と服が一体のアバターに着せたい</a>」の章にあります。</p>
-<p class="zukan-limit">気をつけること: 仮の肌は、試しの機能です。顔・指・足先は、おぎなえません。もようや質感は、戻りません。見た目を見るだけに使います。貫通を調べるときには、使いません。</p>
-<p class="zukan-mark">実アバターで確認済み</p>
-</div>
-</section>
-<section class="chapter" id="ch-zukan_06_一部だけ設定を変える"><h1>一部だけ、設定を変える</h1>
-<p>服の一部だけ、変え方を決められます。そんなときは、その部分だけに、べつの設定をつけられます。</p>
-<div class="zukan-card" id="card-得F3">
+<p>欄を増やすと、衣装を重ねて着せられます。内側に着るものから、順に入れます。たとえば、内側がシャツで、外側が上着です。どちらも、同じアバター用の衣装を使います。元アバターは、衣装ごとに自動で調べます。外側のものは、内側のものに入り込まないように、合わせます。</p>
+<p>先に、「<a href="#ch-03_はじめての練習">はじめての練習</a>」の手順 1・2・4 をやります。練習の衣装が残っていたら、先に［この変換を取り除く］で取り除きます。やることは、欄を増やして、ボタンを押すだけです。そのほかは、ふつうの変換と、同じです。</p>
+<ol>
+<li>
+<p>［＋ 重ね着の衣装を追加（外側の衣装）］ボタンを押します。［衣装］の欄が、2 つになります。「上の衣装から順に変換します」という案内が出ます。</p>
+</li>
+<li>
+<p>［衣装 1（内側）］の欄に、内側に着るものをドラッグします。Prefab でも、元アバターが着ているものでも、かまいません。</p>
+</li>
+<li>
+<p>［衣装 2（外側へ）］の欄に、外側に着るものをドラッグします。</p>
+</li>
+<li>
+<p>［この設定で変換］ボタンを押します。終わるまで、待ちます。</p>
+</li>
+<li>
+<p>ヒエラルキーで、着せたいアバターの下を見ます。着せた数だけ、衣装が増えています。</p>
+</li></ol><p>白いふきだしに「元アバター未検出」と出ても、エラーではありません。そのまま変換できます。</p>
+<p>ドラッグできないときは、欄の右の丸いボタンから、選べます。衣装が見えないときは、着せたいアバターの左の ▶ を押すと、開きます。</p>
+<p>欄を消したいときは、欄の右の［−］ボタンを押します。順番を入れかえるボタンは、ありません。入れかえたいときは、欄に入れ直します。空の欄は、とばされます。同じものを 2 つの欄に入れると、2 つ目は、とばされます。</p>
+<p>「結果」の欄には、変換直後に行った自動チェックの数値要約が、衣装ごとに出ます。くわしくの［貫通確認］で、衣装ごとに場所も確かめられます。数値の読み方は「<a href="#ch-04_04b_貫通の数を読みたい">貫通の場所を確かめたい</a>」をご覧ください。</p>
+<p>できあがったら、シーンビューで、重なりぐあいが見られます。うまくいかなかったときは、すぐなら Ctrl+Z で取り消せます。うまくいかないときは、「<a href="#ch-03_はじめての練習">はじめての練習</a>」の章を見ます。</p>
+<h3>気をつけること</h3>
+<ul>
+<li>内側に着るものは、上の欄に入れます。逆にすると、外側のものが、内側に入り込むことがあります。</li>
+<li>ウィンドウの設定は、すべてに、まとめて効きます。1 着だけ変えたいときは、部分ごとの設定（一部だけ変える設定）を使います。</li>
+<li>1 着ずつ変換することもできます。ただ、そのときは、外側を内側に合わせるはたらきが、使われません。</li>
+<li>重ね着の結果は、衣装ごとに自動チェックと Scene ビューで確認します。</li>
+<li>重ね着では複数の衣装を処理します。進行表示が終わるまで待ってください。</li>
+</ul>
+</div></details><details class="manual-detail" id="ch-04_03_食い込みやぶかぶかを直したい"><summary>食い込みやぶかぶかを直したい</summary><div class="chapter-body">
+<h2>衣装が体に食い込む、またはぶかぶかに見える</h2>
+<!-- 得B1 得F2 -->
+<p>食い込みは、体が衣装から出てしまうことです。ぶかぶかは、衣装が体からはなれて見えることです。直すには、設定を変えて、もう一度変換します。すき間（体と衣装の間のあき）を、大きくしたり、小さくしたりします。やることは、スライダーを動かして、ボタンを押すだけです。1 回で決めなくてもかまいません。なんどでも、変換し直せます。</p>
+<p>先に、変換を 1 回やって、結果を見ておきます。やり方は、「<a href="#ch-03_はじめての練習">はじめての練習</a>」にあります。</p>
+<ol>
+<li>
+<p>「結果」の欄の自動チェックと、シーンビューを見ます。食い込みは、自動チェックの黄色い三角で分かります。ぶかぶかは、数には出ません。見た目で、決めます。</p>
+</li>
+<li>
+<p>食い込むときは、［すき間の最小値 (mm)］のスライダーを、右へ動かします。体と衣装の間に、あけるすき間が、大きくなります。</p>
+</li>
+<li>
+<p>ぶかぶかのときは、［元のすき間の倍率］のスライダーを、左へ動かします。1 のときは、元アバターと同じすき間です。元アバターが見つからないときは、骨のまわりの幅を基準にした、ゆとりが変わります。</p>
+</li>
+<li>
+<p>いまの自動チェックの数を、メモします。変換し直すと、前の数はなくなるためです。</p>
+</li>
+<li>
+<p>もう一度、［この設定で変換］ボタンを押します。終わるまで、待ちます。</p>
+<p><img alt="下の実行欄。［この設定で変換］を赤い枠で囲んでいる。" height="117" loading="lazy" src="images/screen_04_execution.png" width="1190"/></p>
+</li>
+<li>
+<p>「結果」の欄の、衣装の行の右の文を見ます。前の結果と入れかわったという知らせが出ています。</p>
+</li>
+<li>
+<p>「結果」の欄の新しい数と、メモした数を比べます。</p>
+</li>
+</ol>
+<p>手順 2 と 3 は、どちらか 1 つでかまいません。［すき間の最小値 (mm)］のめやすは、0 から数 mm です。まず、少しだけ動かして、ためします。動かしすぎると、衣装が体からはなれて見えます。ちょうどよいところは、衣装ごとにちがいます。ぴったりしすぎるときは、［元のすき間の倍率］を右へ動かします。スライダーは、数を打ちこんでも動かせます。</p>
+<p>手順 6 の知らせは、「前回の結果を置き換えました」です。前の結果は、新しいものに置き換わります。うまくいかなかったときは、すぐなら Ctrl+Z で取り消せます。または、スライダーを元に戻して、もう一度変換します。</p>
+<h3>気をつけること</h3>
+<ul>
+<li>設定は、いっしょに変換する衣装すべてに、まとめて効きます。</li>
+<li>貫通は、自動ではすべて消えません。試した例でも、そでぐちやくつに、少し残りました。</li>
+<li>腕と胴のように、体どうしがかさなるポーズの貫通は、この設定では直りません。</li>
+<li>元の服に、もともとある貫通も、直りません。自動チェックでは元から体に入っていた頂点数を別に示します。詳しくは「<a href="#ch-04_04b_貫通の数を読みたい">貫通の場所を確かめたい</a>」をご覧ください。</li>
+<li>変換し直すと、手で直したところも、消えます。残したいときは、くわしいやり方が、「<a href="#ch-04_10_やり直したい">取り消したい・変換し直したい</a>」の章にあります。</li>
+<li>一部だけのときは、部分ごとの設定で、そこのすき間を変えられます。くわしいやり方は、「<a href="#ch-04_06_一部だけ形を変えたくない">一部だけ、形を変えたくない</a>」の章にあります。</li>
+</ul>
+</div></details><details class="manual-detail" id="ch-04_04_貫通の場所を確かめたい"><summary>貫通の場所を確かめたい</summary><div class="chapter-body">
+<h2>色で見る</h2>
+<p>着せ終わると、自動チェックが出ます。どこが入ったかや、ポーズは、くわしくの［貫通確認］で見られます。</p>
+<ol><li><p>できた服の欄の［くわしく確認］を押します。くわしくの表示では［貫通確認へ］です。</p></li><li><p>［確認する衣装］から、見たい服を選びます。</p></li><li><p>［貫通を確認］を押します。Sceneに色が出ます。黄は浅いところ、赤は深いところです。</p><p><img alt="貫通確認タブ。確認する衣装、縮めるキーの条件、手動の確認ボタン、8ポーズの表がある。" height="778" loading="lazy" src="images/screen_07_check.png" width="1540"/></p></li></ol>
+<p>［体を縮めるシェイプキーを 0 として調べる］は、ふつうはオンです。2つのボタンで、同じ調べ方を使います。オフでは、縮めるキーを含む見た目の形で調べます。調べ方を変えたら、調べるボタンをもう一度押します。自動チェックは、服を合わせたときと同じです。</p>
+<h2>8つのポーズの数をくらべる</h2>
+<ol><li><p>［ポーズで確認］を押します。8つのポーズの表が出ます。</p></li><li><p>ポーズの名前ごとに、入っている頂点の数、割合、最大の深さを読みます。下の行には、8ポーズの割合の平均が出ます。</p></li></ol>
+<p><img alt="今の貫通確認タブ。MANUKAに着せたReTulpeの8ポーズの数、割合、最大の深さと平均が出ている。" height="778" loading="lazy" src="images/screen_07_check.png" width="1540"/></p>
+<p>表は、決まった8ポーズを調べた数です。元のアバターの姿勢は変えません。<a href="#ch-04_04b_貫通の数を読みたい">数の読み方</a>も見ます。</p>
+<p>［表示を消す］で、Sceneの色を消せます。色は、［貫通対策］へ移っても残ります。調べる服を変えるか、片付けるか、窓を閉じると消えます。</p>
+<h2 id="repair-outside-references">衣装の参照を直す</h2>
+<p>衣装が使う骨や体の参照が、着せたアバターの外を指していると、注意と［参照を直す］が出ます。参照と道筋が食い違うときも出ます。古い版で変換した衣装でも、ここで直せます。</p>
+<ol><li><p>［くわしく］の［貫通確認］を開き、［確認する衣装］を選びます。注意の件数と、指している先の例を読みます。</p>
+</li>
+<li><p>［参照を直す］を押します。変換先の骨や体など、対応する物へ付け替えます。対応する物やシェイプキーが無い行・部品は外します。外した行・部品は、名前とともに知らせます。</p>
+</li>
+<li><p>結果の件数と、外した物の名前を読みます。やり直すときは、Ctrl+Zを1回押すと戻せます。</p></li></ol>
+<h2>どこを直すか</h2>
+<p>腕を上げると脇から肌が出るときは、［貫通対策へ］です。［動かすと肌が出る］で直します。膝の先だけなら、［微調整へ］です。<a href="#ch-05_5_貫通対策">すき間や動き方の直し方</a>に、どれを使うかが書いてあります。</p><p><img alt="貫通確認の下部。対策への案内と、変換し直しても残す・この変換を取り除くを赤い枠で囲む。" height="377" loading="lazy" src="images/screen_08_result_management.png" width="1225"/></p>
+</div></details><details class="manual-detail" id="ch-04_04b_貫通の数を読みたい"><summary>自動チェックの数を読む</summary><div class="chapter-body"><aside class="note"><strong>元の衣装と比べられない場合</strong><p>元衣装の比較情報がないときは、元からの重なりも含んだ貫通を数えます。表示された数のすべてを「変換で増えた貫通」とは読みません。比較できたかを示す案内と、Scene ビューの該当箇所を合わせて確認してください。</p></aside><h2>止まっているとき</h2><p>体の中に、1 mm以上入った頂点を数えます。新しく増えた数と割合、いちばん深いところが出ます。元の服と比べられるときは、もともと入っていた分も出ます。</p>
+<h2>8つのポーズを取るとき</h2><p>自動チェックのまとめには、新しく入ったところの平均が出ます。いちばん多いポーズの名前と割合も出ます。［貫通確認］には、ポーズごとの表があります。</p><p>表の数は、新しく増えた分と、もともと入っていた分です。割合と平均には、もともと入っていた分も含みます。自動チェックのまとめとは、数え方が違います。比べられなかったときは、わけが出ます。</p>
+<p><img alt="貫通確認タブ。確認する衣装、縮めるキーの条件、手動の確認ボタン、8ポーズの表がある。" height="778" loading="lazy" src="images/screen_07_check.png" width="1540"/></p><h2>数だけで決めない</h2><p>腕と胴のように、体どうしが重なるポーズもあります。そのときのめり込みは残ります。体と服がひとつながりなら、服の下をおしはかって測ります。ほんとうの体とは違うため、数が少なく出ることもあります。</p><p>調べるのは、決まった8ポーズです。ほかの動きや、VRChatの中での揺れは含みません。</p><p>開き直したあとも、調べ直せます。［貫通を確認］や［ポーズで確認］を使います。自動チェックのまとめとは分けて読みます。<a href="#ch-04_04_貫通の場所を確かめたい">どこが入ったかを見るやり方</a>に続きます。</p></div></details><details class="manual-detail" id="ch-04_05_体と服が一体のアバターに着せたい"><summary>体と服が一体のアバターに着せたい</summary><div class="chapter-body">
+<h2>肌と服が 1 つのパーツのアバターに、衣装を着せたい</h2>
+<!-- 得E1 得E2 得E3 -->
+<p>体と服が一体のアバターは、肌と服が、ひとつながりになっています。そのため、服だけを外すことができません。それでも、衣装を着せることはできます。きがえ工房が、服の下の体を、おしはかって合わせます。そのままでは、元の服が残って、できた衣装と重なって見えます。そこで、元の服を、ボタンで隠します。隠すだけで、元のファイルは変わりません。</p>
+<p>先に、「<a href="#ch-03_はじめての練習">はじめての練習</a>」の手順 1 から 5 をやります。［変換先アバター（衣装を着せたいアバター）］には、体と服が一体のアバターを入れます。ここまでは、ふつうのアバターと、同じです。</p>
+<ol>
+<li>
+<p>黄色い三角の印の警告が出るので、読みます。服の下の体を、おしはかるという知らせです。体と服がひとつながりだからです。警告が出ても、そのまま変換することができます。</p>
+</li>
+<li>
+<p>［この設定で変換］ボタンを押します。終わるまで、待ちます。</p>
+</li>
+<li>
+<p>「結果」の欄の［変換先の元の服を隠す（Undoで戻す）］ボタンを押します。元の服が、見えなくなります。</p>
+</li>
+<li>
+<p>シーンビューで、衣装を見ます。脚や腕も、服といっしょに、消えて見えることがあります。</p>
+</li>
+<li>
+<p>脚や腕も見るなら、肌を出せます。［元の服を隠して仮の肌を表示（試験的・Undoで戻す）］を押します。肌色の胴や腕や脚が、仮に出てきます。この手順は、飛ばしてもかまいません。</p>
+</li>
+</ol>
+<p>元の服を隠しても、自動チェックのまとめは変わりません。仮の肌（元の服を隠したところに出す、肌の色の面）は見た目を確かめるためのものです。数えるときは、仮の肌を使いません。服を合わせるときに、おしはかった体を使います。</p>
+<p>隠した直後なら、Ctrl+Z で戻せます。あとからなら、［元の服を表示に戻す］ボタンで戻せます。このボタンは、隠したときだけ、「結果」の欄に出ます。Unity を開き直したあとでも使えます。</p>
+<h3>気をつけること</h3>
+<ul>
+<li>服の下の体は、おしはかった形です。本当の体と、違うことがあります。貫通の数も、その体で測ります。数だけでなく、目でも確かめることが大切です。</li>
+<li>仮の肌は、まだ試しの機能です。顔や指、足先は、補いません。模様や質感も、もとには戻りません。</li>
+<li>体と服が一体のアバターの服は、切り分けて、ほかのアバターへ移すことができません。</li>
+<li>マテリアル（色や質感を決める設定）の名前を見て、見分けています。当てはまらないときは、この警告も、隠すボタンも出ません。</li>
+<li>服を含まない体が、別にあるときは、素体の欄に入れます。くわしくの［衣装変換］を開きます。［自動判定の確認と修正］の中を見ます。［体と服が一体のアバター］を、［推定しない］にします。</li>
+</ul>
+<h3>うまくいかないとき</h3>
+<ul>
+<li>［変換先の元の服を隠す（Undoで戻す）］ボタンが、灰色のまま。まだ変換していないためです。変換をすると、押せるようになります。</li>
+<li>貫通を確かめたいときは、くわしいやり方が、「<a href="#ch-04_04_貫通の場所を確かめたい">貫通の場所を確かめたい</a>」の章にあります。</li>
+</ul>
+<figure class="fused-example"><img alt="ゆうこにChiyo_yaのOIMO3を着せ、一体型の元衣装を隠して仮の肌を表示したUnityの例" height="1600" loading="lazy" src="images/gp12-yuko-oimo3-fused-display-20261109.png" width="1200"/><figcaption>ゆうこ × OIMO3。一体型の元衣装を隠し、仮の肌を表示した例です。<a href="#scope">仮の肌の対応範囲</a>をご覧ください。<br/>ゆうこ：© Unity Technologies Japan/UCL ／ 衣装：Chiyo_ya</figcaption></figure></div></details><details class="manual-detail" id="ch-04_06_一部だけ形を変えたくない"><summary>一部だけ、形を変えたくない</summary><div class="chapter-body">
+<h2>手首の飾りなど、一部だけ、元の形のまま残したい</h2>
+<!-- 得F1 得F2 得F4 -->
+<p>衣装の一部だけ、変換のしかたを変えられます。これを、部分ごとの設定（一部だけ変える設定）と呼びます。手首の飾りのマテリアルを使います。その部分を、変換先の体型に合わせないようにします。骨の動きには、ついていきます。</p>
+<p>先に、ウィンドウの 2 つの欄を埋めておきます。変換の前でも、後でもかまいません。設定は、次に［この設定で変換］を押したときから使われます。</p>
+<h3>飾りのマテリアルを調べます</h3>
+<ol>
+<li>
+<p>シーンビューで、手首の飾りを押します。はじめは、アバターすべてが、オレンジ色のふちで囲まれます。飾りだけが囲まれたら、手順 2 はとばします。</p>
+</li>
+<li>
+<p>もう一度、同じところを押します。飾りのパーツだけが、オレンジ色のふちで囲まれます。</p>
+<p><img alt="左はヒエラルキーで、緑の＋の印が付いた衣装の下の「手首の飾り」の行が選ばれ、赤い枠で囲まれている。右はシーンビューで、手首の飾りがオレンジ色のふちで囲まれ、赤い枠が付いている" height="619" loading="lazy" src="images/04_06_pick_accessory.png" width="1570"/></p>
+</li>
+<li>
+<p>インスペクターの［Materials］を見ます。</p>
+<p><img alt="手首の飾りを選んだインスペクター。Skinned Mesh Renderer の［Materials］が開き、「マテリアル 1」が 1 つ並んでいる。［Materials］が赤い枠で囲まれている" height="735" loading="lazy" src="images/04_06_materials_list.png" width="1312"/></p>
+</li>
+</ol>
+<p>押すのは、できた衣装の飾りです。元の服の飾りでも、マテリアルの名前は同じです。</p>
+<p>［Materials］は、Skinned Mesh Renderer の中にあります。閉じているときは、左の三角を押して開きます。並んだ名前が、そのパーツのマテリアルです。名前を覚えておきます。</p>
+<p>ほかの服にも同じ名前があると、分けられません。そんなときは、「<a href="#ch-04_06b_ブラシで塗って指定したい">ブラシで塗って、場所を決めたい</a>」の章へ進みます。</p>
+<h3>部分を決めます</h3>
+<p>ウィンドウでもInspectorでも、同じ欄を使えます。ここで場所を決めないと、設定が衣装のすべてに効きます。</p>
+<p>Prefabへ追加するときは、確認の窓が出ます。［Prefab に追加する］は、ファイルを変える操作です。Ctrl+Zでは戻せません。変えたくなければ［キャンセル］です。シーンに置いた衣装なら、Ctrl+Zで戻せます。</p>
+<p>くわしくの［微調整］で、ここから始めます。</p>
+<ol>
+<li>
+<p>［部分ごとの設定を追加］を押します。［部分設定の衣装］には、ここで使う服が出ています。</p></li><li><p>［マテリアルで指定］にチェックを入れます。</p>
+</li>
+<li>
+<p>［衣装のマテリアルから追加...］を押します。マテリアルの名前の一覧が出ます。</p>
+<p><img alt="部分ごとの設定のインスペクター。［衣装のマテリアルから追加...］を押すと、その下にマテリアルの名前の一覧（マテリアル 1 から 7）が出る。ボタンと一覧が赤い枠で囲まれている" height="1099" loading="lazy" src="images/04_06_material_menu.png" width="1121"/></p>
+</li>
+<li>
+<p>一覧から、調べた名前のマテリアルを選びます。［マテリアル］の欄に入ります。「Element 0」は、1 つ目という意味です。</p>
+<p><img alt="インスペクターに出た部分ごとの設定。マテリアルで指定にチェックが入り、マテリアルの一覧に 1 つ入っている。チェックと追加ボタンと一覧が赤い枠で囲まれている" height="660" loading="lazy" src="images/04_06_mask_inspector.png" width="1280"/></p>
+</li>
+</ol>
+<h3>何を変えるかを決めます</h3>
+<ol start="5">
+<li>
+<p>［変換の効き具合を指定］にチェックを入れます。スライダーが出ます。</p>
+</li>
+<li>
+<p>［効き具合］が 0 になっていることを確かめます。</p>
+<p><img alt="インスペクターの何を変えるかの部分。変換の効き具合を指定にチェックが入り、効き具合のスライダーが 0 になっている。チェックとスライダーが赤い枠で囲まれている" height="660" loading="lazy" src="images/04_06_fit_amount.png" width="1280"/></p>
+</li>
+</ol>
+<p>0 でないときは、スライダーを左の端まで動かします。0 の部分は、変換先の体型に合わせません。1 なら、ふつうに合わせます。</p>
+<h3>変換して確かめます</h3>
+<ol start="7">
+<li>
+<p>ウィンドウの［この設定で変換］を押します。</p>
+<p><img alt="下の実行欄。［この設定で変換］を赤い枠で囲んでいる。" height="117" loading="lazy" src="images/screen_04_execution.png" width="1190"/></p>
+</li>
+<li>
+<p>シーンビューで、手首の飾りを見ます。元アバターで着ていたときと同じ形なら、できています。</p>
+<p><img alt="手首の拡大写真の並べ画像。左は変換前で、元アバターの手首に時計の形の飾りが付いている。右は変換後で、変換先のアバターの手首に、同じ形の飾りが付いている" data-compare="" height="456" loading="lazy" src="images/04_06_result_compare.png" width="1524"/></p>
+</li>
+</ol>
+<p>前に変換していれば、その結果と入れかわります。練習で隠した服は、隠れたままです。見くらべるには、かたほうのアバターを、名前の左のチェックで隠します。</p>
+<p>ほかの設定は、「<a href="#ch-05_4_画面の説明_部分ごとの設定">部分ごとの設定（Inspector）</a>」の章にあります。</p>
+<h3>気をつけること</h3>
+<ul>
+<li>この設定は、元の服に付きますが、形は変わりません。いらなければ、設定の右上の「⋮」から、「Remove Component」を選びます。シーンの衣装なら、Ctrl+Z でも取り消せます。</li>
+<li>Prefab に直接付けると、そのファイルが変わります。変えたくないときは、衣装をシーンに置いて付けます。</li>
+<li>同じ名前のマテリアルが、ほかにもあれば、そこも選ばれます。</li>
+<li>場所の決め方を 2 つ以上使うと、すべてに合うところだけが、選ばれます。</li>
+</ul>
+<p>うまくいかないときは、「<a href="#ch-06_困ったとき">困ったとき</a>」を見てください。</p>
+</div></details><details class="manual-detail" id="ch-04_06b_ブラシで塗って指定したい"><summary>ブラシで塗って、場所を決めたい</summary><div class="chapter-body">
+<h2>専用のマテリアルが無い部分を、塗って決めたい</h2>
 <!-- 得F3 -->
-<h2>部分は、いろいろなやり方で選べる。</h2>
-<p>どうやって、一部だけを選ぶのか、分からない。選び方は、3 つあります。マテリアル（色や質感を決める設定）ごとに、選べます。マスク画像（白と黒で、選ぶところを示した絵）でも、選べます。ブラシ（なぞって塗るもの）は、シーンビュー（3D の景色を見るウィンドウ）で使います。</p>
-<p><img src="images/zukan_06_mask_options.png" alt="インスペクターに出た部分ごとの設定。「どこに」の下の［マテリアルで指定］［マスク画像で指定］［ブラシで指定］の 3 つのチェックが、番号の無い赤い枠で囲まれている" loading="lazy" /></p>
-<p class="zukan-where">くわしくの［微調整］で、部分の設定を足せます。Inspector の Add Component（設定のパーツを足すボタン）からも足せます。名前は「きがえ工房 > Cloth Mask」です。その「どこに」で、［マテリアルで指定］［マスク画像で指定］［ブラシで指定］から選びます。くわしいやり方は、「<a href="#ch-04_06_一部だけ形を変えたくない">一部だけ、形を変えたくない</a>」の章にあります。</p>
-<p class="zukan-limit">気をつけること: ブラシで塗るときの、マウスの感じは、まだ確かめていません。塗る・消す・Ctrl+Z で戻す仕組みは、確かめました。</p>
-<p class="zukan-mark">仕組みは動く</p>
-</div>
-<div class="zukan-card" id="card-得F2">
-<!-- 得F2 -->
-<h2>一部だけ、すき間を大きくできる。</h2>
-<p>一部だけ、体に食い込んでしまう。たとえば、ひざや胸の先です。その部分だけ、すき間を大きくできます。選んだ部分だけに、効きます。ほかのところは、いつもどおりです。</p>
-<p class="zukan-where">部分の設定の「何を変えるか」で、すき間の項目をオンにします。そして、［すき間 (mm)］を変えます。くわしいやり方は、「<a href="#ch-04_06_一部だけ形を変えたくない">一部だけ、形を変えたくない</a>」の章にあります。</p>
-<p class="zukan-mark">仕組みは動く</p>
-</div>
-<div class="zukan-card" id="card-得F4">
-<!-- 得F4 -->
-<h2>変換し直しても、設定はそのまま。</h2>
-<p>変換し直すたびに、設定を作り直すのは、めんどうです。部分ごとの設定は、衣装に残ります。だから、変換し直しても、そのまま使われるのです。</p>
-<p class="zukan-where">くわしいやり方は、「<a href="#ch-04_10_やり直したい">取り消したい・変換し直したい</a>」の章にあります。</p>
-<p class="zukan-limit">気をつけること: Prefab（パーツをまとめた Unity のファイル）に、部分ごとの設定を直接つけると、そのファイルが変わります。ウィンドウから付けるときは、確認の窓が出ます。ファイルを変えたくなければ、シーンに置きます。置いた服に付けます。</p>
-<p class="zukan-mark">仕組みは動く</p>
-</div>
-</section>
-<section class="chapter" id="ch-zukan_07_仕掛けや揺れ物も引き継ぐ"><h1>仕掛けや揺れ物も、引き継ぐ</h1>
-<p>動くかざりや、ゆれるものが付いた衣装も、あります。どちらも、変換のあとの衣装に、うつします。ゆれるものは、VRChat SDK があるときだけです。</p>
-<div class="zukan-card" id="card-得G1">
-<!-- 得G1 -->
-<h2>動くかざりの仕掛けも、引き継ぐ。</h2>
-<p>アニメーションで動くかざりが、変換でこわれるのでは。アニメーションが指す先を、新しい衣装に合わせて直します。たとえば、時計のはりのアニメーションです。変換のあとも、同じパーツを指します。</p>
-<p><img src="images/zukan_07_c3_compare.png" data-compare alt="変換前と変換後の並べ画像。左は、元アバターが市販の衣装（カーディガンとスカート）を着た姿。右は、体型の違う変換先のアバターが、同じ衣装を着た姿" loading="lazy" /></p>
-<p>左が変換前、右が変換後です。</p>
-<p class="zukan-where">設定は、いりません。変換のときに、自動で直ります。はじめから、使えます。</p>
-<p class="zukan-limit">気をつけること: はりが回るのを見たのは、確かめ用の簡単な形だけです。実アバターの衣装では、指す先が見つかることまで確かめました。変換のあと、Unity で再生して確かめます。</p>
-<p class="zukan-mark">実アバターで確認済み</p>
-</div>
-<div class="zukan-card" id="card-得G2">
-<!-- 得G2 -->
-<h2>ゆれ物の設定を、付け直してくれる。</h2>
-<p>PhysBone（髪や服をゆらすパーツ）の設定を、付け直したくない。VRChat SDK があれば、同じ骨に付け直します。骨がのび縮みした分は、半径も直します。</p>
-<p><img src="images/screen_13_vrchat.png" alt="VRChat連携タブ。組み込み方の3つの選択と同期、PhysBoneの3項目、出力ウェイトの互換用の設定。" loading="lazy" /></p>
-<p class="zukan-where">くわしくの［VRChat連携］を開きます。［PhysBone を引き継ぐ（VRChat）］を使います。はじめから、オンです。VRChat SDK が無いと、この項目は出ません。</p>
-<p class="zukan-limit">気をつけること: VRChat の中でのゆれ方は、確かめていません。確かめたのは、設定した値と、置いた位置までです。確かめた VRChat SDK は、3.10.5 だけです。ほかの版は、確かめていません。</p>
-<p class="zukan-mark">実アバターで確認済み</p>
-</div>
-<div class="zukan-card" id="card-得G3">
-<!-- 得G3 -->
-<h2>スカートに、ぶつかるところを足せる。</h2>
-<p>VRChat の中で、スカートに手や脚がめり込む。スカートの PhysBone に、コライダー（ぶつかるところを決めるパーツ）を足します。足すのは、手・前腕・太ももの分です。</p>
-<p class="zukan-where">くわしくの［VRChat連携］を開きます。［スカートに手・腕・脚の当たり判定（VRChat）］を使います。はじめから、オンです。</p>
-<p class="zukan-limit">気をつけること: スカートが押し出される見た目は、確かめていません。下ろした手が入るのは、ウェイトの調整では、直りません。足すと、アバター全体の数が増えることがあります。パフォーマンスランク（アバターの重さの目安）は、保証できません。</p>
-<p class="zukan-mark">仕組みは動く</p>
-</div>
-<div class="zukan-card" id="card-得G4">
-<!-- 得G4 得G6 -->
-<h2>VRChat SDK が無くても、使える。</h2>
-<p>VRChat SDK や Modular Avatar が無くても、使いたい。どちらも無くても、変換と確認は、すべて使えます。そのままで、だいじょうぶです。Modular Avatar があると、体型キーを、アバターと自動でそろえます。VRChat SDK があると、PhysBone などの項目が出ます。</p>
-<p class="zukan-where">くわしくの［VRChat連携］を開きます。［Modular Avatar で体型キーを同期する］を使います。Modular Avatar がなければ、灰色になります。そのときは、体型キーを手でそろえます。衣装の骨は、［衣装の骨を残して、変換先の骨の子にする（既定）］で、アバターの骨の子になります。Modular Avatar は、いりません。くわしいやり方は、「<a href="#ch-04_09_ModularAvatarやPhysBoneと使いたい">Modular Avatar や PhysBone と使いたい</a>」の章にあります。</p>
-<p class="zukan-limit">気をつけること: 確かめた Modular Avatar は、1.18.7 だけです。ほかの版は、確かめていません。</p>
-<p class="zukan-mark">実アバターで確認済み</p>
-</div>
-<div class="zukan-card zukan-mini" id="card-得G5">
-<!-- 得G5 -->
-<h3>Unity の布の設定も、引き継ぐ。</h3>
-<p>Cloth（Unity で布をゆらすパーツ）の設定も、うつします。設定は、いりません。</p>
-</div>
-</section>
-<section class="chapter" id="ch-zukan_08_安心して試せる"><h1>安心して試せる</h1>
-<p><strong>元の服とアバターのデータは、そのまま残ります。いつでも元に戻せます。</strong></p>
-<p>できた衣装は、新しく作る、べつのものです。元の服やアバターのファイルは、書きかえません。</p>
+<p>専用のマテリアルが無い部分は、ブラシで塗って決められます。ブラシ（なぞって塗るもの）は、シーンビュー（3D の景色を見るウィンドウ）で使います。マスク画像（白と黒で、選ぶところを示した絵）でも、決められます。</p>
+<p>先に、「<a href="#ch-04_06_一部だけ形を変えたくない">一部だけ、形を変えたくない</a>」の「部分を決めます」で、設定を追加しておきます。衣装は、シーンに置いたものを使います。</p>
+<h3>ブラシで塗ります</h3>
+<ol>
+<li>
+<p>［ブラシで指定］にチェックを入れます。</p>
+</li>
+<li>
+<p>［塗るメッシュ］から、衣装のメッシュ（体や服の形そのもの）を選びます。</p>
+</li>
+<li>
+<p>［ブラシで塗る］を押します。シーンビューの左上に、小窓が出ます。</p>
+<p><img alt="インスペクターの「どこに」の部分。ブラシで指定にチェックが入り、塗るメッシュの一覧と［ブラシで塗る］ボタンがある。この 3 つが赤い枠で囲まれている" height="392" loading="lazy" src="images/04_06_brush_inspector.png" width="1280"/></p>
+</li>
+<li>
+<p>シーンビューで、衣装の上を左ドラッグします。なぞったところが、赤く光ります。</p>
+</li>
+<li>
+<p>消すときは、Shift+左ドラッグです。</p>
+</li>
+<li>
+<p>終わったら、［ブラシを終了］を押します。</p>
+<p><img alt="Sceneの衣装に赤い頂点が見える。左上にブラシの半径・強さと、ブラシを終了するボタンがある。" height="1189" loading="lazy" src="images/screen_25_brush.png" width="1488"/></p>
+</li>
+</ol>
+<p>小窓の［半径 (cm)］で、ブラシの大きさを変えます。［強さ］で、塗りの濃さを変えます。塗った頂点（形を作る点）の数は、「選んだ頂点: N / M」に出ます。Ctrl+Z で、塗る前に戻せます。ここまでが、ブラシの使いかたです。</p>
+<p>ほかの服やタブへ移ると、ブラシは終わります。塗った値は残ります。Alt を押しながらドラッグすると、塗らずに、見る向きを変えられます。</p>
+<h3>マスク画像で決めます</h3>
+<p>ブラシとは別のやり方です。どちらか 1 つで、場所を決められます。</p>
+<ol>
+<li>
+<p>［マスク画像で指定］にチェックを入れます。</p>
+</li>
+<li>
+<p>［マスク画像］の欄に、画像を入れます。</p>
+</li>
+<li>
+<p>［対象の色］で、［白い所］か［黒い所］を選びます。</p>
+<p><img alt="インスペクターの「どこに」の部分。マスク画像で指定にチェックが入り、マスク画像の欄に画像が入っている。対象の色は白い所になっている。この 3 つが赤い枠で囲まれている" height="352" loading="lazy" src="images/04_06_mask_image.png" width="1280"/></p>
+</li>
+</ol>
+<p>画像は、衣装の UV（絵を形にはるための地図）に合わせて作ります。png か jpg なら、そのまま使えます。画像を読めないときは、その部分はここで使うものになりません。これで、場所が決まります。</p>
+<p>そのあとは、「<a href="#ch-04_06_一部だけ形を変えたくない">一部だけ、形を変えたくない</a>」の「何を変えるかを決めます」から続けます。</p>
+<h3>気をつけること</h3>
 <ul>
-<li>すぐなら、Ctrl+Z で変換を取り消せます。</li>
-<li>あとからでも、［この変換を取り除く］で戻せます。着せ直した衣装と、変換でアバターに足した物を、まとめて取り除きます。</li>
-<li>ひとつながりの元の服を隠したときも、戻せます。［元の服を表示に戻す］を使います。</li>
+<li>塗る・消す・Ctrl+Z の仕組みは、確かめています。</li>
+<li>ブラシの半径と強さを小さめにして塗り始め、塗りすぎたら Ctrl+Z で戻します。</li>
+<li>塗ったあとで、頂点の数が違うメッシュに入れ替えることがあります。</li>
+<li>そのときは、「メッシュの頂点数が、塗ったときと違います」と出ます。</li>
+<li>このときは、塗り直します。</li>
+<li>場所の決め方を 2 つ以上使うと、すべてに合うところだけがここで使うものです。</li>
 </ul>
-<p>気をつけること: Prefab のファイルに、部分ごとの設定を直接つけると、そのファイルが変わります。ウィンドウから付けるときは、確認の窓が出ます。ファイルを変えたくなければ、シーンに置きます。置いた服に付けます。</p>
-<div class="zukan-card" id="card-得H1">
-<!-- 得H1 -->
-<h2>元のものは、変えない。</h2>
-<p>大事な衣装やアバターを、こわしたくない。できあがった衣装は、新しく作られて、アバターの中に置かれます。元のものは、そのままです。</p>
-<p><img src="images/screen_05_result.png" alt="かんたんの結果欄。自動チェックの要約、結果の衣装、取り除くボタンと、Sceneで見る・くわしく確認の入口。" loading="lazy" /></p>
-<p class="zukan-where">できあがると、「結果」の欄に、そう書いてあります。</p>
-<p class="zukan-mark">実アバターで確認済み</p>
-</div>
-<div class="zukan-card" id="card-得H2">
-<!-- 得H2 -->
-<h2>失敗しても、Ctrl+Z で戻せる。</h2>
-<p>失敗したら、元に戻したい。変換のすぐあとなら、Ctrl+Z を 1 回押します。それで、まとめて取り消されます。作った骨も、いっしょに消えます。気にせず、なんどでも試せます。</p>
-<p class="zukan-where">あとから戻すときは、変換した衣装を選びます。インスペクター（ものの設定が出るウィンドウ）の［この変換を取り除く］を押します。Unity を開き直したあとでも使えます。取り除いたあとも、Ctrl+Z で取り消せます。</p>
-<p class="zukan-mark">実アバターで確認済み</p>
-</div>
-<div class="zukan-card" id="card-得H3">
-<!-- 得H3 -->
-<h2>前のものを、残しておける。</h2>
-<p>何度も変換し直すと、できあがりが増えて、散らかる。同じ衣装を、同じアバターに変換し直すと、前のものと入れかわります。残したいものには、印を付けられます。</p>
-<p class="zukan-where">できた衣装を選ぶと、インスペクターに、変換の記録（変換した衣装に付く、印のパーツ）が出ます。名前は「Converted Outfit Record (Script)」です。そこで、［変換し直しても残す］をオンにします。</p>
-<p class="zukan-mark">仕組みは動く</p>
-</div>
-<div class="zukan-card" id="card-得H4">
+<p>うまくいかないときは、「<a href="#ch-06_困ったとき">困ったとき</a>」を見てください。</p>
+</div></details><details class="manual-detail" id="ch-04_07_体のシェイプキーについてこさせたい"><summary>体のシェイプキーに、ついてこさせたい</summary><div class="chapter-body">
+<h2>胸の大きさなどを変えたとき、衣装もついてきてほしい</h2>
+<!-- 得B3 得B5 得G4 -->
+<p>シェイプキー（形を変える設定）で、体の形を変えられます。たとえば、胸の大きさです。選んだキーと同じ名前のキーを、衣装にも作れます。体のキーを先に見ておきます。</p>
+<h3>合わせるキーを選びます</h3>
+<ol>
+<li>
+<p>くわしくの［微調整］を開きます。</p>
+</li>
+<li>
+<p>体のシェイプキーの折りたたみを開きます。「変換先の体のシェイプキーに合わせる」で始まる欄です。（ ）の中の数は、チェックしたキーの数です。</p>
+</li>
+<li>
+<p>合わせたいキーに、チェックを入れます。キーの名前は、アバターごとに違います。</p>
+</li>
+<li>
+<p>ウィンドウの［この設定で変換］を押します。終わるまで、待ちます。</p>
+<p><img alt="下の実行欄。［この設定で変換］を赤い枠で囲んでいる。" height="117" loading="lazy" src="images/screen_04_execution.png" width="1190"/></p>
+</li>
+</ol>
+<p>［なし］を押すと、チェックがすべて外れます。［すべて］を押すと、すべてにチェックが入ります。チェックしなくても、衣装の近くの体を動かすキーは、自動で作られます。体を縮めるキーは、除きます。</p>
+<h3>結果を確かめます</h3>
+<ol start="5">
+<li>
+<p>ヒエラルキーで、着せ直した衣装の中のメッシュを選びます。メッシュは、体や服の形そのものです。</p>
+</li>
+<li>
+<p>インスペクター（ものの設定が出るウィンドウ）で、［BlendShapes］を開きます。</p>
+</li>
+</ol>
+<p>変換先の体と同じ名前のキーが、並びます。これで、キーが衣装にも作られました。</p>
+<h3>体のキーと、つなぎます</h3>
+<ul>
+<li>Modular Avatar が入っていると、自動でつながります。</li>
+<li>ただし、1.18.7 以上の版が要ります。</li>
+<li>［Modular Avatar で体型キーを同期する］が、オンのときです。</li>
+<li>［Modular Avatar で結ぶ（Merge Armature）］でも、同じです。</li>
+<li>つながると、体のキーを動かしたとき、衣装のキーも動きます。</li>
+<li>入っていないときや、古い版のときは、手でつなぎます。</li>
+<li>体のキーを動かしたら、服のキーも同じ値にします。同じ名前のキーです。</li>
+<li>このときは、「変換の途中で気づいた点」に、案内が出ます。</li>
+<li>どちらでも、変換はできます。</li>
+</ul>
+<h3>気をつけること</h3>
+<ul>
+<li>体を縮めるキーは、0 として合わせます。</li>
+<li>縮めるキーに、ついてくるわけではありません。</li>
+<li>体と服が一体（1 つのパーツになっている）のアバターは、体のキーを正確には戻せません。</li>
+<li>確かめた Modular Avatar は、1.18.7 です。</li>
+<li>変換後は体のシェイプキーを動かし、衣装の変化も確認します。</li>
+<li>どれくらい合うかは、衣装しだいです。シーンビュー（3D の景色を見るウィンドウ）で見ると分かります。</li>
+</ul>
+<p>うまくいかないときは、「<a href="#ch-06_困ったとき">困ったとき</a>」を見てください。</p>
+</div></details><details class="manual-detail" id="ch-04_08_座ったときのスカートを直したい"><summary>座ったときのスカートを直したい</summary><div class="chapter-body"><aside class="note"><strong>補助ボーンは、元アバターを使う変換で利用します。</strong><p>元アバターの素体を使って合わせるときに、ポーズを考えたウェイト調整と補助ボーンを利用できます。元アバターがないPrefab単体の変換では、この2項目は使用されません。欄の案内を確認し、必要な場合は元アバターに着せた衣装を選び直します。</p></aside>
+<h2>座ったり、しゃがんだりすると、スカートに脚が入る</h2>
+<!-- 得D2 得D3 -->
+<p>座ると、スカートに脚が入ることがあります。そのために、補助の骨（スカートに脚が入りにくくなるように、足す骨）を作れます。骨は、動きのもとになるところです。はじめから、オンになっています。</p>
+<h3>設定を確かめます</h3>
+<ol>
+<li>
+<p>くわしくの［貫通対策］を開きます。</p>
+</li>
+<li>
+<p>［ポーズを考えてウェイトを調整する］に、チェックが入っているか見ます。</p>
+</li>
+<li>
+<p>［補助の骨を作る］も、同じように見ます。</p>
+</li>
+<li>
+<p>ウィンドウの［この設定で変換］を押します。</p>
+<p><img alt="下の実行欄。［この設定で変換］を赤い枠で囲んでいる。" height="117" loading="lazy" src="images/screen_04_execution.png" width="1190"/></p>
+</li>
+</ol>
+<p>ウェイトは、衣装が、骨の動きにどれだけついていくかの割合です。補助の骨を作ると、「変換の途中で気づいた点」に、次の文が出ます。<code>補助の骨 N 本に Rotation Constraint を付けました（…）。</code>
+補助の骨には、Rotation Constraint（ほかの骨の回転につられて動くパーツ）が付きます。この文が出ないときは、補助の骨は作られていません。</p>
+<h3>座りの姿を見たいとき</h3>
+<p>自動チェックは8ポーズを調べます。平均や、最も多いポーズが出ます。くわしくの［貫通確認］で、［ポーズで確認］を押すと、「座り」などのポーズごとの数をくらべられます。<a href="#ch-04_04_貫通の場所を確かめたい">場所とポーズの確認</a>に、画像つきの手順があります。</p>
+<h3>気をつけること</h3>
+<ul>
+<li>補助の骨は、脚のまわりで、体から離れた布に作ります。</li>
+<li>使わないほうが体に入りにくいときは、作りません。</li>
+<li>どれだけ減るかは、衣装しだいです。</li>
+<li>下ろした手がスカートに入るのは、補助の骨では直りません。</li>
+<li>それには、コライダー（ぶつかるところを決めるパーツ）を使います。</li>
+<li>VRChat の中の話です。</li>
+<li>「<a href="#ch-04_09_ModularAvatarやPhysBoneと使いたい">Modular Avatar や PhysBone と使いたい</a>」の章を見ます。</li>
+<li>腕と胴のように、体どうしが重なるところは、直せません。</li>
+<li>自動チェックは決まった8ポーズを対象にします。使いたいポーズは、Scene ビューでも確認します。</li>
+<li>オンとオフは、衣装のすべてに、まとめて効きます。</li>
+<li>衣装ごとに変えたいときは、1 着ずつ変換します。</li>
+<li>揺れ方は衣装と設定によって変わります。使用前に再生モードと VRChat SDK で確認してください。</li>
+</ul>
+<p>うまくいかないときは、「<a href="#ch-06_困ったとき">困ったとき</a>」を見てください。</p>
+<p><a href="#ch-05_5_貫通対策">現在の貫通対策タブの画面を見る →</a></p></div></details><details class="manual-detail" id="ch-04_09_ModularAvatarやPhysBoneと使いたい"><summary>Modular Avatar や PhysBone と使いたい</summary><div class="chapter-body">
+<h2>つなぎ方と、揺れものを決める</h2>
+<p>くわしくの［VRChat連携］で決めます。VRChat SDKやModular Avatarが無くても、タブは出ます。入っているかどうかは、上の案内で分かります。無くても、衣装の変換はできます。</p>
+<ol><li><p>くわしくの［VRChat連携］を開きます。</p></li><li><p>「アバターへの組み込み方」から、1つ選びます。</p></li><li><p>必要な揺れものの項目に、チェックを入れます。</p></li><li><p>［この設定で変換］を押します。</p><p><img alt="下の実行欄。［この設定で変換］を赤い枠で囲んでいる。" height="117" loading="lazy" src="images/screen_04_execution.png" width="1190"/></p></li></ol>
+<h2>3つの組み込み方</h2>
+<p>はじめは、次の項目です。［衣装の骨を残して、変換先の骨の子にする（既定）］です。衣装の骨を残して、体について動くようにします。このときは、［Modular Avatar で体型キーを同期する］を選べます。</p>
+<p>［Modular Avatar で結ぶ（Merge Armature）］は、衣装のArmature（骨をまとめたもの）を残して結びます。体と服のキーは、一緒に動きます。オフにはできません。Modular Avatarが無いと選べません。</p><p><img alt="Modular Avatarで結んだ結果のInspector。Merge Armatureの欄を赤い枠で囲む。" height="1142" loading="lazy" src="images/04_09_merge_armature.png" width="1314"/></p><p>［変換先の骨に直接つなぐ］では、体と服のキーをそろえるしくみは、使いません。</p>
+<h2>スカートが揺れないとき</h2>
+<p>「揺れもの」の3つの項目を使います。衣装にあるPhysBoneを引き継ぐ項目は、はじめはオンです。手・腕・脚で布を押す項目もオンです。PhysBoneが無いスカートに付ける項目だけ、はじめはオフです。</p>
+<p>着せたら、お知らせを読みます。「変換の途中で気づいた点」という欄です。数と内容は、衣装によって変わります。各欄の意味は、<a href="#ch-05_7_VRChat連携">VRChat連携の画面説明</a>にあります。</p>
+<h2>気をつけること</h2>
+<p>PhysBone とコライダーを引き継いだら、再生モードで揺れ方を確認します。コライダーを追加するとコンポーネント数も変わります。アップロード前に［VRChat SDK &gt; Show Control Panel］でビルドとアバターの情報を確認してください。</p>
+</div></details><details class="manual-detail" id="ch-04_10_やり直したい"><summary>取り消したい・変換し直したい</summary><div class="chapter-body">
+<p>元の服とアバターのデータは、そのまま残ります。すぐに戻すやり方と、あとで外すやり方があります。</p>
+<h2>すぐに取り消す</h2><p>着せたすぐあとなら、Ctrl+Zでまとめて戻せます。あとで服を隠したときは、そちらから順に戻ります。Ctrl+Yでやり直せます。</p>
+<h2>あとから取り除く</h2><ol><li><p>くわしくの［貫通確認］で、［確認する衣装］を選びます。</p><p><img alt="貫通確認タブ。確認する衣装、縮めるキーの条件、手動の確認ボタン、8ポーズの表がある。" height="778" loading="lazy" src="images/screen_07_check.png" width="1540"/></p></li><li><p>「結果の管理」の［この変換を取り除く］を押します。</p><p><img alt="貫通確認の下部。対策への案内と、変換し直しても残す・この変換を取り除くを赤い枠で囲む。" height="377" loading="lazy" src="images/screen_08_result_management.png" width="1225"/></p></li></ol><p>服と、アバターに足した骨などをまとめて外します。できた服の欄や、服のInspectorにも同じボタンがあります。いちばんあとに着せた服なら、自動で隠れた元の服も戻ります。自分でチェックを外した服は、チェックを入れ直します。</p>
+<h3>ウィンドウを閉じたあと、続きから始める</h3>
+<p>同じシーンで、ウィンドウを開き直します。［Tools &gt; Kigae Koubo &gt; Open］です。いちばんあとに入れた服や値が戻ります。まだ着せていない値も、Unityを閉じるまでは残ります。</p>
+<p>ほかの服を直すときは、Hierarchyでその服を選びます。シーンを開き直したときも同じです。服のInspectorで［この衣装の調整を再開］を押します。工房にある同じ名前のボタンも使えます。服や値を確かめます。直したい値を変えてから、［この設定で変換］を押します。続きから始めるだけでは、服は変わりません。</p>
+<p>着せた服には、使った値を残します。シーンを保存しておけば、開き直しても使えます。まとめて着せた服なら、入れた並びも戻ります。</p>
+<p>古い版で着せた服には、値が残っていないことがあります。そのときは、はじめの値を使うと出ます。元の服などを消していたら、空の欄へ入れ直します。</p>
+<h2>前の服を残して、着せ直す</h2><ol><li><p>［貫通確認］の［確認する衣装］で、残したい服を選びます。</p></li><li><p>［変換し直しても残す］にチェックを入れます。</p><p><img alt="貫通確認の下部。対策への案内と、変換し直しても残す・この変換を取り除くを赤い枠で囲む。" height="377" loading="lazy" src="images/screen_08_result_management.png" width="1225"/></p></li><li><p>変えたい値を変えます。すき間なら［貫通対策］です。</p></li><li><p>［この設定で変換］を押します。</p><p><img alt="下の実行欄。［この設定で変換］を赤い枠で囲んでいる。" height="117" loading="lazy" src="images/screen_04_execution.png" width="1190"/></p></li></ol>
+<p>残すチェックが無いと、前の服は置き換わります。手で直したところも消えます。チェックがあると、新しい服が別にできます。重なるので、比べるときは片方を隠します。服のInspectorでも、同じチェックを使えます。</p>
+<p>シーンを保存すると、服もその値も残ります。開き直したあとの数は、［貫通確認］で調べ直します。<a href="#ch-04_10b_変換で作ったファイルを片付けたい">ファイルの片付け</a>は別のやり方です。</p>
+</div></details><details class="manual-detail" id="ch-04_10b_変換で作ったファイルを片付けたい"><summary>変換で作ったファイルを片付けたい</summary><div class="chapter-body">
+<h2>使わなくなったファイルを、消したい</h2>
 <!-- 得H4 -->
-<h2>いらないファイルは、自動で片付く。</h2>
-<p>使わなくなったファイルが、たまっていく。使われなくなったファイルは、自動で片付きます。いま片付けることも、できます。</p>
-<p class="zukan-where">一番下の［変換で作ったファイルの片付け］で、［いま片付ける...］を押します。消す前に、数を見せてくれます。</p>
-<p class="zukan-limit">気をつけること: ［削除する］で消したファイルは、戻りません。［Undo の履歴も消して片付ける］を選ぶと、Undo の履歴も、すべて消えます。Unity を開いてから作ったものは、次に開くまで、残ります。</p>
-<p class="zukan-mark">仕組みは動く</p>
-</div>
-<div class="zukan-card" id="card-得H5">
-<!-- 得H5 -->
-<h2>失敗しても、途中のものは残らない。</h2>
-<p>うまくいかなかったとき、途中のものが残るのでは。途中でだめになったら、置いたものも取り消して、シーンには何も残しません。もう一度、変換できます。</p>
-<p class="zukan-where">「変換中にエラーが起きました」と出ます。</p>
-<p class="zukan-mark">仕組みは動く</p>
-</div>
-<div class="zukan-card zukan-mini" id="card-得I1">
-<!-- 得I1 得I2 得I3 得I4 得I5 -->
-<h3>ほかの小さな便利</h3>
+<p>変換すると、メッシュ（体や服の形そのもの）などのファイルができます。ファイルは、［保存先フォルダ］に入ります。はじめの保存先は、<code>Assets/GP12_KigaeKoubo_Converted</code> です。きがえ工房の本体フォルダの外にあるので、入れ直しても消えません。</p>
+<p>使われなくなったファイルは、自動で片付きます。今すぐ片付けることもできます。</p>
+<h3>自動の片付け</h3>
+<p>くわしくの［⚙ツール設定］に、「変換で作ったファイルの片付け」があります。その下の［使われなくなった、変換で作ったファイルを自動で片付ける］が、自動の片付けです。</p>
+<p>はじめから、チェックが入っています。変換のたびと、Unity を起動したときに、片付けます。起動のときに調べるのは、はじめの保存先だけです。どのシーンからも使われていないファイルだけを、消します。今回の起動で作ったファイルは、次の起動まで残します。Ctrl+Z で戻ることがあるからです。</p>
+<h3>今すぐ片付けます</h3>
+<p>自動の片付けとは別のやり方です。<strong>この手順で消したファイルは、Ctrl+Z でも戻りません。</strong></p>
+<ol>
+<li>
+<p>［いま片付ける...］を押します。</p>
+<p><img alt="ツール設定。保存先、ファイルの片付け、自動操作の開始・停止、設定を既定値に戻すボタン。" height="1174" loading="lazy" src="images/screen_14_tools.png" width="1225"/></p>
+</li>
+<li>
+<p>確認の窓の文を読みます。</p>
+<p><img alt="片付けの確認の窓。「使われていない、変換で作ったファイル 5 個を削除します。」と出ている。文と、［削除する］［キャンセル］のボタンが赤い枠で囲まれている" height="176" loading="lazy" src="images/04_10b_cleanup_dialog.png" width="1037"/></p>
+</li>
+<li>
+<p>［削除する］か、［キャンセル］を押します。</p>
+</li>
+</ol>
+<p>窓に、消すファイルの数が出ます。消すものが無いときは、「片付ける、変換で作ったファイルはありません」と出ます。そのときは、［OK］を押します。</p>
+<p>今回の起動で作った、使われていないファイルがあると、ボタンが 3 つになります。3 つ目は、［Undo の履歴も消して片付ける］です。それも、消せます。ただし、Undo の履歴が、すべて消えます。</p>
+<h3>気をつけること</h3>
 <ul>
-<li>アバターをどこに置いても、どちらを向いても、衣装は同じ位置です。</li>
-<li>シェイプキーは、名前も形も、いまの値も、そのまま残ります。</li>
-<li>くわしくの［⚙ツール設定］の［保存先フォルダ］で、保存先を変えられます。</li>
-<li>くわしくの［⚙ツール設定］の［設定を既定値に戻す］で、設定をはじめの値に戻せます（保存先フォルダは、そのままです）。</li>
+<li>消したファイルは、戻りません。</li>
+<li>［Undo の履歴も消して片付ける］を押すと、Ctrl+Z で戻せる操作も無くなります。</li>
+<li>ヒエラルキーで衣装を消しても、ファイルは残ります。</li>
+<li>シーンを保存すると、次の起動のあとの片付けで消えます。</li>
+<li>［設定を既定値に戻す］を押しても、［保存先フォルダ］は戻りません。</li>
 </ul>
-</div>
-</section>
-<section class="chapter" id="ch-zukan_09_苦手なこと"><h1>苦手なこと</h1>
-<p>きがえ工房にも、苦手なことがあります。買う前に、ここで確かめてください。</p>
-<h2>変換のしあがり</h2>
-<ul>
-<!-- 不1 -->
-<li>元の服の穴や食い込みは、直せません。自動チェックでは元から体に入っていた頂点数を別に示します。場所は、［貫通確認］で色を出して見られます。</li>
-<!-- 不2 -->
-<li>体と服が一体のアバターの服だけを、ほかへ移せません。ほかの衣装を着せることは、できます。</li>
-<!-- 不3 -->
-<li>色や模様は、変えません。マテリアルの設定で直します。</li>
-<!-- 不4 -->
-<li>新しい衣装は、作れません。もっている衣装を、ほかの体型に合わせるものです。</li>
-<!-- 不5 -->
-<li>貫通が、すべて消えるわけではありません。試した例では、そでぐちやくつに、少し残りました。［すき間の最小値 (mm)］を大きくするか、部分ごとの設定で直します。</li>
-<!-- 不6 -->
-<li>腕と胴のように、体どうしが重なるポーズの貫通は、直せません。自動チェックで数を見ます。ポーズの見た目は、［貫通確認］で確かめます。</li>
-<!-- 不7 -->
-<li>体と服が一体のアバターの、服の下の体は、おしはかったものです。貫通の数は、少なめに出ることがあります。目でも確かめます。</li>
-<!-- 不8 -->
-<li>仮の肌は、試しの機能です。顔・指・足先は、おぎなえません。見た目の確認だけに使います。</li>
-<!-- 不9 -->
-<li>どの衣装でもうまくいく、とは言えません。確かめたのは、アバターと衣装の 6 組だけです。元アバターを自動で見つけられたときの結果です。変換後に、自動チェックと目で確かめます。</li>
-<!-- 不10 不11 -->
-<li>8 つのポーズのチェックは、決まった 8 つだけを見ます。ほかのポーズは、目で確かめます。腕や脚の向きをそろえるかは、すべての衣装で同じです。1 着ずつ変換して、くらべます。</li>
-<!-- 不27 -->
-<li>頭の飾りは、形をたもったまま動かします。頭のまるみが大きく違うと、はしが少し浮きます。Unity で、位置を直します。</li>
-<!-- 不28 -->
-<li>頭の大きなアバターでは、みみかざりが大きくなります。腕を上げると、かたに入ることがあります。そのポーズをさけるか、Unity で飾りの大きさや位置を直します。</li>
-</ul>
-<h2>VRChat の中</h2>
-<ul>
-<!-- 不12 -->
-<li>VRChat の中でのゆれ方や、おし出される見た目は、確かめていません。アップロード前に、VRChat SDK で確かめます。</li>
-<!-- 不13 不14 -->
-<li>下ろした手がスカートに入るのは、ウェイトでは直りません。VRChat SDK があれば、ぶつかるところを足す項目を、オンにします。足すと数が増え、パフォーマンスランクは保証できません。</li>
-<!-- 不15 -->
-<li>動くかざりの仕掛けは、変換のあと、Unity で再生して確かめます。</li>
-</ul>
-<h2>使えないもの</h2>
-<ul>
-<!-- 不16 -->
-<li>Humanoid（人型の骨の設定）がないアバターは、変換できません。モデルの［Rig］タブで、Humanoid にします。</li>
-<!-- 不17 -->
-<!-- 不18 -->
-<li>骨で動かない衣装は、変換できません。骨の付いた衣装を使います。</li>
-<!-- 不19 -->
-<li>ファイルのままのアバターは、変換先にできません。ヒエラルキー（Unity の左にある、シーンにあるものの一覧）に置いて、入れます。</li>
-</ul>
-<h2>時間・場所・配るとき</h2>
-<ul>
-<!-- 不20 -->
-<li>変換中は、Unity を使えません。元アバターを自動で見つけられたとき、スカートつきの重い衣装は、およそ 4 分半かかりました（GPU のない Linux の Unity）。腕や脚の向きが大きく違うと、およそ 2 倍かかります。</li>
-<!-- 不21 不22 不25 -->
-<li>動作を確かめた環境は、「<a href="#ch-02_入れ方">入れ方</a>」の「動作を確かめた環境」にまとめました。</li>
-<!-- 不23 不24 -->
-<li>VRChat へのアップロードと、VCC（VRChat 用のアプリ）での入れ方は、確かめていません。ブラシで塗るときの、マウスの感じも、確かめていません。</li>
-<!-- 不26 -->
-<li>着せ直した衣装は、元のデータから作ります。たいていの規約は、手を加えたデータを配ることを、みとめていません。自分で使い、配るまえに、規約を確かめます。</li>
-</ul>
-</section>
-<section class="chapter" id="ch-zukan_10_悩みから探す"><h1>悩みから探す</h1><ul><li><a href="#ch-04_04_貫通の場所を確かめたい">腕を上げると脇から肌が出る</a></li><li><a href="#ch-04_08_座ったときのスカートを直したい">座るとスカートに脚が刺さる</a></li><li><a href="#ch-05_5_貫通対策">膝の先だけ突き抜ける</a></li><li><a href="#ch-04_07_体のシェイプキーについてこさせたい">胸を大きくしたら服がついてこない</a></li><li><a href="#ch-05_7_VRChat連携">スカートが揺れない</a></li><li><a href="#ch-05_3_衣装変換">骨が対応しないと警告が出た</a></li><li><a href="#ch-05_8_ツール設定">保存先を変えたい</a></li></ul>
-<p>こまっていることから、できること図鑑を探せます。近いものが見つかったら、その行を押してください。そのカードに進みます。見出しを押すと、その章に進みます。</p>
-<h2><a href="#ch-zukan_01_3つ選んで変換するだけ">着せるまでを、かんたんに</a></h2>
-<ul>
-<!-- 得A1 --><li><a href="#card-得A1">ほかのアバター用の衣装を、自分のアバターに着せたいとき。</a></li>
-<!-- 得A2 --><li><a href="#card-得A2">どれが体なのか、わからないとき。</a></li>
-<!-- 得A3 得A6 --><li><a href="#card-得A3">失敗する前に、直し方を知りたいとき。</a></li>
-<!-- 得A4 --><li><a href="#card-得A4">まだ着せていない衣装の Prefab で、変換したいとき。</a></li>
-<!-- 得A5 --><li><a href="#card-得A5">着ている服を、そのまま移したいとき。</a></li>
-<!-- 得A7 --><li><a href="#card-得A7">重ね着の衣装を、まとめて着せたいとき。</a></li>
-<!-- 得A8 --><li><a href="#card-得A8">腕の向きがちがうアバターでも、着せたいとき。</a></li>
-</ul>
-<h2><a href="#ch-zukan_02_体型や頭身の違うアバターへ">体型や頭身がちがうとき</a></h2>
-<ul>
-<!-- 得B1 --><li><a href="#card-得B1">体型がちがって、ぶかぶかになったり、食い込んだりするとき。</a></li>
-<!-- 得B2 --><li><a href="#card-得B2">頭の大きなアバターにも、着せたいとき。</a></li>
-<!-- 得B4 --><li><a href="#card-得B4">胸の上の骨（UpperChest）が、片方のアバターにしかないとき。</a></li>
-<!-- 得B5 --><li><a href="#card-得B5">体を縮めるシェイプキーが、あるとき。</a></li>
-</ul>
-<h2><a href="#ch-zukan_03_着せたあとを自動で確かめる">着せたあとを、確かめたい</a></h2>
-<ul>
-<!-- 得C1 --><li><a href="#card-得C1">体が服をつきぬけていないか、調べたいとき。</a></li>
-<!-- 得C2 --><li><a href="#card-得C2">つきぬけている場所を、知りたいとき。</a></li>
-<!-- 得C3 --><li><a href="#card-得C2">元の服のせいか、変換のせいかを、知りたいとき。</a></li>
-<!-- 得C4 --><li><a href="#card-得C4">座ったときの貫通を、確かめたいとき。</a></li>
-<!-- 得C5 --><li><a href="#card-得C5">変換のできばえを、知りたいとき。</a></li>
-<!-- 得C6 --><li><a href="#card-得C6">Unity を開き直したあとも、確かめたいとき。</a></li>
-</ul>
-<h2><a href="#ch-zukan_04_動いたときの服">動いたとき</a></h2>
-<ul>
-<!-- 得D1 --><li><a href="#card-得D1">腕や脚を動かすと、衣装が体に入るとき。</a></li>
-<!-- 得D3 --><li><a href="#card-得D3">脚を上げると、スカートの前が体に入るとき。</a></li>
-<!-- 得D4 --><li><a href="#card-得D4">頭の飾りが、ずれたり、ゆがんだりするとき。</a></li>
-</ul>
-<h2><a href="#ch-zukan_05_体と服が一体のアバターにも">体と服が一体のアバター</a></h2>
-<ul>
-<!-- 得E1 --><li><a href="#card-得E1">体と服が一体のアバターに、着せたいとき。</a></li>
-<!-- 得E2 --><li><a href="#card-得E2">元の服が、衣装と重なって見えるとき。</a></li>
-<!-- 得E3 --><li><a href="#card-得E2">元の服を隠したら、脚や腕が消えたとき。</a></li>
-</ul>
-<h2><a href="#ch-zukan_06_一部だけ設定を変える">一部だけ変えたい</a></h2>
-<ul>
-<!-- 得F2 --><li><a href="#card-得F2">一部だけ、体に食い込むとき。</a></li>
-<!-- 得F3 --><li><a href="#card-得F3">一部だけ、変換のしかたを変えたいとき。</a></li>
-<!-- 得F4 --><li><a href="#card-得F4">変換し直すたびに、設定し直したくないとき。</a></li>
-</ul>
-<h2><a href="#ch-zukan_07_仕掛けや揺れ物も引き継ぐ">仕掛けやゆれ物</a></h2>
-<ul>
-<!-- 得G1 --><li><a href="#card-得G1">動くかざりの仕掛けを、残したいとき。</a></li>
-<!-- 得G2 --><li><a href="#card-得G2">PhysBone の設定を、付け直したくないとき。</a></li>
-<!-- 得G3 --><li><a href="#card-得G3">スカートに手や脚が、めり込むとき。</a></li>
-<!-- 得G4 得G6 --><li><a href="#card-得G4">Modular Avatar と使いたいとき。</a></li>
-<!-- 得G4 得G6 --><li><a href="#card-得G4">VRChat SDK が無くても、使いたいとき。</a></li>
-<!-- 得G5 --><li><a href="#card-得G5">Unity の布（Cloth）の設定を、残したいとき。</a></li>
-</ul>
-<h2><a href="#ch-zukan_08_安心して試せる">安心して試したい</a></h2>
-<ul>
-<!-- 得H1 --><li><a href="#card-得H1">大事な衣装やアバターを、こわしたくないとき。</a></li>
-<!-- 得H2 --><li><a href="#card-得H2">失敗して、元に戻したいとき。</a></li>
-<!-- 得H3 --><li><a href="#card-得H3">前の結果を、残したいとき。</a></li>
-<!-- 得H4 --><li><a href="#card-得H4">使わないファイルが、たまっていくとき。</a></li>
-<!-- 得H5 --><li><a href="#card-得H5">失敗して、途中のものが残るのが、心配なとき。</a></li>
-</ul>
-<h2><a href="#ch-zukan_09_苦手なこと">苦手なこと</a></h2>
-<ul>
-<li>できないことを、先に知りたいとき。</li>
-</ul>
-</section>
-<section class="chapter" id="ch-02_0_Unityの基本の操作"><h1>Unity の基本の操作</h1>
+<p>うまくいかないときは、「<a href="#ch-06_困ったとき">困ったとき</a>」を見てください。</p>
+</div></details><details class="manual-detail" id="ch-04_11_変換した服をさらに移す"><summary>変換した服を、さらに別のアバターへ移す</summary><div class="chapter-body"><p class="note">変換先を別のアバターへ変える操作は、無料体験で登録された組とは別の組です。Pro で利用できます。</p><p>一度着せた服も、次のアバターへ移せます。たとえば、AからBへ着せた服を、BからCへ移すやり方です。</p>
+<ol><li><p>［衣装］に、できた服を入れます。中のパーツだけではありません。服をまとめている、一番上の行を使います。</p></li><li><p>［変換先アバター（衣装を着せたいアバター）］に、次のアバターを入れます。</p></li><li><p>［この設定で変換］を押します。</p></li></ol>
+<p>前のアバターの骨は、次へは持っていきません。ただし、前のアバターには、服の骨が残ることがあります。そんなときは、「結果」の欄に、取りのぞき方が出ます。</p>
+<p>前のアバターでその服を使わなければ、前の服の記録を使います。Hierarchyで前の服を選びます。Inspectorの［この変換を取り除く］で取り除けます。次に着せた服と取り違えないようにします。</p>
+<p>一度合わせた形を、さらに合わせるやり方です。AからCへそのまま着せた形とは、少し違うことがあります。見た目をもう一度確かめます。</p>
+</div></details></section><section class="layer" id="reference"><div class="section-heading"><div><p class="eyebrow">必要なときに読む辞書</p><h2>画面の説明と、<br/>困ったときの手がかり。</h2></div><p>入れ方から詳しい設定まで。以前の手引書のリンクから来た場合も、該当する項目が開きます。</p></div><nav aria-label="辞書の分類" class="reference-nav"><a href="#setup-reference">入れ方・練習</a><a href="#screen-reference">画面の説明</a><a href="#faq-reference">困ったとき</a><a href="#scope">仕様と制限</a><a href="#ch-08_クレジット">クレジット</a></nav><div id="setup-reference"><details class="manual-detail" id="ch-01_はじめに"><summary>きがえ工房でできること</summary><div class="chapter-body"><p>衣装の形と動きを、着せたいアバターに合わせる Unity の道具です。衣装と変換先アバターを選び、元アバターが見つかれば素体の差を使って変換します。見つからない場合も、骨付き衣装の Prefab から合わせられます。</p><p>変換では元の衣装やアバターのファイルを直接書き換えず、結果を別に保存します。仕上がりは自動チェックと Scene ビューで確認してください。</p><p><a href="#quickstart">まず1組を試す</a> ／ <a href="#scope">対応範囲を見る</a></p></div></details><details class="manual-detail" id="ch-02_0_Unityの基本の操作"><summary>Unity の基本の操作</summary><div class="chapter-body">
 <p>Unity をはじめて使う人のための章です。この手引書で使う操作だけを書きます。知っている人は、「<a href="#ch-02_入れ方">入れ方</a>」へ進んでください。</p>
 <h2>プロジェクトを開く</h2>
 <p>プロジェクト（Unity で作業するフォルダ）は、Unity Hub から開きます。Unity Hub は、Unity を起動するアプリです。左の「Projects」に、プロジェクトが並びます。名前を押すと、そのプロジェクトで Unity が開きます。アバターを入れてあるプロジェクトを使います。</p>
@@ -682,83 +507,7 @@ th{background:var(--panel)}
 <h2>取り消す</h2>
 <p>Ctrl+Z を押すと、さいごの操作から 1 つずつ取り消します。Ctrl+Y を押すと、取り消した操作が戻ります。きがえ工房の操作にも、効きます。</p>
 <p>この手引書は、Windows のキーで書いています。Mac では、Ctrl キーは command キーです。Ctrl+Y は command+shift+Z です。F2 キーは Enter キーです。</p>
-</section>
-<section class="chapter" id="ch-02_入れ方"><h1>入れ方</h1>
-<p>きがえ工房を Unity に入れます。手に入れる、Unity に入れる、入ったことを確かめる、の順です。Unity がはじめての人は、先に「<a href="#ch-02_0_Unityの基本の操作">Unity の基本の操作</a>」を読みます。</p>
-<h2>手に入れる</h2>
-<p>BOOTH で買います。ZIP のファイルをダウンロードします。</p>
-<p>ZIP を解凍します。Windows では、ZIP を右クリックします。「すべて展開」を選びます。Mac では、ZIP をダブルクリックします。中に unitypackage（Unity に入れるファイル）があります。名前の例は <code>KigaeKoubo_v1_0_0.unitypackage</code> です。うしろに版の番号が付きます。番号は、画像とちがってもかまいません。</p>
-<h2>Unity に入れる</h2>
-<p>先に、使うプロジェクトを Unity で開きます。開き方は、「<a href="#ch-02_0_Unityの基本の操作">Unity の基本の操作</a>」にあります。Unity は、開いたままにします。</p>
-<p>取り込み先は <code>Assets/GP12_KigaeKoubo</code> です。前の版が入っていたら、先に読みます。「<a href="#ch-02b_新しい版に入れ替える">新しい版に入れ替える</a>」を読みます。</p>
-<p>unitypackage は、パソコンのフォルダの画面にあります。Windows ならエクスプローラー、Mac なら Finder です。そこで、手順 1 のダブルクリックをします。</p>
-<ol>
-<li>
-<p>unitypackage をダブルクリックします。取り込むファイルの一覧が出ます。</p>
-</li>
-<li>
-<p>窓の右下の［Import］を押します。一覧のチェックは、付けたままにします。</p>
-<p><img src="images/02_01_import_window.png" alt="Unity の取り込みの窓。上に unitypackage の名前が出ていて、一覧の先頭に「GP12_KigaeKoubo」のフォルダがある。すべてにチェックが付いている。右下の［Import］が赤い枠で囲まれている（番号 2）" loading="lazy" /></p>
-</li>
-<li>
-<p>読み込みが終わるまで、待ちます。進み具合の窓や、右下の回る印が消えるまで、待ちます。</p>
-</li>
-</ol>
-<p>窓が出ないときは、別のやり方があります。メニューの［Assets &gt; Import Package &gt; Custom Package...］を選びます。そのあと、unitypackage を選びます。</p>
-<h2>入ったことを確かめる</h2>
-<ol start="4">
-<li>
-<p>Project ウィンドウの左の一覧で、「Assets」を押します。右に本体のフォルダが出ます。名前は「GP12_KigaeKoubo」です。右上の検索欄でも探せます。</p>
-<p><img src="images/screen_24_folders.png" alt="Projectのフォルダ一覧。きがえ工房の本体と、変換結果の保存先が別のフォルダになっている。" loading="lazy" /></p>
-<p>画像は、すでに変換した結果があるプロジェクトの例です。「GP12_KigaeKoubo_Converted」は変換結果の保存先です。入れた直後は、この結果フォルダがなくても問題ありません。</p>
-</li>
-<li>
-<p>メニューバーの［Tools &gt; Kigae Koubo &gt; Open］を選びます。</p>
-<p>ほかの工房を開いているときは、いちばん上の［きがえ工房］からも開けます。</p>
-<p><img src="images/screen_01_navigation.png" alt="くわしくの上部と下部。工房の切り替え、かんたん／くわしく、使用手引書、ツール設定、5つのタブ、共通の実行欄を赤い枠と番号で示す。" loading="lazy" /></p>
-</li>
-<li>
-<p>出たウィンドウの上に、「きがえ工房」と出ているか確かめます。</p>
-<p><img src="images/screen_02_empty.png" alt="何も選んでいない、かんたんの画面。衣装と変換先アバターの案内があり、下の実行ボタンは灰色。" loading="lazy" /></p>
-</li>
-</ol>
-<p>ウィンドウが出れば、入っています。はじめは、白いふきだしの案内が 2 つ出ます。まだ何も選んでいないためで、エラーではありません。［Tools］が出ないときは、「<a href="#ch-06_困ったとき">困ったとき</a>」を見てください。</p>
-<h2>動作を確かめた環境</h2>
-<p>きがえ工房は、次の環境で確かめました。</p>
-<ul>
-<li>Unity 2022.3.22f1。</li>
-<li>パソコン: Linux（Ubuntu）と、Windows 11。</li>
-<li>VRChat SDK 3.10.5。Modular Avatar 1.18.7。</li>
-</ul>
-<p>Mac では、まだ確かめていません。VCC（VRChat 用のアプリ）は、いりません。VCC で作ったプロジェクトへの入れ方は、まだ確かめていません。</p>
-<p>Unity の版は、Unity Hub の一覧で分かります。</p>
-<h2>なくても使えるもの</h2>
-<p>VRChat SDK と Modular Avatar は、なくても使えます。あると、使える項目が増えます。「<a href="#ch-04_09_ModularAvatarやPhysBoneと使いたい">Modular Avatar や PhysBone と使いたい</a>」の章を見ます。</p>
-<p>新しい版のときは、「<a href="#ch-02b_新しい版に入れ替える">新しい版に入れ替える</a>」を見ます。</p>
-</section>
-<section class="chapter" id="ch-02b_新しい版に入れ替える"><h1>新しい版に入れ替える</h1>
-<p>新しい版を入れるときは、古いフォルダを先に消します。消さないと、いらなくなったファイルが残ることがあります。はじめて入れる人は、この章はいりません。</p>
-<h2>古いフォルダを消す</h2>
-<p>先にプロジェクトをバックアップします。ツールのフォルダに、自分の服を置いていませんか。置いてあれば、先に外へ移します。</p>
-<ol>
-<li>
-<p>Project ウィンドウの左の一覧で、「GP12_KigaeKoubo」を選びます。「GP12_KigaeKoubo_Converted」は残します。</p>
-<p><img src="images/02_04_select_folder.png" alt="Unity の Project ウィンドウ。左の一覧で「GP12_KigaeKoubo」のフォルダが選ばれていて、赤い枠で囲まれている。右には、その中のフォルダが並んでいる" loading="lazy" /></p>
-</li>
-<li>
-<p>キーボードの Delete キーを押します。</p>
-</li>
-<li>
-<p>確認の窓が出たら、［Delete］を押します。</p>
-<p><img src="images/02b_delete_dialog.png" alt="フォルダを消すかどうかの確認の窓。消すフォルダの名前と、「元に戻せません」という意味の文が出ている。［Delete］のボタンが赤い枠で囲まれている" loading="lazy" /></p>
-</li>
-</ol>
-<h2>新しい版を入れる</h2>
-<p>新しい版は、「<a href="#ch-02_入れ方">入れ方</a>」の章と同じに入れます。入れ直したあと、赤い「CS2001」が出ることがあります。そのときは、Unity を開き直します。くわしくは、「<a href="#ch-06_困ったとき">困ったとき</a>」にあります。</p>
-<h2>変換の結果は残ります</h2>
-<p>できた衣装は、別のフォルダに入ります。名前は「GP12_KigaeKoubo_Converted」です。このフォルダは、消さないでください。消すのは、製品のフォルダ「GP12_KigaeKoubo」だけです。入れ替えても、前のできた衣装は消えません。</p>
-</section>
-<section class="chapter" id="ch-03_はじめての練習"><h1>はじめての練習</h1>
+</div></details><details class="manual-detail" id="ch-02_入れ方"><summary>入れ方</summary><div class="chapter-body"><p>きがえ工房は「3D 創作スタジオ」に同梱されています。無料の本体パッケージを、アバターを編集する Unity プロジェクトに取り込みます。</p><ol><li><a href="https://appluna.booth.pm/items/9071749">きがえ工房の無料ページ</a>から本体をダウンロードし、ZIP を展開します。中の <code>3D_CreativeStudio_vX_Y_Z.unitypackage</code> を使います。X・Y・Z は版数です。</li><li>アバターを入れた Unity プロジェクトを開きます。VRChat 用は、普段 VCC で管理しているプロジェクトを開いてください。</li><li>Unity の［Assets &gt; Import Package &gt; Custom Package...］から本体を選びます。ファイル一覧は<strong>すべてのチェックを入れたまま</strong>［Import］を押します。</li><li>取り込みが終わったら［Tools &gt; Kigae Koubo &gt; Open］を開きます。ほかの工房からは上部の［きがえ工房］でも開けます。</li></ol><p>変換結果の保存先は <code>Assets/GP12_KigaeKoubo_Converted</code> です。製品本体と別の場所に保存されます。</p><h3>使用環境</h3><p>Unity 2022.3.22f1 を基準とする手順です。VRChat SDK と Modular Avatar は、対応する連携機能を使うときに必要です。衣装とアバターが指定するシェーダーなども先に導入してください。</p><p>画面写真は撮影時点の表示例です。版によって配置や文言が変わることがあります。</p></div></details><details class="manual-detail" id="ch-02b_新しい版に入れ替える"><summary>新しい版に入れ替える</summary><div class="chapter-body"><ol><li>作業中のシーンを保存し、プロジェクトの控えを残します。</li><li>3D 創作スタジオの［更新を確認］、または無料配布ページから新しい本体を取得します。</li><li>新しい本体の unitypackage を開き、<strong>すべてのチェックを入れたまま</strong>［Import］します。旧版のファイルを置き換える項目も含まれるため、チェックを外さないでください。</li><li>読み込みが終わってから工房を開き、保存していたアバターと変換結果を確認します。</li></ol><p>変換結果の <code>GP12_KigaeKoubo_Converted</code>、保存呼出し工房の <code>GP25_HozonKoubo_DataFile</code>、Proキーの <code>Assets/Koubo_Pro</code> は残してください。本体の更新に合わせて Proキーを買い直す必要はありません。</p></div></details><details class="manual-detail" id="ch-03_はじめての練習"><summary>はじめての練習</summary><div class="chapter-body">
 <p>元アバター（衣装がもともと合っているアバター）が着ている衣装を、着せたいアバターに着せます。選ぶのは、［衣装］と［変換先アバター（衣装を着せたいアバター）］の 2 つです。この練習では、元アバターをまるごと入れます。体や顔や髪は、移しません。</p>
 <h2>使うアバター</h2>
 <p>まず、アバターを 2 体用意します。どちらも、Humanoid（人型の骨の設定）のアバターを使います。元アバターは、体と服が別のものを使います。Humanoid でないときは、ウィンドウに案内が出ます。</p>
@@ -769,11 +518,11 @@ th{background:var(--panel)}
 <ol>
 <li>
 <p>2 体の Prefab を、1 体ずつヒエラルキーへドラッグします。2 体は、重なって見えることがあります。</p>
-<p><img src="images/screen_23_hierarchy_before.png" alt="変換前のHierarchy。元アバターと変換先アバターの2体が並ぶ。" loading="lazy" /></p>
+<p><img alt="変換前のHierarchy。元アバターと変換先アバターの2体が並ぶ。" height="562" loading="lazy" src="images/screen_23_hierarchy_before.png" width="1190"/></p>
 </li>
 <li>
 <p>メニューバーの［Tools &gt; Kigae Koubo &gt; Open］を選びます。ウィンドウが出ます。白いふきだしの案内が 2 つ出て、［この設定で変換］ボタンは灰色です。まだ何も入っていないためです。</p>
-<p><img src="images/screen_02_empty.png" alt="何も選んでいない、かんたんの画面。衣装と変換先アバターの案内があり、下の実行ボタンは灰色。" loading="lazy" /></p>
+<p><img alt="何も選んでいない、かんたんの画面。衣装と変換先アバターの案内があり、下の実行ボタンは灰色。" height="950" loading="lazy" src="images/screen_02_empty.png" width="1190"/></p>
 </li>
 <li>
 <p>元アバターの一番上の行を、［衣装］へドラッグします。着ている服をまとめて移せます。</p>
@@ -784,39 +533,36 @@ th{background:var(--panel)}
 </li>
 <li>
 <p>白いふきだしに「元アバターを検出」と出たか見ます。</p>
-<p><img src="images/screen_03_inputs.png" alt="かんたんの入力。番号1は衣装、2は変換先アバター。その下に元アバターを見つけた案内がある。" loading="lazy" /></p>
+<p><img alt="HINOshopのReTulpe衣装Prefabと、変換先Tsubomiを指定する入力例。元アバター未検出でも衣装から合わせます" height="1174" loading="lazy" src="images/screen_17_prefab.png" width="1190"/></p>
 </li>
 <li>
-<p>［この設定で変換］を押します。値はそのままでかまいません。進み具合の窓が、2 回続けて出ます。変換と、自動チェックです。消えるまで、Unity は動かせません。元アバターが見つかった6組で測りました。およそ30秒から4分半でした。</p>
-<p><img src="images/screen_04_execution.png" alt="下の実行欄。［この設定で変換］を赤い枠で囲んでいる。" loading="lazy" /></p>
+<p>［この設定で変換］を押します。値はそのままでかまいません。進み具合の窓が、2 回続けて出ます。変換と、自動チェックです。消えるまで、Unity は動かせません。処理が終わるまで待ちます。所要時間は衣装の構成やパソコンによって変わります。</p>
+<p><img alt="下の実行欄。［この設定で変換］を赤い枠で囲んでいる。" height="117" loading="lazy" src="images/screen_04_execution.png" width="1190"/></p>
 <p>着せ終わると、コピーしたアバターの下に、衣装の行が増えます。名前から、元のアバターと選んだ衣装が分かります。同じ名前の別のものがあるときだけ、見分ける印が付きます。</p>
-<p><img src="images/screen_20_hierarchy.png" alt="変換後のHierarchy。コピーしたアバターの中に、元アバターから移した衣装がある。コピー前のアバターは灰色。" loading="lazy" /></p>
+<p><img alt="ReTulpeを着せたアバターが並ぶHierarchyの例。使わない元衣装の行は非表示になっています" height="1174" loading="lazy" src="images/screen_22_original_hidden.png" width="1190"/></p>
 </li>
 <li>
 <p>「結果」の欄に、「変換しました」と出たか確かめます。「結果」の欄は、ウィンドウの下の方にあります。これで、変換できています。</p>
-<p><img src="images/screen_05_result.png" alt="かんたんの結果欄。自動チェックの要約、結果の衣装、取り除くボタンと、Sceneで見る・くわしく確認の入口。" loading="lazy" /></p>
 </li>
 </ol>
 <p>服の見分け方は、「<a href="#ch-02_0_Unityの基本の操作">Unity の基本の操作</a>」にあります。</p>
-<p>まとめて選ぶには、Ctrl キーを押したまま、行を 1 つずつ押します。灰色の行は、はじめから隠れています。ふちは見えず、選ばなくてかまいません。画像では、コピーしたアバターの中の、一番下の行ができた衣装です。</p>
+<p>まとめて選ぶには、Ctrl キーを押したまま、行を 1 つずつ押します。灰色の行は、はじめから隠れています。ふちは見えず、選ばなくてかまいません。できた衣装の名前と変換先アバターを、結果の案内とHierarchyで照合します。</p>
 <ol start="8">
 <li>
 <p>ヒエラルキーで、コピーしたアバターを開きます。そのすぐ下の、もとの服の行を選びます。できた衣装の行と、その中の行は、ふくめません。</p>
-<p><img src="images/screen_20_hierarchy.png" alt="変換後のHierarchy。コピーしたアバターの中に、元アバターから移した衣装がある。コピー前のアバターは灰色。" loading="lazy" /></p>
+<p><img alt="ReTulpeを着せたアバターが並ぶHierarchyの例。使わない元衣装の行は非表示になっています" height="1174" loading="lazy" src="images/screen_22_original_hidden.png" width="1190"/></p>
 </li>
 <li>
 <p>インスペクターで、名前の左のチェックを外します。もとの服が見えなくなります。複数あるときは、名前の欄が「—」になり、右に数が出ます。数は、選んだ服によって変わります。</p>
-<p><img src="images/03_09_uncheck_active.png" alt="複数の服を選んだインスペクターの上の部分。名前の左のチェックが外れていて、赤い枠で囲まれている" loading="lazy" /></p>
+<p><img alt="複数の服を選んだインスペクターの上の部分。名前の左のチェックが外れていて、赤い枠で囲まれている" height="176" loading="lazy" src="images/03_09_uncheck_active.png" width="1280"/></p>
 </li>
 <li>
 <p>ヒエラルキーで、できた衣装の行をダブルクリックします。シーンビューが、衣装に寄ります。着せたいアバターが、元の服を着ていれば、できあがりです。</p>
-<p><img src="images/zukan_02_c1_compare.png" data-compare alt="同じカメラで撮った、変換前と変換後の並べ画像。左は、元アバターが濃い紫の上着とスカートの衣装を着た姿。右は、変換先のアバターが、同じ衣装を着た姿" loading="lazy" /></p>
 </li>
 </ol>
-<p>写真は、同じ組み合わせの例です。変換先のもとの服は、手順 8 と 9 で隠しています。</p>
+<p>変換先のもとの服が重なるときは、前の手順で非表示にしてから確認します。</p>
 <p>続きは、「<a href="#ch-03b_練習の結果を見る・取り消す">練習の結果を見る・取り消す</a>」にあります。</p>
-</section>
-<section class="chapter" id="ch-03b_練習の結果を見る・取り消す"><h1>練習の結果を見る・取り消す</h1>
+</div></details><details class="manual-detail" id="ch-03b_練習の結果を見る・取り消す"><summary>練習の結果を見る・取り消す</summary><div class="chapter-body">
 <p>「<a href="#ch-03_はじめての練習">はじめての練習</a>」のあとに読む章です。自動チェックを見ると、戻し方です。</p>
 <h2>自動チェックを見る</h2>
 <p>自動チェックは、「結果」の欄に出ます。体に入り込むところが増えたか調べます。印のちがいで、次のように読みます。</p>
@@ -831,11 +577,11 @@ th{background:var(--panel)}
 <p>場所の見方は、「<a href="#ch-04_04_貫通の場所を確かめたい">貫通の場所を確かめたい</a>」にあります。すき間の変え方は、「<a href="#ch-04_03_食い込みやぶかぶかを直したい">食い込みやぶかぶかを直したい</a>」にあります。</p>
 <h2>元の衣装が見えなくなったとき</h2>
 <p>うまく着せられると、入れた元の服はひとりでに隠れます。データは消えません。Hierarchyの灰色の衣装を選ぶと、Inspectorにチェックが出ます。名前の左のチェックで、また見えるようになります。最後に着せた服を取り除いたときも戻ります。隠れたままでも、［衣装］に選んで着せ直せます。</p>
-<p><img src="images/screen_22_original_hidden.png" alt="変換後のHierarchy。元の市販の衣装は灰色で、変換した衣装は由来が分かる名前になっている。" loading="lazy" /></p><p>これは、着せたいアバターが、もともと着ていた服とは違います。そちらが重なるときは、練習の手順8・9で隠します。［複製したアバターに着せる］では、コピー前のアバターも隠れます。</p>
+<p><img alt="変換後のHierarchy。元の市販の衣装は灰色で、変換した衣装は由来が分かる名前になっている。" height="1174" loading="lazy" src="images/screen_22_original_hidden.png" width="1190"/></p><p>これは、着せたいアバターが、もともと着ていた服とは違います。そちらが重なるときは、練習の手順8・9で隠します。［複製したアバターに着せる］では、コピー前のアバターも隠れます。</p>
 <h2>取り消すとき</h2>
 <p>Ctrl+Z は、さいごの操作から 1 つずつ取り消します。着せたすぐあとなら、1 回で、まとめて取り消されます。そのあとで服を選んだり、隠したりしたときは、そちらから順に戻ります。服を隠していれば、その服が先に戻ります。1 回ずつ押して、衣装の行を見ます。できた衣装が消えたら、止めます。2 体は、そのままです。</p>
 <p>Ctrl+Y を押すと、取り消したものが戻ります。ウィンドウの「結果」は、戻りません。</p>
-<p><img src="images/screen_20_hierarchy.png" alt="変換後のHierarchy。コピーしたアバターの中に、元アバターから移した衣装がある。コピー前のアバターは灰色。" loading="lazy" /></p>
+<p><img alt="ReTulpeを着せたアバターが並ぶHierarchyの例。使わない元衣装の行は非表示になっています" height="1174" loading="lazy" src="images/screen_22_original_hidden.png" width="1190"/></p>
 <p>写真は、着せたすぐあとのHierarchyです。取り消すと、この衣装の行が消えます。</p>
 <p>［この変換を取り除く］を使うときは、「<a href="#ch-04_10_やり直したい">取り消したい・変換し直したい</a>」にあります。自分でチェックを外して隠した服は、これでは戻りません。名前の左のチェックを、自分で入れなおします。</p>
 <h2>うまくいかないとき</h2>
@@ -847,496 +593,20 @@ th{background:var(--panel)}
 </ul>
 <h2>気をつけること</h2>
 <p>服のPrefabを着せたいときは、「<a href="#ch-04_01_衣装のPrefabを着せたい">衣装の Prefab を着せたい</a>」を見ます。</p>
-</section>
-<section class="chapter" id="ch-04_01_衣装のPrefabを着せたい"><h1>衣装の Prefab を着せたい</h1>
-<h2>まだ着せていない衣装の Prefab を、アバターに着せたい</h2>
-<!-- 得A4 得A5 得A6 -->
-<p>服のPrefabだけでも使えます。着せていない Prefab も、そのまま［衣装］の欄に入れられます。元アバターは、選びません。自動で調べます。見つからないときは、衣装から合わせます。このとき、［補助の骨を作る］は使われません。［ポーズを考えてウェイトを調整する］も同じです。骨の名前のつけ方が違っても、よくある名前なら、自動で合わせます。</p>
-<p>先に、「<a href="#ch-03_はじめての練習">はじめての練習</a>」の手順 1・2・4 をやります。［衣装］の欄だけが、違います。練習の衣装が残っていたら、先に［この変換を取り除く］で取り除きます。</p>
-<ol>
-<li>
-<p>Project ウィンドウで、衣装の Prefab を探します。Prefab は、青い箱のアイコンです。</p>
-</li>
-<li>
-<p>Prefab を、［衣装］の欄へドラッグします。［衣装］の案内が消えて、［この設定で変換］ボタンが使えます。</p>
-<p><img src="images/screen_17_prefab.png" alt="衣装のPrefabを入れた入力例。衣装と変換先アバターの欄、元アバター未検出の案内。" loading="lazy" /></p>
-</li>
-<li>
-<p>［この設定で変換］ボタンを押します。変換のあいだは、Unity が止まったように見えます。終わるまで、待ちます。</p>
-</li>
-<li>
-<p>ヒエラルキーで、着せたいアバターの下を見ます。選んだ衣装の名前が分かる行が、できています。</p>
-<p><img src="images/screen_20_hierarchy.png" alt="変換後のHierarchy。コピーしたアバターの中に、元アバターから移した衣装がある。コピー前のアバターは灰色。" loading="lazy" /></p>
-</li>
-</ol>
-<p>Prefab がたくさんあって探しにくいときは、検索の欄が便利です。ドラッグできないときは、［衣装］の欄の右の丸いボタンで、Prefab を選べます。Prefab は、ヒエラルキーに置かなくてかまいません。できた衣装が見えないときは、着せたいアバターの左の ▶ を押すと、開きます。</p>
-<p>元の Prefab のファイルも、アバターも、変わりません。できた衣装は、元の服のコピーです。中の並び方や、付いている設定は、残ります。変わるのは、形と、骨の位置と、ウェイトです。ウェイトは、衣装が、骨の動きにどれだけついていくかの割合です。補助の骨（スカートに脚が入りにくくなるように、足す骨）が増えることもあります。ほかの衣装も、同じやり方で着せられます。うまくいかなかったときは、すぐに Ctrl+Z を押します。取り消せます。</p>
-<p>名前から、元のアバターと選んだ衣装が分かります。同じ名前の別のものがあるときだけ、見分ける印が付きます。</p>
-<p>重ねて着せるときは、「<a href="#ch-04_02_重ね着の衣装を着せたい">重ね着の衣装を着せたい</a>」の章を見ます。</p>
-<h3>気をつけること</h3>
-<ul>
-<li>骨で動かないものは、変換できません。</li>
-<li>Prefab の位置や向き、大きさを変えていると、ずれて読まれることがあります。大きくずれていると、「元アバターの体から大きく離れています」という警告が出ます。</li>
-<li>Prefab に部分ごとの設定を直接付けると、そのファイルが変わります。くわしいやり方は、「<a href="#ch-04_06_一部だけ形を変えたくない">一部だけ、形を変えたくない</a>」の章にあります。</li>
-</ul>
-<h3>うまくいかないとき</h3>
-<ul>
-<li>「名前で対応しませんでした」と出たら、骨を補います。くわしくの［衣装変換］を開きます。［自動判定の確認と修正］の中です。［骨の部位の補正（任意）］で直せます。</li>
-<li>［この設定で変換］ボタンが灰色のまま。赤いエラーのあとの「→」に、直し方があります。</li>
-<li>変換が、なかなか終わらない。重い衣装は、時間がかかります。終わるまで、待ってください。</li>
-</ul>
-</section>
-<section class="chapter" id="ch-04_02_重ね着の衣装を着せたい"><h1>重ね着の衣装を着せたい</h1>
-<h2>上着の下にシャツ、のように、重ねて着せたい</h2>
-<!-- 得A7 -->
-<p>欄を増やすと、衣装を重ねて着せられます。内側に着るものから、順に入れます。たとえば、内側がシャツで、外側が上着です。どちらも、同じアバター用の衣装を使います。元アバターは、衣装ごとに自動で調べます。外側のものは、内側のものに入り込まないように、合わせます。</p>
-<p>先に、「<a href="#ch-03_はじめての練習">はじめての練習</a>」の手順 1・2・4 をやります。練習の衣装が残っていたら、先に［この変換を取り除く］で取り除きます。やることは、欄を増やして、ボタンを押すだけです。そのほかは、ふつうの変換と、同じです。</p>
-<ol>
-<li>
-<p>［＋ 重ね着の衣装を追加（外側の衣装）］ボタンを押します。［衣装］の欄が、2 つになります。「上の衣装から順に変換します」という案内が出ます。</p>
-</li>
-<li>
-<p>［衣装 1（内側）］の欄に、内側に着るものをドラッグします。Prefab でも、元アバターが着ているものでも、かまいません。</p>
-</li>
-<li>
-<p>［衣装 2（外側へ）］の欄に、外側に着るものをドラッグします。</p>
-<p><img src="images/screen_16_layers.png" alt="かんたんで衣装を2つ並べた入力例。内側と外側の欄、重ね着の追加ボタンを示す。" loading="lazy" /></p>
-</li>
-<li>
-<p>［この設定で変換］ボタンを押します。終わるまで、待ちます。</p>
-</li>
-<li>
-<p>ヒエラルキーで、着せたいアバターの下を見ます。着せた数だけ、衣装が増えています。</p>
-</li></ol><p>白いふきだしに「元アバター未検出」と出ても、エラーではありません。そのまま変換できます。</p>
-<p>ドラッグできないときは、欄の右の丸いボタンから、選べます。衣装が見えないときは、着せたいアバターの左の ▶ を押すと、開きます。</p>
-<p>欄を消したいときは、欄の右の［−］ボタンを押します。順番を入れかえるボタンは、ありません。入れかえたいときは、欄に入れ直します。空の欄は、とばされます。同じものを 2 つの欄に入れると、2 つ目は、とばされます。</p>
-<p>「結果」の欄には、変換直後に行った自動チェックの数値要約が、衣装ごとに出ます。くわしくの［貫通確認］で、衣装ごとに場所も確かめられます。数値の読み方は「<a href="#ch-04_04b_貫通の数を読みたい">貫通の場所を確かめたい</a>」をご覧ください。</p>
-<p>できあがったら、シーンビューで、重なりぐあいが見られます。うまくいかなかったときは、すぐなら Ctrl+Z で取り消せます。うまくいかないときは、「<a href="#ch-03_はじめての練習">はじめての練習</a>」の章を見ます。</p>
-<h3>気をつけること</h3>
-<ul>
-<li>内側に着るものは、上の欄に入れます。逆にすると、外側のものが、内側に入り込むことがあります。</li>
-<li>ウィンドウの設定は、すべてに、まとめて効きます。1 着だけ変えたいときは、部分ごとの設定（一部だけ変える設定）を使います。</li>
-<li>1 着ずつ変換することもできます。ただ、そのときは、外側を内側に合わせるはたらきが、使われません。</li>
-<li>重ね着のしくみは、動くことを確かめました。ただ、じっさいの衣装での見た目は、まだ確かめていません。3 着以上も、試していません。</li>
-<li>時間は、着せる数だけ、かかります。</li>
-</ul>
-</section>
-<section class="chapter" id="ch-04_03_食い込みやぶかぶかを直したい"><h1>食い込みやぶかぶかを直したい</h1>
-<h2>衣装が体に食い込む、またはぶかぶかに見える</h2>
-<!-- 得B1 得F2 -->
-<p>食い込みは、体が衣装から出てしまうことです。ぶかぶかは、衣装が体からはなれて見えることです。直すには、設定を変えて、もう一度変換します。すき間（体と衣装の間のあき）を、大きくしたり、小さくしたりします。やることは、スライダーを動かして、ボタンを押すだけです。1 回で決めなくてもかまいません。なんどでも、変換し直せます。</p>
-<p>先に、変換を 1 回やって、結果を見ておきます。やり方は、「<a href="#ch-03_はじめての練習">はじめての練習</a>」にあります。</p>
-<ol>
-<li>
-<p>「結果」の欄の自動チェックと、シーンビューを見ます。食い込みは、自動チェックの黄色い三角で分かります。ぶかぶかは、数には出ません。見た目で、決めます。</p>
-</li>
-<li>
-<p>食い込むときは、［すき間の最小値 (mm)］のスライダーを、右へ動かします。体と衣装の間に、あけるすき間が、大きくなります。</p>
-</li>
-<li>
-<p>ぶかぶかのときは、［元のすき間の倍率］のスライダーを、左へ動かします。1 のときは、元アバターと同じすき間です。元アバターが見つからないときは、骨のまわりの幅を基準にした、ゆとりが変わります。</p>
-<p><img src="images/screen_09_measures.png" alt="貫通対策タブ。前回の確認の要約、すき間、動かしたときの対策、部分ごとのすき間の一覧。" loading="lazy" /></p>
-</li>
-<li>
-<p>いまの自動チェックの数を、メモします。変換し直すと、前の数はなくなるためです。</p>
-</li>
-<li>
-<p>もう一度、［この設定で変換］ボタンを押します。終わるまで、待ちます。</p>
-<p><img src="images/screen_04_execution.png" alt="下の実行欄。［この設定で変換］を赤い枠で囲んでいる。" loading="lazy" /></p>
-</li>
-<li>
-<p>「結果」の欄の、衣装の行の右の文を見ます。前の結果と入れかわったという知らせが出ています。</p>
-</li>
-<li>
-<p>「結果」の欄の新しい数と、メモした数を比べます。</p>
-<p><img src="images/screen_05_result.png" alt="かんたんの結果欄。自動チェックの要約、結果の衣装、取り除くボタンと、Sceneで見る・くわしく確認の入口。" loading="lazy" /></p>
-</li>
-</ol>
-<p>手順 2 と 3 は、どちらか 1 つでかまいません。［すき間の最小値 (mm)］のめやすは、0 から数 mm です。まず、少しだけ動かして、ためします。動かしすぎると、衣装が体からはなれて見えます。ちょうどよいところは、衣装ごとにちがいます。ぴったりしすぎるときは、［元のすき間の倍率］を右へ動かします。スライダーは、数を打ちこんでも動かせます。</p>
-<p>手順 6 の知らせは、「前回の結果を置き換えました」です。前の結果は、新しいものに置き換わります。うまくいかなかったときは、すぐなら Ctrl+Z で取り消せます。または、スライダーを元に戻して、もう一度変換します。</p>
-<h3>気をつけること</h3>
-<ul>
-<li>設定は、いっしょに変換する衣装すべてに、まとめて効きます。</li>
-<li>貫通は、自動ではすべて消えません。試した例でも、そでぐちやくつに、少し残りました。</li>
-<li>腕と胴のように、体どうしがかさなるポーズの貫通は、この設定では直りません。</li>
-<li>元の服に、もともとある貫通も、直りません。自動チェックでは元から体に入っていた頂点数を別に示します。詳しくは「<a href="#ch-04_04b_貫通の数を読みたい">貫通の場所を確かめたい</a>」をご覧ください。</li>
-<li>変換し直すと、手で直したところも、消えます。残したいときは、くわしいやり方が、「<a href="#ch-04_10_やり直したい">取り消したい・変換し直したい</a>」の章にあります。</li>
-<li>一部だけのときは、部分ごとの設定で、そこのすき間を変えられます。くわしいやり方は、「<a href="#ch-04_06_一部だけ形を変えたくない">一部だけ、形を変えたくない</a>」の章にあります。</li>
-</ul>
-</section>
-<section class="chapter" id="ch-04_04_貫通の場所を確かめたい"><h1>貫通の場所を確かめたい</h1>
-<h2>色で見る</h2>
-<p>着せ終わると、自動チェックが出ます。どこが入ったかや、ポーズは、くわしくの［貫通確認］で見られます。</p>
-<ol><li><p>できた服の欄の［くわしく確認］を押します。くわしくの表示では［貫通確認へ］です。</p><p><img src="images/screen_05_result.png" alt="かんたんの結果欄。自動チェックの要約、結果の衣装、取り除くボタンと、Sceneで見る・くわしく確認の入口。" loading="lazy" /></p></li><li><p>［確認する衣装］から、見たい服を選びます。</p></li><li><p>［貫通を確認］を押します。Sceneに色が出ます。黄は浅いところ、赤は深いところです。</p><p><img src="images/screen_07_check.png" alt="貫通確認タブ。確認する衣装、縮めるキーの条件、手動の確認ボタン、8ポーズの表がある。" loading="lazy" /></p></li></ol>
-<p>［体を縮めるシェイプキーを 0 として調べる］は、ふつうはオンです。2つのボタンで、同じ調べ方を使います。オフでは、縮めるキーを含む見た目の形で調べます。調べ方を変えたら、調べるボタンをもう一度押します。自動チェックは、服を合わせたときと同じです。</p>
-<h2>8つのポーズの数をくらべる</h2>
-<ol><li><p>［ポーズで確認］を押します。8つのポーズの表が出ます。</p></li><li><p>ポーズの名前ごとに、入っている頂点の数、割合、最大の深さを読みます。下の行には、8ポーズの割合の平均が出ます。</p></li></ol>
-<p><img src="images/screen_07_check.png" alt="今の貫通確認タブ。MANUKAに着せたReTulpeの8ポーズの数、割合、最大の深さと平均が出ている。" loading="lazy" /></p>
-<p>表は、決まった8ポーズを調べた数です。元のアバターの姿勢は変えません。<a href="#ch-04_04b_貫通の数を読みたい">数の読み方</a>も見ます。</p>
-<p>［表示を消す］で、Sceneの色を消せます。色は、［貫通対策］へ移っても残ります。調べる服を変えるか、片付けるか、窓を閉じると消えます。</p>
-<h2 id="repair-outside-references">衣装の参照を直す</h2>
-<p>衣装が使う骨や体の参照が、着せたアバターの外を指していると、注意と［参照を直す］が出ます。参照と道筋が食い違うときも出ます。古い版で変換した衣装でも、ここで直せます。</p>
-<ol><li><p>［くわしく］の［貫通確認］を開き、［確認する衣装］を選びます。注意の件数と、指している先の例を読みます。</p>
-<p><img src="images/screen_26_outside_refs.png" alt="Anonに着せたReTulpeの注意。衣装の参照が変換先の外を指す29件と、参照を直すボタンが出ている。" loading="lazy" /></p></li>
-<li><p>［参照を直す］を押します。変換先の骨や体など、対応する物へ付け替えます。対応する物やシェイプキーが無い行・部品は外します。外した行・部品は、名前とともに知らせます。</p>
-<p><img src="images/screen_27_refs_repaired.png" alt="撮影用に複製したAnonの修復結果。外の参照が29件から0件になり、外した連動の行と部品の名前が続く。" loading="lazy" /></p></li>
-<li><p>結果の件数と、外した物の名前を読みます。やり直すときは、Ctrl+Zを1回押すと戻せます。</p></li></ol>
-<h2>どこを直すか</h2>
-<p>腕を上げると脇から肌が出るときは、［貫通対策へ］です。［動かすと肌が出る］で直します。膝の先だけなら、［微調整へ］です。<a href="#ch-05_5_貫通対策">すき間や動き方の直し方</a>に、どれを使うかが書いてあります。</p><p><img src="images/screen_08_result_management.png" alt="貫通確認の下部。対策への案内と、変換し直しても残す・この変換を取り除くを赤い枠で囲む。" loading="lazy" /></p>
-</section>
-<section class="chapter" id="ch-04_04b_貫通の数を読みたい"><h1>自動チェックの数を読む</h1><h2>止まっているとき</h2><p>体の中に、1 mm以上入った頂点を数えます。新しく増えた数と割合、いちばん深いところが出ます。元の服と比べられるときは、もともと入っていた分も出ます。</p>
-<h2>8つのポーズを取るとき</h2><p>自動チェックのまとめには、新しく入ったところの平均が出ます。いちばん多いポーズの名前と割合も出ます。［貫通確認］には、ポーズごとの表があります。</p><p>表の数は、新しく増えた分と、もともと入っていた分です。割合と平均には、もともと入っていた分も含みます。自動チェックのまとめとは、数え方が違います。比べられなかったときは、わけが出ます。</p>
-<p><img src="images/screen_07_check.png" alt="貫通確認タブ。確認する衣装、縮めるキーの条件、手動の確認ボタン、8ポーズの表がある。" loading="lazy" /></p><h2>数だけで決めない</h2><p>腕と胴のように、体どうしが重なるポーズもあります。そのときのめり込みは残ります。体と服がひとつながりなら、服の下をおしはかって測ります。ほんとうの体とは違うため、数が少なく出ることもあります。</p><p>調べるのは、決まった8ポーズです。ほかの動きや、VRChatの中での揺れは含みません。</p><p>開き直したあとも、調べ直せます。［貫通を確認］や［ポーズで確認］を使います。自動チェックのまとめとは分けて読みます。<a href="#ch-04_04_貫通の場所を確かめたい">どこが入ったかを見るやり方</a>に続きます。</p></section>
-<section class="chapter" id="ch-04_05_体と服が一体のアバターに着せたい"><h1>体と服が一体のアバターに着せたい</h1>
-<h2>肌と服が 1 つのパーツのアバターに、衣装を着せたい</h2>
-<!-- 得E1 得E2 得E3 -->
-<p>体と服が一体のアバターは、肌と服が、ひとつながりになっています。そのため、服だけを外すことができません。それでも、衣装を着せることはできます。きがえ工房が、服の下の体を、おしはかって合わせます。そのままでは、元の服が残って、できた衣装と重なって見えます。そこで、元の服を、ボタンで隠します。隠すだけで、元のファイルは変わりません。</p>
-<p>先に、「<a href="#ch-03_はじめての練習">はじめての練習</a>」の手順 1 から 5 をやります。［変換先アバター（衣装を着せたいアバター）］には、体と服が一体のアバターを入れます。ここまでは、ふつうのアバターと、同じです。</p>
-<ol>
-<li>
-<p>黄色い三角の印の警告が出るので、読みます。服の下の体を、おしはかるという知らせです。体と服がひとつながりだからです。警告が出ても、そのまま変換することができます。</p>
-</li>
-<li>
-<p>［この設定で変換］ボタンを押します。終わるまで、待ちます。</p>
-</li>
-<li>
-<p>「結果」の欄の［変換先の元の服を隠す（Undoで戻す）］ボタンを押します。元の服が、見えなくなります。</p>
-<p><img src="images/screen_21_fused.png" alt="一体型アバターの結果欄。元の服を隠すボタンと、仮の肌も出すボタンが並ぶ。" loading="lazy" /></p>
-</li>
-<li>
-<p>シーンビューで、衣装を見ます。脚や腕も、服といっしょに、消えて見えることがあります。</p>
-<p><img src="images/zukan_05_hide_compare.png" data-compare data-frames="3" alt="同じカメラで撮った、3 つの並べ画像。左は元の服を隠す前で、元の服が衣装と重なっている。中は隠したあとで、脚が見えなくなっている。右は仮の肌を出した姿で、肌色の脚が出ている" loading="lazy" /></p>
-</li>
-<li>
-<p>脚や腕も見るなら、肌を出せます。［元の服を隠して仮の肌を表示（試験的・Undoで戻す）］を押します。肌色の胴や腕や脚が、仮に出てきます。この手順は、飛ばしてもかまいません。</p>
-<p><img src="images/screen_21_fused.png" alt="一体型アバターの結果欄。元の服を隠すボタンと、仮の肌も出すボタンが並ぶ。" loading="lazy" /></p>
-</li>
-</ol>
-<p>元の服を隠しても、自動チェックのまとめは変わりません。仮の肌（元の服を隠したところに出す、肌の色の面）は見た目を確かめるためのものです。数えるときは、仮の肌を使いません。服を合わせるときに、おしはかった体を使います。</p>
-<p>隠した直後なら、Ctrl+Z で戻せます。あとからなら、［元の服を表示に戻す］ボタンで戻せます。このボタンは、隠したときだけ、「結果」の欄に出ます。Unity を開き直したあとでも使えます。</p>
-<h3>気をつけること</h3>
-<ul>
-<li>服の下の体は、おしはかった形です。本当の体と、違うことがあります。貫通の数も、その体で測ります。数だけでなく、目でも確かめることが大切です。</li>
-<li>仮の肌は、まだ試しの機能です。顔や指、足先は、補いません。模様や質感も、もとには戻りません。</li>
-<li>体と服が一体のアバターの服は、切り分けて、ほかのアバターへ移すことができません。</li>
-<li>マテリアル（色や質感を決める設定）の名前を見て、見分けています。当てはまらないときは、この警告も、隠すボタンも出ません。</li>
-<li>服を含まない体が、別にあるときは、素体の欄に入れます。くわしくの［衣装変換］を開きます。［自動判定の確認と修正］の中を見ます。［体と服が一体のアバター］を、［推定しない］にします。</li>
-</ul>
-<h3>うまくいかないとき</h3>
-<ul>
-<li>［変換先の元の服を隠す（Undoで戻す）］ボタンが、灰色のまま。まだ変換していないためです。変換をすると、押せるようになります。</li>
-<li>貫通を確かめたいときは、くわしいやり方が、「<a href="#ch-04_04_貫通の場所を確かめたい">貫通の場所を確かめたい</a>」の章にあります。</li>
-</ul>
-</section>
-<section class="chapter" id="ch-04_06_一部だけ形を変えたくない"><h1>一部だけ、形を変えたくない</h1>
-<h2>手首の飾りなど、一部だけ、元の形のまま残したい</h2>
-<!-- 得F1 得F2 得F4 -->
-<p>衣装の一部だけ、変換のしかたを変えられます。これを、部分ごとの設定（一部だけ変える設定）と呼びます。手首の飾りのマテリアルを使います。その部分を、変換先の体型に合わせないようにします。骨の動きには、ついていきます。</p>
-<p>先に、ウィンドウの 2 つの欄を埋めておきます。変換の前でも、後でもかまいません。設定は、次に［この設定で変換］を押したときから使われます。</p>
-<h3>飾りのマテリアルを調べます</h3>
-<ol>
-<li>
-<p>シーンビューで、手首の飾りを押します。はじめは、アバターすべてが、オレンジ色のふちで囲まれます。飾りだけが囲まれたら、手順 2 はとばします。</p>
-</li>
-<li>
-<p>もう一度、同じところを押します。飾りのパーツだけが、オレンジ色のふちで囲まれます。</p>
-<p><img src="images/04_06_pick_accessory.png" alt="左はヒエラルキーで、緑の＋の印が付いた衣装の下の「手首の飾り」の行が選ばれ、赤い枠で囲まれている。右はシーンビューで、手首の飾りがオレンジ色のふちで囲まれ、赤い枠が付いている" loading="lazy" /></p>
-</li>
-<li>
-<p>インスペクターの［Materials］を見ます。</p>
-<p><img src="images/04_06_materials_list.png" alt="手首の飾りを選んだインスペクター。Skinned Mesh Renderer の［Materials］が開き、「マテリアル 1」が 1 つ並んでいる。［Materials］が赤い枠で囲まれている" loading="lazy" /></p>
-</li>
-</ol>
-<p>押すのは、できた衣装の飾りです。元の服の飾りでも、マテリアルの名前は同じです。</p>
-<p>［Materials］は、Skinned Mesh Renderer の中にあります。閉じているときは、左の三角を押して開きます。並んだ名前が、そのパーツのマテリアルです。名前を覚えておきます。</p>
-<p>ほかの服にも同じ名前があると、分けられません。そんなときは、「<a href="#ch-04_06b_ブラシで塗って指定したい">ブラシで塗って、場所を決めたい</a>」の章へ進みます。</p>
-<h3>部分を決めます</h3>
-<p>ウィンドウでもInspectorでも、同じ欄を使えます。ここで場所を決めないと、設定が衣装のすべてに効きます。</p>
-<p>Prefabへ追加するときは、確認の窓が出ます。［Prefab に追加する］は、ファイルを変える操作です。Ctrl+Zでは戻せません。変えたくなければ［キャンセル］です。シーンに置いた衣装なら、Ctrl+Zで戻せます。</p>
-<p>くわしくの［微調整］で、ここから始めます。</p>
-<ol>
-<li>
-<p>［部分ごとの設定を追加］を押します。［部分設定の衣装］には、ここで使う服が出ています。</p><p><img src="images/screen_10_fine.png" alt="微調整タブ。骨と姿勢の合わせ方、体型キー、部分ごとの設定の入口。" loading="lazy" /></p></li><li><p>［マテリアルで指定］にチェックを入れます。</p>
-</li>
-<li>
-<p>［衣装のマテリアルから追加...］を押します。マテリアルの名前の一覧が出ます。</p>
-<p><img src="images/04_06_material_menu.png" alt="部分ごとの設定のインスペクター。［衣装のマテリアルから追加...］を押すと、その下にマテリアルの名前の一覧（マテリアル 1 から 7）が出る。ボタンと一覧が赤い枠で囲まれている" loading="lazy" /></p>
-</li>
-<li>
-<p>一覧から、調べた名前のマテリアルを選びます。［マテリアル］の欄に入ります。「Element 0」は、1 つ目という意味です。</p>
-<p><img src="images/04_06_mask_inspector.png" alt="インスペクターに出た部分ごとの設定。マテリアルで指定にチェックが入り、マテリアルの一覧に 1 つ入っている。チェックと追加ボタンと一覧が赤い枠で囲まれている" loading="lazy" /></p>
-</li>
-</ol>
-<h3>何を変えるかを決めます</h3>
-<ol start="5">
-<li>
-<p>［変換の効き具合を指定］にチェックを入れます。スライダーが出ます。</p>
-</li>
-<li>
-<p>［効き具合］が 0 になっていることを確かめます。</p>
-<p><img src="images/04_06_fit_amount.png" alt="インスペクターの何を変えるかの部分。変換の効き具合を指定にチェックが入り、効き具合のスライダーが 0 になっている。チェックとスライダーが赤い枠で囲まれている" loading="lazy" /></p>
-</li>
-</ol>
-<p>0 でないときは、スライダーを左の端まで動かします。0 の部分は、変換先の体型に合わせません。1 なら、ふつうに合わせます。</p>
-<h3>変換して確かめます</h3>
-<ol start="7">
-<li>
-<p>ウィンドウの［この設定で変換］を押します。</p>
-<p><img src="images/screen_04_execution.png" alt="下の実行欄。［この設定で変換］を赤い枠で囲んでいる。" loading="lazy" /></p>
-</li>
-<li>
-<p>シーンビューで、手首の飾りを見ます。元アバターで着ていたときと同じ形なら、できています。</p>
-<p><img src="images/04_06_result_compare.png" data-compare alt="手首の拡大写真の並べ画像。左は変換前で、元アバターの手首に時計の形の飾りが付いている。右は変換後で、変換先のアバターの手首に、同じ形の飾りが付いている" loading="lazy" /></p>
-</li>
-</ol>
-<p>前に変換していれば、その結果と入れかわります。練習で隠した服は、隠れたままです。見くらべるには、かたほうのアバターを、名前の左のチェックで隠します。</p>
-<p>ほかの設定は、「<a href="#ch-05_4_画面の説明_部分ごとの設定">部分ごとの設定（Inspector）</a>」の章にあります。</p>
-<h3>気をつけること</h3>
-<ul>
-<li>この設定は、元の服に付きますが、形は変わりません。いらなければ、設定の右上の「⋮」から、「Remove Component」を選びます。シーンの衣装なら、Ctrl+Z でも取り消せます。</li>
-<li>Prefab に直接付けると、そのファイルが変わります。変えたくないときは、衣装をシーンに置いて付けます。</li>
-<li>同じ名前のマテリアルが、ほかにもあれば、そこも選ばれます。</li>
-<li>場所の決め方を 2 つ以上使うと、すべてに合うところだけが、選ばれます。</li>
-</ul>
-<p>うまくいかないときは、「<a href="#ch-06_困ったとき">困ったとき</a>」を見てください。</p>
-</section>
-<section class="chapter" id="ch-04_06b_ブラシで塗って指定したい"><h1>ブラシで塗って、場所を決めたい</h1>
-<h2>専用のマテリアルが無い部分を、塗って決めたい</h2>
-<!-- 得F3 -->
-<p>専用のマテリアルが無い部分は、ブラシで塗って決められます。ブラシ（なぞって塗るもの）は、シーンビュー（3D の景色を見るウィンドウ）で使います。マスク画像（白と黒で、選ぶところを示した絵）でも、決められます。</p>
-<p>先に、「<a href="#ch-04_06_一部だけ形を変えたくない">一部だけ、形を変えたくない</a>」の「部分を決めます」で、設定を追加しておきます。衣装は、シーンに置いたものを使います。</p>
-<h3>ブラシで塗ります</h3>
-<ol>
-<li>
-<p>［ブラシで指定］にチェックを入れます。</p>
-</li>
-<li>
-<p>［塗るメッシュ］から、衣装のメッシュ（体や服の形そのもの）を選びます。</p>
-</li>
-<li>
-<p>［ブラシで塗る］を押します。シーンビューの左上に、小窓が出ます。</p>
-<p><img src="images/04_06_brush_inspector.png" alt="インスペクターの「どこに」の部分。ブラシで指定にチェックが入り、塗るメッシュの一覧と［ブラシで塗る］ボタンがある。この 3 つが赤い枠で囲まれている" loading="lazy" /></p>
-</li>
-<li>
-<p>シーンビューで、衣装の上を左ドラッグします。なぞったところが、赤く光ります。</p>
-</li>
-<li>
-<p>消すときは、Shift+左ドラッグです。</p>
-</li>
-<li>
-<p>終わったら、［ブラシを終了］を押します。</p>
-<p><img src="images/screen_25_brush.png" alt="Sceneの衣装に赤い頂点が見える。左上にブラシの半径・強さと、ブラシを終了するボタンがある。" loading="lazy" /></p>
-</li>
-</ol>
-<p>小窓の［半径 (cm)］で、ブラシの大きさを変えます。［強さ］で、塗りの濃さを変えます。塗った頂点（形を作る点）の数は、「選んだ頂点: N / M」に出ます。Ctrl+Z で、塗る前に戻せます。ここまでが、ブラシの使いかたです。</p>
-<p>ほかの服やタブへ移ると、ブラシは終わります。塗った値は残ります。Alt を押しながらドラッグすると、塗らずに、見る向きを変えられます。</p>
-<h3>マスク画像で決めます</h3>
-<p>ブラシとは別のやり方です。どちらか 1 つで、場所を決められます。</p>
-<ol>
-<li>
-<p>［マスク画像で指定］にチェックを入れます。</p>
-</li>
-<li>
-<p>［マスク画像］の欄に、画像を入れます。</p>
-</li>
-<li>
-<p>［対象の色］で、［白い所］か［黒い所］を選びます。</p>
-<p><img src="images/04_06_mask_image.png" alt="インスペクターの「どこに」の部分。マスク画像で指定にチェックが入り、マスク画像の欄に画像が入っている。対象の色は白い所になっている。この 3 つが赤い枠で囲まれている" loading="lazy" /></p>
-</li>
-</ol>
-<p>画像は、衣装の UV（絵を形にはるための地図）に合わせて作ります。png か jpg なら、そのまま使えます。画像を読めないときは、その部分はここで使うものになりません。これで、場所が決まります。</p>
-<p>そのあとは、「<a href="#ch-04_06_一部だけ形を変えたくない">一部だけ、形を変えたくない</a>」の「何を変えるかを決めます」から続けます。</p>
-<h3>気をつけること</h3>
-<ul>
-<li>塗る・消す・Ctrl+Z の仕組みは、確かめています。</li>
-<li>マウスで塗るときの感触は、確かめていません。</li>
-<li>塗ったあとで、頂点の数が違うメッシュに入れ替えることがあります。</li>
-<li>そのときは、「メッシュの頂点数が、塗ったときと違います」と出ます。</li>
-<li>このときは、塗り直します。</li>
-<li>場所の決め方を 2 つ以上使うと、すべてに合うところだけがここで使うものです。</li>
-</ul>
-<p>うまくいかないときは、「<a href="#ch-06_困ったとき">困ったとき</a>」を見てください。</p>
-</section>
-<section class="chapter" id="ch-04_07_体のシェイプキーについてこさせたい"><h1>体のシェイプキーに、ついてこさせたい</h1>
-<h2>胸の大きさなどを変えたとき、衣装もついてきてほしい</h2>
-<!-- 得B3 得B5 得G4 -->
-<p>シェイプキー（形を変える設定）で、体の形を変えられます。たとえば、胸の大きさです。選んだキーと同じ名前のキーを、衣装にも作れます。体のキーを先に見ておきます。</p>
-<h3>合わせるキーを選びます</h3>
-<ol>
-<li>
-<p>くわしくの［微調整］を開きます。</p>
-</li>
-<li>
-<p>体のシェイプキーの折りたたみを開きます。「変換先の体のシェイプキーに合わせる」で始まる欄です。（ ）の中の数は、チェックしたキーの数です。</p>
-</li>
-<li>
-<p>合わせたいキーに、チェックを入れます。キーの名前は、アバターごとに違います。</p>
-<p><img src="images/screen_12_shapes.png" alt="微調整で体型キーの一覧を開いた画面。すべて・なしと、キーごとのチェックがある。" loading="lazy" /></p>
-</li>
-<li>
-<p>ウィンドウの［この設定で変換］を押します。終わるまで、待ちます。</p>
-<p><img src="images/screen_04_execution.png" alt="下の実行欄。［この設定で変換］を赤い枠で囲んでいる。" loading="lazy" /></p>
-</li>
-</ol>
-<p>［なし］を押すと、チェックがすべて外れます。［すべて］を押すと、すべてにチェックが入ります。チェックしなくても、衣装の近くの体を動かすキーは、自動で作られます。体を縮めるキーは、除きます。</p>
-<h3>結果を確かめます</h3>
-<ol start="5">
-<li>
-<p>ヒエラルキーで、着せ直した衣装の中のメッシュを選びます。メッシュは、体や服の形そのものです。</p>
-</li>
-<li>
-<p>インスペクター（ものの設定が出るウィンドウ）で、［BlendShapes］を開きます。</p>
-<p><img src="images/04_07_inspector_blendshapes.png" alt="結果の衣装のメッシュを選んだインスペクター。Skinned Mesh Renderer の BlendShapes が開き、変換先の体と同じ名前のキーが並んでいる。BlendShapes が赤い枠で囲まれている" loading="lazy" /></p>
-</li>
-</ol>
-<p>変換先の体と同じ名前のキーが、並びます。これで、キーが衣装にも作られました。</p>
-<h3>体のキーと、つなぎます</h3>
-<ul>
-<li>Modular Avatar が入っていると、自動でつながります。</li>
-<li>ただし、1.18.7 以上の版が要ります。</li>
-<li>［Modular Avatar で体型キーを同期する］が、オンのときです。</li>
-<li>［Modular Avatar で結ぶ（Merge Armature）］でも、同じです。</li>
-<li>つながると、体のキーを動かしたとき、衣装のキーも動きます。</li>
-<li>入っていないときや、古い版のときは、手でつなぎます。</li>
-<li>体のキーを動かしたら、服のキーも同じ値にします。同じ名前のキーです。</li>
-<li>このときは、「変換の途中で気づいた点」に、案内が出ます。</li>
-<li>どちらでも、変換はできます。</li>
-</ul>
-<h3>気をつけること</h3>
-<ul>
-<li>体を縮めるキーは、0 として合わせます。</li>
-<li>縮めるキーに、ついてくるわけではありません。</li>
-<li>体と服が一体（1 つのパーツになっている）のアバターは、体のキーを正確には戻せません。</li>
-<li>確かめた Modular Avatar は、1.18.7 です。</li>
-<li>Unity の画面で、連動して動くかは、確かめていません。</li>
-<li>どれくらい合うかは、衣装しだいです。シーンビュー（3D の景色を見るウィンドウ）で見ると分かります。</li>
-</ul>
-<p>うまくいかないときは、「<a href="#ch-06_困ったとき">困ったとき</a>」を見てください。</p>
-</section>
-<section class="chapter" id="ch-04_08_座ったときのスカートを直したい"><h1>座ったときのスカートを直したい</h1>
-<h2>座ったり、しゃがんだりすると、スカートに脚が入る</h2>
-<!-- 得D2 得D3 -->
-<p>座ると、スカートに脚が入ることがあります。そのために、補助の骨（スカートに脚が入りにくくなるように、足す骨）を作れます。骨は、動きのもとになるところです。はじめから、オンになっています。</p>
-<h3>設定を確かめます</h3>
-<ol>
-<li>
-<p>くわしくの［貫通対策］を開きます。</p>
-</li>
-<li>
-<p>［ポーズを考えてウェイトを調整する］に、チェックが入っているか見ます。</p>
-</li>
-<li>
-<p>［補助の骨を作る］も、同じように見ます。</p>
-<p><img src="images/screen_09_measures.png" alt="貫通対策タブ。前回の確認の要約、すき間、動かしたときの対策、部分ごとのすき間の一覧。" loading="lazy" /></p>
-</li>
-<li>
-<p>ウィンドウの［この設定で変換］を押します。</p>
-<p><img src="images/screen_04_execution.png" alt="下の実行欄。［この設定で変換］を赤い枠で囲んでいる。" loading="lazy" /></p>
-</li>
-</ol>
-<p>ウェイトは、衣装が、骨の動きにどれだけついていくかの割合です。補助の骨を作ると、「変換の途中で気づいた点」に、次の文が出ます。<code>補助の骨 N 本に Rotation Constraint を付けました（…）。</code>
-補助の骨には、Rotation Constraint（ほかの骨の回転につられて動くパーツ）が付きます。この文が出ないときは、補助の骨は作られていません。</p>
-<h3>座りの姿を見たいとき</h3>
-<p>自動チェックは8ポーズを調べます。平均や、最も多いポーズが出ます。くわしくの［貫通確認］で、［ポーズで確認］を押すと、「座り」などのポーズごとの数をくらべられます。<a href="#ch-04_04_貫通の場所を確かめたい">場所とポーズの確認</a>に、画像つきの手順があります。</p>
-<h3>気をつけること</h3>
-<ul>
-<li>補助の骨は、脚のまわりで、体から離れた布に作ります。</li>
-<li>使わないほうが体に入りにくいときは、作りません。</li>
-<li>どれだけ減るかは、衣装しだいです。</li>
-<li>下ろした手がスカートに入るのは、補助の骨では直りません。</li>
-<li>それには、コライダー（ぶつかるところを決めるパーツ）を使います。</li>
-<li>VRChat の中の話です。</li>
-<li>「<a href="#ch-04_09_ModularAvatarやPhysBoneと使いたい">Modular Avatar や PhysBone と使いたい</a>」の章を見ます。</li>
-<li>腕と胴のように、体どうしが重なるところは、直せません。</li>
-<li>確かめるポーズは、8 つだけです。ほかのポーズでの形は、確かめていません。</li>
-<li>オンとオフは、衣装のすべてに、まとめて効きます。</li>
-<li>衣装ごとに変えたいときは、1 着ずつ変換します。</li>
-<li>VRChat の中での動きは、確かめていません。</li>
-</ul>
-<p>うまくいかないときは、「<a href="#ch-06_困ったとき">困ったとき</a>」を見てください。</p>
-</section>
-<section class="chapter" id="ch-04_09_ModularAvatarやPhysBoneと使いたい"><h1>Modular Avatar や PhysBone と使いたい</h1>
-<h2>つなぎ方と、揺れものを決める</h2>
-<p>くわしくの［VRChat連携］で決めます。VRChat SDKやModular Avatarが無くても、タブは出ます。入っているかどうかは、上の案内で分かります。無くても、衣装の変換はできます。</p>
-<ol><li><p>くわしくの［VRChat連携］を開きます。</p><p><img src="images/screen_13_vrchat.png" alt="VRChat連携タブ。組み込み方の3つの選択と同期、PhysBoneの3項目、出力ウェイトの互換用の設定。" loading="lazy" /></p></li><li><p>「アバターへの組み込み方」から、1つ選びます。</p></li><li><p>必要な揺れものの項目に、チェックを入れます。</p></li><li><p>［この設定で変換］を押します。</p><p><img src="images/screen_04_execution.png" alt="下の実行欄。［この設定で変換］を赤い枠で囲んでいる。" loading="lazy" /></p></li></ol>
-<h2>3つの組み込み方</h2>
-<p>はじめは、次の項目です。［衣装の骨を残して、変換先の骨の子にする（既定）］です。衣装の骨を残して、体について動くようにします。このときは、［Modular Avatar で体型キーを同期する］を選べます。</p>
-<p>［Modular Avatar で結ぶ（Merge Armature）］は、衣装のArmature（骨をまとめたもの）を残して結びます。体と服のキーは、一緒に動きます。オフにはできません。Modular Avatarが無いと選べません。</p><p><img src="images/04_09_merge_armature.png" alt="Modular Avatarで結んだ結果のInspector。Merge Armatureの欄を赤い枠で囲む。" loading="lazy" /></p><p>［変換先の骨に直接つなぐ］では、体と服のキーをそろえるしくみは、使いません。</p>
-<h2>スカートが揺れないとき</h2>
-<p>「揺れもの」の3つの項目を使います。衣装にあるPhysBoneを引き継ぐ項目は、はじめはオンです。手・腕・脚で布を押す項目もオンです。PhysBoneが無いスカートに付ける項目だけ、はじめはオフです。</p>
-<p>着せたら、お知らせを読みます。「変換の途中で気づいた点」という欄です。数と内容は、衣装によって変わります。各欄の意味は、<a href="#ch-05_7_VRChat連携">VRChat連携の画面説明</a>にあります。</p>
-<h2>気をつけること</h2>
-<p>確かめたSDKは3.10.5です。Modular Avatarは1.18.7です。VRChatの中の揺れや、アップロードは確かめていません。布を押すところを足すと、パーツも増えます。パフォーマンスランクは保証しません。［VRChat SDK &gt; Show Control Panel］で確かめます。</p>
-</section>
-<section class="chapter" id="ch-04_10_やり直したい"><h1>取り消したい・変換し直したい</h1>
-<p>元の服とアバターのデータは、そのまま残ります。すぐに戻すやり方と、あとで外すやり方があります。</p>
-<h2>すぐに取り消す</h2><p>着せたすぐあとなら、Ctrl+Zでまとめて戻せます。あとで服を隠したときは、そちらから順に戻ります。Ctrl+Yでやり直せます。</p>
-<h2>あとから取り除く</h2><ol><li><p>くわしくの［貫通確認］で、［確認する衣装］を選びます。</p><p><img src="images/screen_07_check.png" alt="貫通確認タブ。確認する衣装、縮めるキーの条件、手動の確認ボタン、8ポーズの表がある。" loading="lazy" /></p></li><li><p>「結果の管理」の［この変換を取り除く］を押します。</p><p><img src="images/screen_08_result_management.png" alt="貫通確認の下部。対策への案内と、変換し直しても残す・この変換を取り除くを赤い枠で囲む。" loading="lazy" /></p></li></ol><p>服と、アバターに足した骨などをまとめて外します。できた服の欄や、服のInspectorにも同じボタンがあります。いちばんあとに着せた服なら、自動で隠れた元の服も戻ります。自分でチェックを外した服は、チェックを入れ直します。</p>
-<h3>ウィンドウを閉じたあと、続きから始める</h3>
-<p>同じシーンで、ウィンドウを開き直します。［Tools &gt; Kigae Koubo &gt; Open］です。いちばんあとに入れた服や値が戻ります。まだ着せていない値も、Unityを閉じるまでは残ります。</p>
-<p>ほかの服を直すときは、Hierarchyでその服を選びます。シーンを開き直したときも同じです。服のInspectorで［この衣装の調整を再開］を押します。工房にある同じ名前のボタンも使えます。服や値を確かめます。直したい値を変えてから、［この設定で変換］を押します。続きから始めるだけでは、服は変わりません。</p>
-<p>着せた服には、使った値を残します。シーンを保存しておけば、開き直しても使えます。まとめて着せた服なら、入れた並びも戻ります。</p>
-<p>古い版で着せた服には、値が残っていないことがあります。そのときは、はじめの値を使うと出ます。元の服などを消していたら、空の欄へ入れ直します。</p>
-<h2>前の服を残して、着せ直す</h2><ol><li><p>［貫通確認］の［確認する衣装］で、残したい服を選びます。</p></li><li><p>［変換し直しても残す］にチェックを入れます。</p><p><img src="images/screen_08_result_management.png" alt="貫通確認の下部。対策への案内と、変換し直しても残す・この変換を取り除くを赤い枠で囲む。" loading="lazy" /></p></li><li><p>変えたい値を変えます。すき間なら［貫通対策］です。</p></li><li><p>［この設定で変換］を押します。</p><p><img src="images/screen_04_execution.png" alt="下の実行欄。［この設定で変換］を赤い枠で囲んでいる。" loading="lazy" /></p></li></ol>
-<p>残すチェックが無いと、前の服は置き換わります。手で直したところも消えます。チェックがあると、新しい服が別にできます。重なるので、比べるときは片方を隠します。服のInspectorでも、同じチェックを使えます。</p>
-<p>シーンを保存すると、服もその値も残ります。開き直したあとの数は、［貫通確認］で調べ直します。<a href="#ch-04_10b_変換で作ったファイルを片付けたい">ファイルの片付け</a>は別のやり方です。</p>
-</section>
-<section class="chapter" id="ch-04_10b_変換で作ったファイルを片付けたい"><h1>変換で作ったファイルを片付けたい</h1>
-<h2>使わなくなったファイルを、消したい</h2>
-<!-- 得H4 -->
-<p>変換すると、メッシュ（体や服の形そのもの）などのファイルができます。ファイルは、［保存先フォルダ］に入ります。はじめの保存先は、<code>Assets/GP12_KigaeKoubo_Converted</code> です。きがえ工房の本体フォルダの外にあるので、入れ直しても消えません。</p>
-<p>使われなくなったファイルは、自動で片付きます。今すぐ片付けることもできます。</p>
-<h3>自動の片付け</h3>
-<p>くわしくの［⚙ツール設定］に、「変換で作ったファイルの片付け」があります。その下の［使われなくなった、変換で作ったファイルを自動で片付ける］が、自動の片付けです。</p>
-<p>はじめから、チェックが入っています。変換のたびと、Unity を起動したときに、片付けます。起動のときに調べるのは、はじめの保存先だけです。どのシーンからも使われていないファイルだけを、消します。今回の起動で作ったファイルは、次の起動まで残します。Ctrl+Z で戻ることがあるからです。</p>
-<h3>今すぐ片付けます</h3>
-<p>自動の片付けとは別のやり方です。<strong>この手順で消したファイルは、Ctrl+Z でも戻りません。</strong></p>
-<ol>
-<li>
-<p>［いま片付ける...］を押します。</p>
-<p><img src="images/screen_14_tools.png" alt="ツール設定。保存先、ファイルの片付け、自動操作の開始・停止、設定を既定値に戻すボタン。" loading="lazy" /></p>
-</li>
-<li>
-<p>確認の窓の文を読みます。</p>
-<p><img src="images/04_10b_cleanup_dialog.png" alt="片付けの確認の窓。「使われていない、変換で作ったファイル 5 個を削除します。」と出ている。文と、［削除する］［キャンセル］のボタンが赤い枠で囲まれている" loading="lazy" /></p>
-</li>
-<li>
-<p>［削除する］か、［キャンセル］を押します。</p>
-</li>
-</ol>
-<p>窓に、消すファイルの数が出ます。消すものが無いときは、「片付ける、変換で作ったファイルはありません」と出ます。そのときは、［OK］を押します。</p>
-<p>今回の起動で作った、使われていないファイルがあると、ボタンが 3 つになります。3 つ目は、［Undo の履歴も消して片付ける］です。それも、消せます。ただし、Undo の履歴が、すべて消えます。</p>
-<h3>気をつけること</h3>
-<ul>
-<li>消したファイルは、戻りません。</li>
-<li>［Undo の履歴も消して片付ける］を押すと、Ctrl+Z で戻せる操作も無くなります。</li>
-<li>ヒエラルキーで衣装を消しても、ファイルは残ります。</li>
-<li>シーンを保存すると、次の起動のあとの片付けで消えます。</li>
-<li>［設定を既定値に戻す］を押しても、［保存先フォルダ］は戻りません。</li>
-</ul>
-<p>うまくいかないときは、「<a href="#ch-06_困ったとき">困ったとき</a>」を見てください。</p>
-</section>
-<section class="chapter" id="ch-04_11_変換した服をさらに移す"><h1>変換した服を、さらに別のアバターへ移す</h1><p>一度着せた服も、次のアバターへ移せます。たとえば、AからBへ着せた服を、BからCへ移すやり方です。</p>
-<ol><li><p>［衣装］に、できた服を入れます。中のパーツだけではありません。服をまとめている、一番上の行を使います。</p></li><li><p>［変換先アバター（衣装を着せたいアバター）］に、次のアバターを入れます。</p></li><li><p>［この設定で変換］を押します。</p></li></ol>
-<p>前のアバターの骨は、次へは持っていきません。ただし、前のアバターには、服の骨が残ることがあります。そんなときは、「結果」の欄に、取りのぞき方が出ます。</p>
-<p>前のアバターでその服を使わなければ、前の服の記録を使います。Hierarchyで前の服を選びます。Inspectorの［この変換を取り除く］で取り除けます。次に着せた服と取り違えないようにします。</p>
-<p>一度合わせた形を、さらに合わせるやり方です。AからCへそのまま着せた形とは、少し違うことがあります。見た目をもう一度確かめます。</p>
-</section>
-<section class="chapter" id="ch-05_1_上部と下部"><h1>画面の説明（上と下のボタン）</h1>
+</div></details></div><div id="screen-reference"><details class="manual-detail" id="ch-05_1_上部と下部"><summary>画面の説明（上と下のボタン）</summary><div class="chapter-body">
 <p>上と下のボタンは、スクロールしても残ります。タブを変えても、入れた服や値はそのままです。切り替えるだけでは、着せ直しません。</p>
 <h2>上部のボタン</h2><ul>
 <li>工房のボタン: ほかの工房へ移ります。まだ入れていない工房は開けません。</li>
-<li>①［かんたん］［くわしく］: 見せる欄を切り替えます。</li>
-<li>②［使用手引書］: この手引書をブラウザで開きます。</li>
-<li>②［⚙ツール設定］: くわしくでだけ出ます。同じウィンドウで開いたり閉じたりできます。</li>
+<li>［かんたん］［くわしく］: 見せる欄を切り替えます。</li>
+<li>［使用手引書］: この手引書をブラウザで開きます。</li>
+<li>［⚙ツール設定］: くわしくでだけ出ます。同じウィンドウで開いたり閉じたりできます。</li>
 <li>5つのタブ: ［衣装変換］［貫通確認］［貫通対策］［微調整］［VRChat連携］です。</li>
 <li>［変更］: 入れる欄へ戻ります。ほかのタブで、服の名前のそばに出ます。長い名前は、マウスを重ねると読めます。</li></ul>
 <h2>下のボタンとお知らせ</h2>
 <p>［標準設定］なら、はじめの値です。［詳細設定を使用中］なら、変えてあるタブ名が出ます。かんたんに戻しても、その値を使います。</p>
-<p>［設定を変更済み・結果には未反映］は、まだ着せ直していない印です。［設定を見る］で、変えた欄へ戻れます。③［この設定で変換］で、服を着せ直します。</p>
+<p>［設定を変更済み・結果には未反映］は、まだ着せ直していない印です。［設定を見る］で、変えた欄へ戻れます。［この設定で変換］で、服を着せ直します。</p>
 <p>ほかのタブでは、下に［直前の結果］も出ます。うまくいったか、気をつけることがあるか分かります。［貫通確認へ］で調べられます。</p>
-<p><img src="images/screen_15_pending.png" alt="くわしくの下の実行欄。詳細設定を使用中、設定を変更済み・結果には未反映、設定を見るボタン。" loading="lazy" /></p><p><img src="images/screen_01_navigation.png" alt="くわしくの上部と下部。工房の切り替え、かんたん／くわしく、使用手引書、ツール設定、5つのタブ、共通の実行欄を赤い枠と番号で示す。" loading="lazy" /></p></section>
-<section class="chapter" id="ch-05_2_かんたん"><h1>画面の説明（［かんたん］）</h1><p>はじめて開くと、こう見えます。服とアバターを入れて、下のボタンで着せます。重ね着もできます。</p>
+<p><img alt="くわしくの下の実行欄。詳細設定を使用中、設定を変更済み・結果には未反映、設定を見るボタン。" height="152" loading="lazy" src="images/screen_15_pending.png" width="1226"/></p></div></details><details class="manual-detail" id="ch-05_2_かんたん"><summary>画面の説明（［かんたん］）</summary><div class="chapter-body"><p>はじめて開くと、こう見えます。服とアバターを入れて、下のボタンで着せます。重ね着もできます。</p>
 <h2>入力</h2><ul>
 <li>［衣装］: 着せたい服です。Prefabも、シーンに置いた服も使えます。</li>
 <li>［＋ 重ね着の衣装を追加（外側の衣装）］: もう1着を入れる欄が出ます。上から内側、下へ外側です。［−］で欄を消します。</li>
@@ -1347,8 +617,7 @@ th{background:var(--panel)}
 <h2>できたあとの欄</h2><p>うまく着せられたかと、自動チェックが出ます。はじめてなら「新規」と出ます。着せ直したときは、前の服と入れかわったことも知らせます。</p>
 <p>［Sceneで見る］で、できた服へカメラが寄ります。重ね着なら、まとめて映します。［くわしく確認］で、［貫通確認］へ進みます。［この変換を取り除く］で、服と足した骨などを取り除けます。</p>
 <p>着せ終わると、元の服は見えなくなります。戻し方は、<a href="#ch-03b_練習の結果を見る・取り消す">練習の続き</a>にあります。</p>
-<p><img src="images/screen_03_inputs.png" alt="かんたんの入力。番号1は衣装、2は変換先アバター。その下に元アバターを見つけた案内がある。" loading="lazy" /></p></section>
-<section class="chapter" id="ch-05_3_衣装変換"><h1>画面の説明（［衣装変換］）</h1><p>服を入れる欄は、かんたんと同じです。できたあとの［くわしく確認］は、ここでは［貫通確認へ］です。</p>
+<p><img alt="HINOshopのReTulpe衣装Prefabと、変換先Tsubomiを指定する入力例。元アバター未検出でも衣装から合わせます" height="1174" loading="lazy" src="images/screen_17_prefab.png" width="1190"/></p></div></details><details class="manual-detail" id="ch-05_3_衣装変換"><summary>画面の説明（［衣装変換］）</summary><div class="chapter-body"><p>服を入れる欄は、かんたんと同じです。できたあとの［くわしく確認］は、ここでは［貫通確認へ］です。</p><figure class="current-ui"><img alt="ReTulpe衣装PrefabとMANUKAを選んだ、現在の衣装変換タブ" height="1072" loading="lazy" src="images/gp12-ui-inputs-20261109.png" width="1435"/><figcaption>［くわしく］の入力例。元アバターを検出していないため、衣装Prefabから合わせる案内が出ています。素体転写の例ではありません。</figcaption></figure>
 <h2>［自動判定の確認と修正］</h2><p>ふだんは閉じています。体や骨のお知らせがあると、開いて出ます。骨がうまく合わないと出たら、ここで直します。</p><ul>
 <li>［素体（体のメッシュ）］: 見つけた体と、その理由が出ます。［＋ 素体を追加］で、体を手で入れられます。空なら、自動で探します。［−］で欄を減らせます。</li>
 <li>［体と服が一体のアバター］: はじめは［自動（服の下を推定）］です。服のない体を別に入れるときは、［推定しない］にします。</li>
@@ -1356,8 +625,7 @@ th{background:var(--panel)}
 <li>元アバターが見つかった服では、骨を手で補いません。その理由も出ます。</li></ul>
 <h2>体と服がひとつながりのとき</h2><p>［変換先の元の服を隠す（Undoで戻す）］で、もとの服を隠せます。［元の服を隠して仮の肌を表示（試験的・Undoで戻す）］では、肌も出せます。隠したあとは、［元の服を表示に戻す］で戻せます。</p>
 <p>入力に使った服を隠すしくみとは、別です。<a href="#ch-04_05_体と服が一体のアバターに着せたい">体と服がひとつながりのときのやり方</a>を先に読みます。</p>
-<p><img src="images/screen_06_conversion.png" alt="衣装変換タブ。衣装と変換先の下で、自動判定の確認と修正が開いている。" loading="lazy" /></p></section>
-<section class="chapter" id="ch-05_4_貫通確認"><h1>画面の説明（［貫通確認］）</h1><p>できた服を調べるタブです。服の形を直すタブではありません。8つのポーズで調べた数を表でくらべられます。</p>
+</div></details><details class="manual-detail" id="ch-05_4_貫通確認"><summary>画面の説明（［貫通確認］）</summary><div class="chapter-body"><p>できた服を調べるタブです。服の形を直すタブではありません。8つのポーズで調べた数を表でくらべられます。</p>
 <h2>調べるボタン</h2><ul>
 <li>［確認する衣装］: 調べたい服を選びます。何回目に作った服かも分かります。</li>
 <li>［体を縮めるシェイプキーを 0 として調べる］: 下の2つのボタンに使います。ふつうはオンです。オフなら、縮めたままの体で調べます。</li>
@@ -1369,8 +637,7 @@ th{background:var(--panel)}
 <h2>案内と結果の管理</h2><p>［貫通対策へ］では、すき間や動き方を直せます。一部だけなら［微調整へ］へ進みます。</p>
 <p>［変換し直しても残す］なら、前の服と見くらべられます。［この変換を取り除く］で、服と足した骨などを取り除けます。Inspectorの記録にも、同じボタンがあります。</p>
 <p>服が無ければ、［衣装変換へ］で戻れます。<a href="#ch-04_04_貫通の場所を確かめたい">場所と数を見るやり方</a>も読みます。</p>
-<p><img src="images/screen_07_check.png" alt="貫通確認タブ。確認する衣装、縮めるキーの条件、手動の確認ボタン、8ポーズの表がある。" loading="lazy" /></p></section>
-<section class="chapter" id="ch-05_5_貫通対策"><h1>画面の説明（［貫通対策］）</h1><p>肌が出るところを減らすタブです。値を変えたら、［この設定で変換］で着せ直します。そのあと、［貫通確認］で見直します。</p>
+<p><img alt="貫通確認タブ。確認する衣装、縮めるキーの条件、手動の確認ボタン、8ポーズの表がある。" height="778" loading="lazy" src="images/screen_07_check.png" width="1540"/></p></div></details><details class="manual-detail" id="ch-05_5_貫通対策"><summary>画面の説明（［貫通対策］）</summary><div class="chapter-body"><p>肌が出るところを減らすタブです。値を変えたら、［この設定で変換］で着せ直します。そのあと、［貫通確認］で見直します。</p><figure class="current-ui"><img alt="すき間とウェイト、補助の骨を設定する現在の貫通対策タブ" height="1072" loading="lazy" src="images/gp12-ui-penetration-20261109.png" width="1435"/><figcaption>設定の位置を示す画面です。この入力では元アバターがないため、コピーする距離・ポーズを考えたウェイト調整・補助の骨は使用されません。チェックが入っていても、欄に出る案内を確認してください。</figcaption></figure>
 <h2>前に調べた数</h2><p>調べたことがあれば、上にまとめが出ます。止まった姿と、8ポーズの数が分かります。新しい値で着せたときの数ではありません。</p>
 <h2>止まっていても肌が出る</h2><ul>
 <li>［すき間の最小値 (mm)］: 体からどれだけ離すかです。食い込むときは、大きくします。</li>
@@ -1382,19 +649,17 @@ th{background:var(--panel)}
 <li>［補助の骨を作る］: 座ったときに、スカートへ脚が入りにくくします。良くならないときは、作りません。</li></ul>
 <p>元アバターが無いときは、下の3つは使いません。ウェイトを移さないときも、コピーする距離は使いません。使わない理由が出ても、値は残ります。</p>
 <h2>一部だけ肌が出る</h2><p>部分ごとのすき間も、一覧で見られます。名前と幅、使うかどうかが出ます。ここでは変えられません。膝の先だけなら、［微調整で編集］へ進みます。</p>
-<p><img src="images/screen_09_measures.png" alt="貫通対策タブ。前回の確認の要約、すき間、動かしたときの対策、部分ごとのすき間の一覧。" loading="lazy" /></p></section>
-<section class="chapter" id="ch-05_6_微調整"><h1>画面の説明（［微調整］）</h1><p>服の形を整えるタブです。変えた値は、次に着せ直すときから使います。</p>
+</div></details><details class="manual-detail" id="ch-05_6_微調整"><summary>画面の説明（［微調整］）</summary><div class="chapter-body"><p>服の形を整えるタブです。変えた値は、次に着せ直すときから使います。</p><figure class="current-ui"><img alt="体型キーと部分ごとの設定を開く現在の微調整タブ" height="1072" loading="lazy" src="images/gp12-ui-fine-20261109.png" width="1435"/><figcaption>この入力では元アバターがないため、骨の位置合わせと姿勢をそろえる項目は使用されません。部分ごとの設定は、下の［部分ごとの設定を追加］から開きます。</figcaption></figure>
 <h2>全体の形と体型キー</h2><ul>
 <li>［骨の位置を自動で合わせる］: 骨の位置や長さを合わせます。ふつうはオンです。</li>
 <li>［姿勢をそろえてから変換する］: 腕や脚の向きをそろえます。ふつうはオンです。終わると元の姿に戻ります。</li>
 <li>元アバターが見つからないときは、この2つを使いません。理由も出ます。</li>
 <li>体のシェイプキーの折りたたみ: 合わせたいキーを選べます。数は、チェックしたキーの数です。［すべて］でまとめて入れられます。［なし］で外せます。</li>
 <li>［VRChat連携で同期の設定を見る］: 体と服のキーを、一緒に動かす欄へ進みます。今、使うかどうかも出ます。</li></ul>
-<h2>部分ごとの設定</h2><p><img src="images/screen_11_parts.png" alt="微調整の中の部分ごとの設定。1は変換の効き具合、2は最小のすき間。写真の値は、欄を見せるための例。" loading="lazy" /></p><p>［部分設定の衣装］で、服を選びます。まだ無ければ、［部分ごとの設定を追加］で足せます。いくつもあれば、［編集する設定の場所］で選べます。親に付けたものは、その下の服にも使います。</p>
+<h2>部分ごとの設定</h2><p>［部分設定の衣装］で、服を選びます。まだ無ければ、［部分ごとの設定を追加］で足せます。いくつもあれば、［編集する設定の場所］で選べます。親に付けたものは、その下の服にも使います。</p>
 <p>ここに出る欄は、Inspectorと同じです。マテリアルやブラシなどで、変えたいところを決めます。すき間や動き方を、そこだけ変えられます。<a href="#ch-05_4_画面の説明_部分ごとの設定">各欄の説明</a>に続きます。</p>
 <p>Prefabへ足すと、ファイルが変わります。［Prefab に追加する］で進めます。Ctrl+Zでは戻せません。やめるなら［キャンセル］です。ブラシは、服やタブを変えると終わります。塗ったものは残ります。</p>
-<p><img src="images/screen_10_fine.png" alt="微調整タブ。骨と姿勢の合わせ方、体型キー、部分ごとの設定の入口。" loading="lazy" /></p></section>
-<section class="chapter" id="ch-05_7_VRChat連携"><h1>画面の説明（［VRChat連携］）</h1><p>骨のつなぎ方と、揺れものを決めます。上の案内で、SDKとModular Avatarがあるか分かります。</p>
+</div></details><details class="manual-detail" id="ch-05_7_VRChat連携"><summary>画面の説明（［VRChat連携］）</summary><div class="chapter-body"><p>骨のつなぎ方と、揺れものを決めます。上の案内で、SDKとModular Avatarがあるか分かります。</p><figure class="current-ui"><img alt="組み込み方とPhysBone、コライダーの設定が並ぶ現在のVRChat連携タブ" height="1072" loading="lazy" src="images/gp12-ui-vrchat-20261109.png" width="1435"/><figcaption>ReTulpe × MANUKA の設定画面。VRChat SDK と Modular Avatar がある環境での操作位置の例です。設定画面の表示だけで、VRChat内の揺れや接触の仕上がりを保証するものではありません。</figcaption></figure>
 <h2>アバターへの組み込み方</h2><ul>
 <li>［衣装の骨を残して、変換先の骨の子にする（既定）］: 服の骨を残します。体型キーをそろえるかは選べます。</li>
 <li>［Modular Avatar で結ぶ（Merge Armature）］: 服の骨をまとめたまま結びます。体型キーはそろえます。</li>
@@ -1404,11 +669,10 @@ th{background:var(--panel)}
 <li>［PhysBone を引き継ぐ（VRChat）］: 服の揺れものを付け直します。はじめはオンです。</li>
 <li>［スカートに手・腕・脚の当たり判定（VRChat）］: 布を押すところを足します。はじめはオンです。</li>
 <li>［スカートの骨に PhysBone を付ける（VRChat）］: まだ揺れないスカートに付けます。はじめはオフです。使うときだけオンにします。</li></ul>
-<p>この3つは、SDKがあるときだけ出ます。VRChatの中でどう揺れるかは、まだ確かめていません。</p>
+<p>この3つは、SDKがあるときだけ出ます。揺れ幅は再生モードで確認し、衣装に合わせて調整します。</p>
 <h2>書き出すとき</h2><p>［出力ウェイトを4本に制限（互換用）］は、できた服だけを4本に絞ります。元のメッシュは変えません。オフなら5本目からも残します。動かした形が変わることがあります。</p>
 <p>補助の骨は、VRChatへ載せるとき、自動でConstraintに変わります。作りたいときは、［貫通対策］を使います。</p>
-<p><img src="images/screen_13_vrchat.png" alt="VRChat連携タブ。組み込み方の3つの選択と同期、PhysBoneの3項目、出力ウェイトの互換用の設定。" loading="lazy" /></p></section>
-<section class="chapter" id="ch-05_8_ツール設定"><h1>画面の説明（［⚙ツール設定］）</h1><p>くわしくの右上で、開いたり閉じたりできます。前に見ていたタブや、選んだ服はそのままです。</p>
+</div></details><details class="manual-detail" id="ch-05_8_ツール設定"><summary>画面の説明（［⚙ツール設定］）</summary><div class="chapter-body"><p>くわしくの右上で、開いたり閉じたりできます。前に見ていたタブや、選んだ服はそのままです。</p>
 <h2>どこへ入れるか・片付け</h2><p>［保存先フォルダ］は、できたファイルを入れる場所です。はじめは <code>Assets/GP12_KigaeKoubo_Converted</code> です。</p>
 <p>［使われなくなった、変換で作ったファイルを自動で片付ける］なら、自動で消せます。今すぐなら［いま片付ける...］です。消す数を見て、［削除する］で進めます。やめるなら［キャンセル］です。</p>
 <p>［Undo の履歴も消して片付ける］では、Ctrl+Zで戻れる操作も無くなります。消したファイルは戻りません。先に<a href="#ch-04_10b_変換で作ったファイルを片付けたい">片付けのやり方</a>を読みます。</p>
@@ -1416,10 +680,9 @@ th{background:var(--panel)}
 <h2>自動操作（HTTP）</h2><p>プログラムから使う人のための欄です。止まっているか動いているかが分かります。［開始］で動かし、［停止］で止めます。動いているときは、つなぐ先のURLも出ます。つなぐための秘密の値は出ません。</p>
 <p>スクリプトを読み直すと、止まります。Playに入るときや、Unityを閉じるときも同じです。ふつうにウィンドウを使うなら、止めたままでかまいません。</p>
 <h2>はじめの値へ戻す</h2><p>［設定を既定値に戻す］で、着せ方をはじめの値へ戻せます。［保存先フォルダ］は、そのままです。</p>
-<p><img src="images/screen_14_tools.png" alt="ツール設定。保存先、ファイルの片付け、自動操作の開始・停止、設定を既定値に戻すボタン。" loading="lazy" /></p></section>
-<section class="chapter" id="ch-05_4_画面の説明_部分ごとの設定"><h1>部分ごとの設定（Inspector）</h1>
+<p><img alt="ツール設定。保存先、ファイルの片付け、自動操作の開始・停止、設定を既定値に戻すボタン。" height="1174" loading="lazy" src="images/screen_14_tools.png" width="1225"/></p></div></details><details class="manual-detail" id="ch-05_4_画面の説明_部分ごとの設定"><summary>部分ごとの設定（Inspector）</summary><div class="chapter-body">
 <p>同じ欄を、［微調整］でもInspectorでも使えます。やり方は「<a href="#ch-04_06_一部だけ形を変えたくない">一部だけ、形を変えたくない</a>」をご覧ください。</p>
-<ol><li><p>Hierarchyで服や、その親を選びます。</p></li><li><p>Inspectorの［Add Component］で足します。名前は「きがえ工房 > Cloth Mask」です。</p><p><img src="images/05_4_mask_inspector.png" alt="Inspector に表示された Cloth Mask。マテリアル・マスク画像・ブラシの指定と、変換の効き具合・すき間・ウェイトの設定がある" loading="lazy" /></p></li></ol>
+<ol><li><p>Hierarchyで服や、その親を選びます。</p></li><li><p>Inspectorの［Add Component］で足します。名前は「きがえ工房 &gt; Cloth Mask」です。</p><p><img alt="Inspector に表示された Cloth Mask。マテリアル・マスク画像・ブラシの指定と、変換の効き具合・すき間・ウェイトの設定がある" height="950" loading="lazy" src="images/05_4_mask_inspector.png" width="1280"/></p></li></ol>
 <h2>Inspector の設定</h2>
 <ul>
 <li>①［名前］: 見分けるための名前です。［削除］で消します。</li>
@@ -1434,8 +697,7 @@ th{background:var(--panel)}
 <li>⑧［最小のすき間を指定］: ［すき間 (mm)］で、体とのすき間を決めます。</li>
 <li>⑨［この部分のウェイト］: ［全体の設定のまま］［移す］［移さない］から選びます。</li><li>ここで決めたところは、そのとおりに動きます。ほかのところは、［ウェイトを移す］に従います。</li><li>［マテリアル］は並んだマテリアルを変えられます。［マスク画像］と［対象の色］は絵で、変えるところを決めます。［白い所］か［黒い所］を選べます。</li><li>［塗るメッシュ］で、塗るものを選びます。［ブラシで塗る］で始めます。［塗りをすべて消す］で、塗ったものを消します。</li><li>［すべて選ぶ］で、塗るメッシュをまるごと選べます。［反転］で、塗ったところと塗っていないところを入れかえます。</li><li>Sceneの［半径 (cm)］は太さ、［強さ］は濃さです。［ブラシを終了］で終えます。</li>
 </ul>
-</section>
-<section class="chapter" id="ch-06_困ったとき"><h1>困ったとき</h1>
+</div></details></div><div id="faq-reference"><details class="manual-detail" id="trial-faq"><summary>無料の1組・Proキーについて</summary><div class="chapter-body"><h3>同じ衣装なのに Pro の案内が出たら</h3><p>最初に成功した衣装セットと、変換先アバターを選んでいるか確認してください。別衣装を追加・差し替えした場合、別アバターへ変換する場合は Pro の対象です。元の衣装の複製や別ファイルへの差し替えで識別が変わることもあります。元の変換記録の［この衣装の調整を再開］から戻ってみてください。</p><h3>途中で変換に失敗したら</h3><p>成功前の失敗では無料枠を消費しません。入力や表示された案内を確認して、同じ設定からやり直してください。</p><h3>キーを入れても Pro にならないとき</h3><p>本体が Proキー対応版か確認し、<code>Assets/Koubo_Pro/KouboProLicense.bytes</code> が取り込まれているか見ます。キーの内容は編集せず、購入済みパッケージを再度 Import してください。</p><h3>Proキーを外したら保存したものは消える？</h3><p>無料版の利用枠に戻ります。2つ目以降のスロットの呼び出しなどは Pro が必要です。保存済みライブラリは削除せずに残し、キーを再度取り込んでください。</p></div></details><details class="manual-detail" id="ch-06_困ったとき"><summary>困ったとき</summary><div class="chapter-body">
 <p>まず、ウィンドウの赤や黄色の案内を読みます。「→」のあとに、直し方があります。</p>
 <h2>［この設定で変換］が灰色で押せない</h2>
 <ul>
@@ -1452,7 +714,7 @@ th{background:var(--panel)}
 <li>どうなっている: 人型の骨の設定がありません。</li>
 <li>どうすれば: モデルの［Rig］タブを開きます。［Animation Type］を Humanoid にします。［Apply］を押します。</li>
 </ul>
-<p><img src="images/06_02_rig_tab.png" alt="モデルのインスペクターの Rig タブ。Animation Type が Humanoid になっていて、Apply と Configure のボタンがある。Animation Type と Apply が赤い枠で囲まれている" loading="lazy" /></p>
+<p><img alt="モデルのインスペクターの Rig タブ。Animation Type が Humanoid になっていて、Apply と Configure のボタンがある。Animation Type と Apply が赤い枠で囲まれている" height="426" loading="lazy" src="images/06_02_rig_tab.png" width="1280"/></p>
 <h2>「素体（体のメッシュ）が見つかりません」と出る</h2>
 <ul>
 <li>どうなっている: 体のメッシュが分かりません。</li>
@@ -1494,8 +756,7 @@ th{background:var(--panel)}
 <li>どうなっている: 思わぬ問題です。シーンには、何も残りません。</li>
 <li>どうすれば: Console の赤い文を見て、入れたものを見直します。直らなければ、その文を控えて問い合わせます。</li>
 </ul>
-</section>
-<section class="chapter" id="ch-06b_着せたあとに困ったとき"><h1>着せたあとに困ったとき</h1>
+</div></details><details class="manual-detail" id="ch-06b_着せたあとに困ったとき"><summary>着せたあとに困ったとき</summary><div class="chapter-body">
 <h2>メッシュ工房で直した服を着せたい</h2>
 <ul>
 <li>どうすれば: メッシュ工房で保存してから着せ直します。プレビューを見せていても隠していても、保存したものを使います。</li>
@@ -1511,7 +772,7 @@ th{background:var(--panel)}
 </ul>
 <h2>衣装の参照が、変換先の外を指すと出る</h2>
 <ul><li>どうなっている: 古い版で変換した衣装などで、別のアバターの骨や体を指した参照が残っています。</li>
-<li>どうすれば: ［くわしく ＞ 貫通確認］で衣装を選び、［参照を直す］を押します。<a href="#repair-outside-references">画像つきの手順</a>で、外した行・部品の名前も確かめます。Ctrl+Zで戻せます。</li></ul>
+<li>どうすれば: ［くわしく ＞ 貫通確認］で衣装を選び、［参照を直す］を押します。<a href="#repair-outside-references">参照を直す手順</a>で、外した行・部品の名前も確かめます。Ctrl+Zで戻せます。</li></ul>
 <h2>衣装が体に食い込む</h2>
 <ul>
 <li>どうなっている: すき間が足りません。</li>
@@ -1532,8 +793,7 @@ th{background:var(--panel)}
 <li>どうなっている: ほかの服やタブへ移ると、ブラシは終わります。塗った値は残ります。</li>
 <li>どうすれば: 衣装を選び直します。［ブラシで塗る］を押します。</li>
 </ul>
-</section>
-<section class="chapter" id="ch-07_言葉の一覧"><h1>言葉の一覧</h1>
+</div></details><details class="manual-detail" id="ch-07_言葉の一覧"><summary>言葉の一覧</summary><div class="chapter-body">
 <p>この手引書の言葉を、まとめました。わからない言葉が出たら、ここでさがします。すべて、おぼえなくてもかまいません。はじめて出たところにも、かっこで書いてあります。かっこの中が、その言葉のいみです。ブラウザで、ことばをさがすこともできます。</p>
 <h2>Unity の言葉</h2>
 <p>ウィンドウがどこにあるかは、「<a href="#ch-02_0_Unityの基本の操作">Unity の基本の操作</a>」にあります。</p>
@@ -1596,68 +856,41 @@ th{background:var(--panel)}
 <li>パフォーマンスランク: アバターの重さの目安。</li>
 <li>VCC: VRChat 用のアプリ。</li>
 </ul>
-</section>
-<section class="chapter" id="ch-08_クレジット"><h1>クレジット</h1>
-<p>この手引書の写真には、次の素材を、それぞれの利用規約の範囲で使っています。素材のデータは、きがえ工房には入っていません。</p>
-<h2>お借りしたモデル</h2>
-<ul>
-<li>MANUKAちゃん ver1.02（진권（ジンゴ）さん）</li>
-<li>Tsubomiちゃん ver1.4（こここやさん）</li>
-<li>SDこはくちゃんズ v1.1.0（ユニティちゃんライセンス（UCL 2.02）。© Unity Technologies Japan/UCL）</li>
-</ul>
-<p>SDこはくちゃんズは、ユニティちゃんライセンス条項の元に提供されています。</p>
-<div role="img" aria-label="ユニティちゃんライセンスのロゴ（LICENSED UNDER UNITY-CHAN LICENSE）" style="display:inline-block;background:#fff;border-radius:8px;padding:12px 16px;margin:8px 0;line-height:0"><svg width="140" height="121" aria-hidden="true" focusable="false" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 140 121" enable-background="new 0 0 140 121" xml:space="preserve"> <g> <path d="M70.1,36.2c2.9,0,5.8,0.3,8.4,0.9l4-5.5c-3.8-1.8-8-2.8-12.4-2.8s-8.6,1-12.4,2.8l4,5.5C64.3,36.5,67.1,36.2,70.1,36.2z"/> <path d="M70.1,91.5c14.3,0,24.2-9.5,27.9-22.6H42.1C45.9,81.9,55.8,91.5,70.1,91.5z"/> <path d="M98.2,50.4c-1.4-5.2-4.2-9.9-8.1-13.6l-4.9,2.3C91.2,41.8,95.8,45.7,98.2,50.4z"/> <path d="M70.5,48.9c0,0,3.2,7,7.3,8.4c-2.3,2.7-2.9,7-1.7,5.8c6.3-6.5,16.2-8.4,20.3-3c0.5,0.7,0.8,1.3,1.1,1 c1-0.9,0.3-6.7-3.6-8.8c-4.4-2.4-9.8-0.6-14.1,3C74.7,54.3,70.5,48.9,70.5,48.9z"/> <path d="M54.8,39.2l-4.9-2.4c-3.8,3.6-6.7,8.3-8.1,13.6C44.3,45.7,48.9,41.7,54.8,39.2z"/> <g> <path d="M140,24.3h-30.6C99.7,13.6,85.7,6.9,70.1,6.9s-29.6,6.7-39.4,17.4H0l20.2,17c-2.2,5.9-3.4,12.2-3.4,18.8 c0,29.4,23.8,53.2,53.2,53.2s53.2-23.8,53.2-53.2c0-6.6-1.2-13-3.4-18.9L140,24.3z M6.9,26.8l25.4,0.1c0,0,2.9-3.9,6.4-7 s7.3-4.3,7.3-4.3l9.4,12.8c4.5-2.1,9.5-3.3,14.7-3.3c5.3,0,10.3,1.2,14.7,3.3l9.4-12.8c0,0,3.8,1.2,7.3,4.3s6.4,7,6.4,7l25.4-0.1 l-27.3,21c0,0-0.9-3.5-3.4-7.8c-2.6-4.4-5.5-6.5-5.5-6.5l-2.8,1.4c6.6,6.4,10.8,15.3,10.8,25.2c0,19.3-15.6,35-35,35 c-19.3,0-35-15.6-35-35c0-4.5,0.9-8.9,2.4-12.8c0.6,1.1,2.5,4.7,5,6.8c-1.3,2.2-0.5,4.4,1.5,6.4c2.9,2.9,16.6,3.8,20.1,2.6 c4.5-1.6-10.8-17.5-18.8-11.8c-0.5,0.4-1,0.7-1.4,1.1c-3.2-1.6-5.6-4.3-6.4-5.2c1.9-4.7,4.7-8.9,8.3-12.3L43,33.6 c0,0-2.9,2.1-5.5,6.5c-2.5,4.2-3.4,7.8-3.4,7.8L6.9,26.8z M116,56.3l-9.4,1.1l-0.4-3.3l9.4-1.1L116,56.3z M19.3,57.5 c0.1-1.1,0.2-2.1,0.5-2.8c0.3-0.8,0.7-1.4,1.3-1.8c0.5-0.4,1.1-0.6,1.8-0.8c0.7-0.1,1.8-0.2,3.2-0.1l1.4,0.1l5.6,0.3L32.9,56 l-6.4-0.3c-0.9,0-1.6-0.1-2,0c-0.4,0-0.8,0.1-1,0.2c-0.3,0.1-0.6,0.3-0.8,0.7c-0.2,0.3-0.3,0.7-0.3,1.2s0,0.9,0.2,1.3 c0.2,0.3,0.4,0.6,0.7,0.8c0.3,0.1,0.6,0.2,1,0.3s1.1,0.1,2,0.2h0.9l5.5,0.3L32.5,64l-7-0.4c-1.4-0.1-2.5-0.2-3.2-0.4 s-1.3-0.5-1.7-1c-0.5-0.5-0.9-1.1-1.1-1.9C19.3,59.5,19.2,58.6,19.3,57.5z M23.7,80.2l4.7-7c0.1-0.1,0.3-0.4,0.6-0.7 c0.3-0.3,0.7-0.7,1.1-1.2c-0.5,0.3-0.9,0.5-1.3,0.7s-0.7,0.3-1,0.4l-6.1,2.2l-1.2-3.3l12.4-4.5l1.2,3.3l-4.7,7 c-0.1,0.1-0.3,0.4-0.6,0.7c-0.3,0.4-0.7,0.7-1.2,1.2c0.5-0.3,0.9-0.5,1.3-0.6c0.4-0.2,0.7-0.3,1.1-0.4l6.1-2.2l1.2,3.2l-12.4,4.5 L23.7,80.2z M31.3,92.5l-2.2-2.9l10.4-8.1l2.2,2.9L31.3,92.5z M48.8,94.8L46.5,93l-6.2,7.9l-2.8-2.2l6.2-7.9L41.4,89l1.9-2.5 l7.5,5.9L48.8,94.8z M56.3,102.4l-2.1,5.7l-3.3-1.2l2.1-5.7l-1.9-8.3l3.9,1.4l0.5,3.8v0.1c0.1,0.4,0.1,0.8,0,1.1 c0.2-0.3,0.4-0.5,0.7-0.8c0.1,0,0.1-0.1,0.1-0.1l2.8-2.6l3.9,1.4L56.3,102.4z M76.7,102.3l-4.1,3.1l1.7,4.9l0,0l-4.2-3l-4.1,3.1 l0,0l1.5-5l-4.2-2.9v-0.1l5.1-0.1l1.5-4.9H70l1.7,4.9H76.7L76.7,102.3z M89.6,107c-0.5,0.3-1,0.6-1.5,0.8c-0.7,0.2-1.3,0.4-2,0.4 c-0.6,0-1.2,0-1.8-0.2c-1.2-0.3-2.1-0.8-3-1.6c-0.8-0.8-1.4-1.7-1.9-2.9c-0.3-1-0.5-1.9-0.5-2.8s0.2-1.8,0.6-2.6 c0.4-0.8,0.9-1.5,1.5-2.1s1.4-1,2.3-1.3c0.5-0.2,1.1-0.3,1.7-0.4s1.2-0.1,1.8,0l1.3,3.7c-0.6-0.3-1.2-0.6-1.8-0.6 c-0.5-0.1-1.1,0-1.6,0.2c-1,0.3-1.6,1-2,1.8c-0.4,0.9-0.4,1.9,0,2.9s1,1.7,1.8,2.1s1.7,0.5,2.7,0.1c0.5-0.2,1-0.5,1.4-0.9 s0.7-1,1-1.6l1.3,3.7C90.5,106.3,90.1,106.7,89.6,107z M103.6,97.8l-3.4-4.2l-3.7,3l3.4,4.2l-2.8,2.3l-8.3-10.3l2.8-2.3l3.2,4 l3.7-3l-3.2-4l2.8-2.3l8.3,10.3L103.6,97.8z M115.1,83l-2.4-0.6l-2.6,4.4l1.7,1.8l-1.8,3.1l-9-10.6l2.3-3.9L117,80L115.1,83z M120.3,65.4l-7.5,3.8c-0.2,0.1-0.5,0.2-0.9,0.3c-0.4,0.1-1,0.3-1.6,0.5c0.6,0,1,0,1.5,0.1c0.4,0,0.8,0.1,1.1,0.1l6.4,1.1 l-0.6,3.4l-13-2.2l0.6-3.4l7.5-3.8c0.2-0.1,0.5-0.2,0.9-0.3c0.4-0.1,1-0.3,1.6-0.5c-0.6,0-1,0-1.5-0.1c-0.4,0-0.8-0.1-1.1-0.1 l-6.4-1.1l0.6-3.4l13,2.2L120.3,65.4z M120.5,54.1c0.1,0.5-0.1,0.9-0.4,1.3c-0.3,0.4-0.7,0.6-1.2,0.7c-0.5,0.1-1-0.1-1.3-0.4 c-0.4-0.3-0.6-0.7-0.7-1.2s0.1-1,0.4-1.4s0.7-0.6,1.2-0.7c0.5-0.1,1,0.1,1.4,0.4C120.2,53.2,120.4,53.6,120.5,54.1z"/> <path d="M105.2,81.4l3.1,3.4l1.8-3.1l-4.4-1.1c-0.1,0-0.3-0.1-0.6-0.2c-0.3-0.1-0.7-0.2-1.1-0.3c0.2,0.2,0.5,0.5,0.7,0.7 C104.8,81,105,81.2,105.2,81.4z"/> </g> <path d="M14.9,45.7l-0.6,2.2l0,0l-0.8-2.2l-2.4,0.1l0,0l1.9-1.5l-0.8-2.2l0,0l2,1.3L16,42l0,0l-0.6,2.2l2,1.3l0,0L14.9,45.7z"/> <path d="M13.3,53.9L13,56.3l0,0l-1.1-2.1l-2.3,0.4l0,0l1.6-1.7L10,50.8l0,0l2.1,1l1.6-1.7l0,0l-0.3,2.3l2.1,1l0,0L13.3,53.9z"/> <path d="M12.9,62.4v2.3l0,0l-1.4-1.9l-2.2,0.8l0,0l1.4-1.9l-1.4-1.9l0,0l2.3,0.7l1.3-1.9l0,0v2.3l2.3,0.7l0,0L12.9,62.4z"/> <path d="M127.3,61.8l0.1-2.3l0,0l1.3,1.9l2.3-0.7l0,0l-1.4,1.9l1.3,2l0,0l-2.2-0.8l-1.4,1.8l0,0l0.1-2.3l-2.2-0.8l0,0L127.3,61.8z" /> <path d="M126.8,53.4l-0.3-2.3l0,0l1.6,1.7l2.2-1l0,0l-1.2,2.1l1.6,1.7l0,0l-2.3-0.5l-1.1,2l0,0l-0.3-2.3l-2.3-0.5l0,0L126.8,53.4z" /> <path d="M125.1,45.1l-0.6-2.3l0,0l1.8,1.5l2-1.3l0,0l-0.8,2.2l1.8,1.5l0,0l-2.4-0.1l-0.8,2.2l0,0l-0.6-2.3l-2.4-0.1l0,0L125.1,45.1 z"/> <path d="M109.8,19.7l-1.7-1.6l0,0l2.3,0.4l1.1-2.1l0,0l0.4,2.3l2.3,0.4l0,0l-2.1,1.1l0.4,2.3l0,0l-1.7-1.6l-2.1,1.1l0,0L109.8,19.7 z"/> <path d="M102.9,14l-1.9-1.4l0,0h2.3l0.7-2.3l0,0l0.7,2.2h2.4l0,0l-1.9,1.4l0.7,2.2l0,0l-1.9-1.4l-1.9,1.4l0,0L102.9,14z"/> <path d="M95.2,9.5l-2.1-1.1l0,0L95.4,8l0.4-2.3l0,0l1.1,2.1l2.3-0.4l0,0l-1.7,1.7l1.1,2.1l0,0l-2.1-1.1l-1.7,1.7l0,0L95.2,9.5z"/> <path d="M86.9,6.2l-2.2-0.7l0,0l2.2-0.7V2.4l0,0l1.4,1.9l2.2-0.7l0,0l-1.4,1.9l1.4,1.9l0,0l-2.2-0.7l-1.4,1.9l0,0V6.2z"/> <path d="M78.2,4.3l-2.3-0.4l0,0L78,2.8l-0.4-2.3l0,0l1.7,1.7L81.4,1l0,0l-1.1,2.1L82,4.8l0,0l-2.3-0.4l-1.1,2.1l0,0L78.2,4.3z"/> <path d="M69.2,3.7h-2.3l0,0l1.9-1.4L68,0.1l0,0l2,1.3L71.8,0l0,0l-0.7,2.3L73,3.6l0,0h-2.3L70,5.9l0,0L69.2,3.7z"/> <path d="M60.3,4.5L58,4.9l0,0l1.7-1.6l-1.1-2.1l0,0l2.1,1.1l1.7-1.7l0,0L62,2.8l2.1,1.1l0,0l-2.3,0.4l-0.4,2.3l0,0L60.3,4.5z"/> <path d="M51.7,6.7l-2.2,0.7l0,0l1.4-1.9l-1.4-1.9l0,0l2.3,0.7l1.4-1.9l0,0v2.4l2.2,0.7l0,0l-2.2,0.7v2.4l0,0L51.7,6.7z"/> <path d="M43.5,10.2l-2.1,1.1l0,0l1.1-2.1l-1.7-1.7l0,0l2.3,0.4l1.1-2.1l0,0l0.4,2.3l2.3,0.4l0,0l-2.1,1.1l0.4,2.3l0,0L43.5,10.2z" /> <path d="M35.9,15L34,16.4l0,0l0.7-2.2l-1.9-1.4l0,0h2.4l0.7-2.3l0,0l0.7,2.3h2.3l0,0L37,14.2l0.7,2.2l0,0L35.9,15z"/> <path d="M29.2,20.9l-1.7,1.7l0,0l0.4-2.3l-2.1-1.1l0,0l2.3-0.4l0.4-2.3l0,0l1.1,2.1l2.3-0.4l0,0l-1.7,1.7l1.1,2.1l0,0L29.2,20.9z" /> <g> <path d="M9.8,69.4l5.9-1.1L16,70l-4.5,0.8l0.4,2l-1.4,0.3L9.8,69.4z"/> <path d="M10.7,73.9l5.8-1.4l0.4,1.6l-5.8,1.4L10.7,73.9z"/> <path d="M18.2,79.3l-1.7,0.5c0.2-0.3,0.3-0.6,0.3-0.8c0-0.2,0-0.5-0.1-0.7c-0.1-0.4-0.4-0.8-0.8-0.9c-0.4-0.2-0.8-0.2-1.3,0 c-0.5,0.1-0.8,0.4-1,0.8s-0.2,0.8-0.1,1.2c0.1,0.2,0.2,0.5,0.4,0.6c0.2,0.2,0.4,0.3,0.7,0.5L13,81c-0.2-0.2-0.4-0.4-0.5-0.7 c-0.1-0.2-0.2-0.5-0.3-0.7C12,79.3,12,79,12,78.7s0-0.6,0.1-0.8c0.1-0.5,0.4-1,0.8-1.3c0.4-0.4,0.8-0.6,1.4-0.8 c0.4-0.1,0.9-0.2,1.3-0.2c0.4,0,0.8,0.1,1.2,0.3c0.4,0.2,0.7,0.4,0.9,0.7c0.2,0.3,0.4,0.7,0.6,1.1c0.1,0.2,0.1,0.5,0.1,0.8 C18.3,78.7,18.3,79,18.2,79.3z"/> <path d="M13.1,82l5.5-2.3l1.4,3.4l-1.2,0.5L18,81.7l-1,0.4l0.8,1.8l-1.2,0.5l-0.8-1.8L15,83l0.8,1.9l-1.2,0.5L13.1,82z"/> <path d="M15.1,86.6l5.3-2.9l0.8,1.4l-1.6,3.5c0,0.1-0.1,0.2-0.2,0.4c-0.1,0.2-0.3,0.4-0.4,0.6c0.2-0.1,0.4-0.3,0.5-0.4 c0.2-0.1,0.3-0.2,0.4-0.3l2.6-1.4l0.8,1.4L18,91.8l-0.8-1.4l1.6-3.5c0-0.1,0.1-0.2,0.2-0.4c0.1-0.2,0.3-0.4,0.4-0.6 c-0.2,0.1-0.4,0.3-0.6,0.4s-0.3,0.2-0.4,0.3L15.8,88L15.1,86.6z"/> <path d="M20.5,92.1c-0.1,0.4-0.1,0.7-0.1,0.9c0,0.3,0.1,0.5,0.2,0.7s0.3,0.3,0.5,0.3s0.3,0,0.5-0.1s0.3-0.2,0.3-0.4 c0-0.2,0-0.5-0.2-0.9c-0.2-0.6-0.3-1-0.2-1.4c0.1-0.3,0.3-0.6,0.7-0.9c0.5-0.3,1-0.4,1.5-0.3s0.9,0.4,1.3,0.9 c0.2,0.3,0.3,0.6,0.4,0.9s0.1,0.6,0.1,0.9l-1.3,0.2c0-0.2,0-0.5,0-0.7s-0.1-0.4-0.2-0.5c-0.1-0.2-0.2-0.3-0.4-0.3 c-0.1,0-0.3,0-0.4,0.1S23,91.7,23,91.8c0,0.1,0,0.4,0.1,0.7v0.1c0.2,0.7,0.3,1.1,0.3,1.4c0,0.2-0.1,0.4-0.3,0.6 c-0.1,0.2-0.3,0.3-0.5,0.5c-0.5,0.4-1.1,0.5-1.6,0.4c-0.6-0.1-1-0.5-1.4-1.1c-0.2-0.3-0.4-0.7-0.5-1.1s-0.1-0.8,0-1.2H20.5z"/> <path d="M21.6,97.1l4.7-3.8l2.3,2.9l-1,0.8l-1.3-1.6l-0.8,0.7l1.2,1.5l-1,0.8l-1.2-1.5l-0.8,0.6l1.3,1.6l-1,0.8L21.6,97.1z"/> <path d="M24.8,100.9l4.3-4.2l0.9,0.9c0.7,0.7,1.1,1.2,1.3,1.5c0.2,0.3,0.3,0.7,0.4,1c0.1,0.5,0,0.9-0.1,1.3 c-0.2,0.4-0.4,0.8-0.8,1.2c-0.4,0.4-0.8,0.6-1.2,0.8c-0.4,0.1-0.9,0.2-1.3,0.1c-0.3-0.1-0.7-0.2-1-0.4c-0.3-0.2-0.8-0.6-1.3-1.1 l-0.2-0.2L24.8,100.9z M26.8,101.1l0.2,0.2c0.5,0.5,0.9,0.7,1.3,0.7s0.8-0.2,1.2-0.6c0.4-0.4,0.6-0.8,0.6-1.2 c0-0.4-0.2-0.8-0.7-1.3l-0.2-0.2L26.8,101.1z"/> <path d="M35,102.5l1.3,1l-1.7,2.3c-0.3,0.3-0.4,0.6-0.5,0.8c-0.1,0.2-0.2,0.3-0.2,0.4c0,0.2,0,0.3,0.1,0.5s0.2,0.3,0.4,0.4 s0.4,0.2,0.5,0.2c0.2,0,0.3,0,0.5-0.1c0.1-0.1,0.2-0.2,0.4-0.3c0.1-0.1,0.3-0.4,0.6-0.7l0.2-0.3l1.5-2l1.3,1l-1.9,2.5 c-0.4,0.5-0.7,0.9-1,1.1s-0.5,0.3-0.8,0.4s-0.6,0-1-0.1s-0.7-0.3-1.2-0.6c-0.4-0.3-0.7-0.6-0.9-0.9s-0.3-0.6-0.4-0.9 c0-0.3,0-0.6,0.2-0.9c0.1-0.3,0.4-0.7,0.8-1.2l0.4-0.5L35,102.5z"/> <path d="M37,111.4l3-5.2l1.4,0.8l0.4,3.8c0,0.1,0,0.2,0,0.4c0,0.2,0,0.5-0.1,0.8c0.1-0.2,0.2-0.4,0.3-0.6s0.2-0.3,0.2-0.5l1.5-2.6 l1.4,0.8l-3,5.2l-1.4-0.8l-0.4-3.8c0-0.1,0-0.2,0-0.4c0-0.2,0-0.5,0.1-0.7c-0.1,0.2-0.2,0.4-0.3,0.6s-0.2,0.3-0.2,0.5l-1.5,2.6 L37,111.4z"/> <path d="M43.5,115l2.4-5.5L47,110c0.9,0.4,1.4,0.7,1.8,0.9c0.3,0.2,0.6,0.5,0.8,0.8c0.2,0.4,0.4,0.8,0.4,1.3s-0.1,0.9-0.3,1.4 s-0.5,0.9-0.8,1.2c-0.3,0.3-0.7,0.5-1.2,0.6c-0.3,0.1-0.7,0.1-1.1,0c-0.4-0.1-0.9-0.3-1.6-0.6l-0.3-0.1L43.5,115z M45.5,114.4 l0.3,0.1c0.6,0.3,1.1,0.3,1.4,0.2c0.4-0.1,0.7-0.5,0.9-1s0.3-1,0.1-1.3c-0.2-0.4-0.5-0.7-1.1-0.9l-0.3-0.1L45.5,114.4z"/> <path d="M49.6,117.5l1.9-5.7l3.5,1.1l-0.4,1.3l-2-0.6l-0.3,1l1.9,0.6l-0.4,1.2l-1.9-0.6l-0.3,1l2,0.6l-0.4,1.3L49.6,117.5z"/> <path d="M54.3,119l1.4-5.8l1.7,0.4c0.7,0.2,1.1,0.3,1.3,0.4s0.4,0.3,0.6,0.5c0.2,0.2,0.3,0.4,0.3,0.7c0.1,0.3,0,0.6,0,0.9 c-0.1,0.5-0.3,0.8-0.6,1s-0.7,0.3-1.1,0.3l1,2.7l-1.8-0.4l-0.8-2.6l-0.5,2.3L54.3,119z M56.5,116.2l0.3,0.1c0.3,0.1,0.6,0.1,0.8,0 s0.3-0.2,0.4-0.5c0.1-0.3,0-0.5-0.1-0.7s-0.4-0.3-0.7-0.4l-0.3-0.1L56.5,116.2z"/> <path d="M62.8,114.6l1.6,0.1l-0.2,2.9c0,0.4,0,0.7,0,0.9c0,0.2,0,0.3,0.1,0.5s0.1,0.3,0.3,0.4c0.1,0.1,0.3,0.1,0.6,0.2 c0.2,0,0.4,0,0.6-0.1s0.3-0.2,0.4-0.3c0.1-0.1,0.1-0.3,0.1-0.5s0.1-0.5,0.1-0.9v-0.4l0.2-2.5l1.6,0.1l-0.3,3.2 c-0.1,0.7-0.1,1.1-0.2,1.4s-0.3,0.6-0.5,0.8c-0.2,0.2-0.5,0.4-0.9,0.5S65.5,121,65,121s-0.9-0.1-1.3-0.3c-0.3-0.2-0.6-0.4-0.8-0.6 s-0.3-0.5-0.3-0.8c-0.1-0.3-0.1-0.8,0-1.5l0.1-0.6L62.8,114.6z"/> <path d="M69.1,121.1l-0.2-6l1.6-0.1l2.4,3c0,0.1,0.1,0.2,0.2,0.4c0.1,0.2,0.2,0.4,0.4,0.7c0-0.2-0.1-0.5-0.1-0.7s0-0.4,0-0.5 l-0.1-3l1.6-0.1l0.2,6l-1.6,0.1l-2.4-3c0-0.1-0.1-0.2-0.2-0.4c-0.1-0.2-0.2-0.4-0.3-0.7c0,0.3,0.1,0.5,0.1,0.7s0,0.4,0,0.5l0.1,3 L69.1,121.1z"/> <path d="M76.4,120.7l-0.7-6l1.6-0.2l0.7,6L76.4,120.7z"/> <path d="M80.3,120.1l-0.8-4.5l-1.3,0.2l-0.3-1.4l4.3-0.8l0.3,1.4l-1.3,0.2l0.8,4.5L80.3,120.1z"/> <path d="M85.2,119.1l-0.7-2.6l-2.9-2.6l1.8-0.5l1.2,1.3l0,0c0.1,0.1,0.2,0.3,0.3,0.4c0-0.1,0-0.3,0.1-0.5v-0.1l0.4-1.7l1.8-0.5 L86,116l0.7,2.6L85.2,119.1z"/> <path d="M87.5,117l-0.4-1.3l2.6-0.9l0.4,1.3L87.5,117z"/> <path d="M93.7,110l0.7,1.6c-0.3-0.1-0.6-0.2-0.8-0.2c-0.3,0-0.5,0-0.7,0.1c-0.4,0.2-0.7,0.5-0.9,0.9s-0.1,0.9,0.1,1.3 s0.5,0.8,0.9,0.9c0.4,0.2,0.8,0.2,1.2,0c0.2-0.1,0.4-0.2,0.6-0.4c0.2-0.2,0.3-0.5,0.4-0.8l0.7,1.6c-0.2,0.2-0.4,0.4-0.6,0.6 s-0.4,0.3-0.7,0.4c-0.3,0.1-0.6,0.2-0.9,0.2s-0.6,0-0.8,0c-0.5-0.1-1-0.3-1.4-0.6c-0.4-0.3-0.7-0.8-0.9-1.3 c-0.2-0.4-0.3-0.8-0.3-1.2c0-0.4,0.1-0.8,0.2-1.2c0.1-0.4,0.4-0.7,0.6-1c0.3-0.3,0.6-0.5,1-0.7c0.2-0.1,0.5-0.2,0.8-0.2 C93.1,110,93.4,109.9,93.7,110z"/> <path d="M97,114.8l-2.9-5.3l1.4-0.8l1.1,2l1.9-1.1l-1.1-2l1.4-0.8l2.9,5.3l-1.4,0.8l-1.2-2.1l-1.9,1.1l1.2,2.1L97,114.8z"/> <path d="M102.4,111.8l-1.8-6.1l1.7-1.2l5.1,3.7l-1.3,0.9l-0.9-0.7l-1.9,1.3l0.4,1.1L102.4,111.8z M103,108.6l1.3-0.9l-1.6-1.3 c-0.1,0-0.1-0.1-0.2-0.2s-0.2-0.2-0.4-0.3c0.1,0.1,0.1,0.3,0.2,0.4c0,0.1,0.1,0.3,0.1,0.4L103,108.6z"/> <path d="M108.2,107.7l-4-4.5l1.2-1l3.7,0.8c0.1,0,0.2,0.1,0.4,0.1c0.2,0.1,0.4,0.2,0.7,0.3c-0.2-0.2-0.4-0.3-0.5-0.4 s-0.3-0.3-0.4-0.4l-2-2.2l1.2-1l4,4.5l-1.2,1l-3.8-0.8c-0.1,0-0.2-0.1-0.4-0.1c-0.2-0.1-0.4-0.2-0.7-0.3c0.2,0.2,0.4,0.3,0.5,0.5 c0.1,0.1,0.3,0.3,0.4,0.4l2,2.2L108.2,107.7z"/> <path d="M115.4,100.8l-4.6-3.9l1.1-1.2l3.5,3l1.3-1.5l1.1,0.9L115.4,100.8z"/> <path d="M118.3,97.3l-4.8-3.6l1-1.3l4.8,3.6L118.3,97.3z"/> <path d="M117.6,88l1.5,1c-0.3,0.1-0.6,0.1-0.8,0.3c-0.2,0.1-0.4,0.3-0.5,0.5c-0.3,0.4-0.3,0.8-0.2,1.2c0.1,0.4,0.4,0.8,0.8,1 c0.4,0.3,0.8,0.4,1.2,0.3c0.4-0.1,0.8-0.3,1-0.7c0.1-0.2,0.2-0.4,0.2-0.7c0-0.3,0-0.5-0.1-0.9l1.5,1c0,0.3-0.1,0.6-0.2,0.8 c-0.1,0.2-0.2,0.5-0.3,0.7c-0.2,0.3-0.4,0.5-0.6,0.7s-0.5,0.3-0.7,0.4c-0.5,0.2-1,0.3-1.5,0.2c-0.5-0.1-1-0.2-1.5-0.5 c-0.4-0.2-0.7-0.5-0.9-0.9c-0.2-0.3-0.4-0.7-0.5-1.1s-0.1-0.8,0-1.2c0.1-0.4,0.2-0.8,0.5-1.1c0.1-0.2,0.3-0.4,0.5-0.6 C117.2,88.4,117.4,88.2,117.6,88z"/> <path d="M123,90.2l-5.3-2.8l1.7-3.2l1.2,0.6l-1,1.8l0.9,0.5l0.9-1.7l1.1,0.6l-0.9,1.7l0.9,0.5l1-1.8l1.2,0.6L123,90.2z"/> <path d="M125.3,85.8l-5.6-2.3l0.6-1.5l3.7-0.9c0.1,0,0.2,0,0.4-0.1c0.2,0,0.5,0,0.8,0c-0.2-0.1-0.5-0.1-0.6-0.2 c-0.2-0.1-0.3-0.1-0.5-0.2l-2.7-1.1L122,78l5.6,2.3l-0.6,1.5l-3.7,0.9c-0.1,0-0.2,0-0.4,0.1s-0.5,0-0.7,0c0.2,0.1,0.5,0.1,0.6,0.2 c0.2,0.1,0.3,0.1,0.5,0.2l2.7,1.1L125.3,85.8z"/> <path d="M126.2,78.2c0.3-0.2,0.6-0.3,0.8-0.5c0.2-0.2,0.3-0.4,0.4-0.6s0.1-0.4,0-0.6s-0.2-0.3-0.4-0.3c-0.2-0.1-0.4,0-0.5,0 s-0.3,0.3-0.6,0.7c-0.3,0.5-0.6,0.9-0.9,1c-0.3,0.2-0.7,0.2-1.1,0.1c-0.6-0.2-0.9-0.5-1.2-0.9c-0.2-0.5-0.3-1-0.1-1.6 c0.1-0.3,0.2-0.6,0.4-0.9c0.2-0.3,0.4-0.5,0.6-0.7l1,0.8c-0.2,0.1-0.4,0.3-0.5,0.4c-0.1,0.2-0.2,0.3-0.3,0.5 c-0.1,0.2-0.1,0.4,0,0.5s0.2,0.2,0.3,0.3c0.1,0,0.3,0,0.4-0.1s0.3-0.3,0.4-0.5v-0.1c0.4-0.6,0.7-1,0.9-1.1 c0.2-0.1,0.4-0.1,0.6-0.2c0.2,0,0.4,0,0.7,0.1c0.6,0.2,1,0.5,1.3,1s0.3,1.1,0.1,1.8c-0.1,0.4-0.3,0.7-0.5,1s-0.5,0.5-0.9,0.8 L126.2,78.2z"/> <path d="M129.3,74.2l-5.9-1.2l0.7-3.6l1.3,0.3l-0.4,2l1,0.2l0.4-1.9l1.3,0.3l-0.4,1.9l1,0.2l0.4-2l1.3,0.3L129.3,74.2z"/> </g> </g> </svg></div>
-<h2>お借りした衣装</h2>
-<ul>
-<li>OIMO3 v0.0.0（Chiyo_yaさん）</li>
-<li>ReTulpe ver1.3（HINOshopさん）</li>
-</ul>
-<h2>検証に協力してくれたモデル</h2>
-<ul>
-<li>Anon（こよりLaboさん）</li>
-</ul>
-<p>きがえ工房をためすとき、たくさん力を貸してくれました。ありがとうございます。</p>
-<h2>お願い</h2>
-<p>これらの素材の著作権は、それぞれの作者にあります。きがえ工房で変換した衣装を配るときは、元の素材の利用規約を確かめてください。</p>
-</section>
-</main>
-</div>
-<div class="top"><button class="menu-btn" type="button">目次</button><a href="#ch-index">いちばん上へ</a></div>
-<div id="lightbox"><img alt=""></div>
-<script>
+</div></details></div><details class="manual-detail" id="scope"><summary>仕様と制限・使用前に確認すること</summary><div class="chapter-body"><ul><li>変換先には、Humanoid の骨設定があるシーン上のアバターを使います。衣装は骨で動くメッシュが対象です。</li><li>変換結果は衣装の構成・素体・姿勢で変わります。自動変換だけで、すべての貫通や形の違いがなくなるわけではありません。8ポーズの結果と、実際に使う姿勢の見た目を合わせて確認します。</li><li>元の衣装にある穴・食い込み、体どうしが重なる姿勢は、別途調整が必要です。体と服が一体の変換先では、推定した素体と実際の体に差が出ることがあります。一体になった元の衣装だけを切り出して移す用途には対応しません。</li><li>仮の肌は試験的な表示補助です。顔・指・足先や、元の肌の模様・質感を再現する機能ではありません。肌のむらや継ぎ目など、見た目に追加調整が必要な場合があります。</li><li>PhysBone・コライダー・Modular Avatar の設定は、変換先での参照と動作を確認してください。揺れ幅や飾りの位置は衣装に合わせて調整します。アップロード前に VRChat SDK のビルドとアバター情報を確認します。</li><li>処理中は完了を待ってから操作します。所要時間は衣装・設定・パソコンによって変わります。</li><li>保存呼出し工房は、シーンと対応工房の作業を保存します。プロジェクト全体のバックアップ、購入素材の原本、Unity の Undo 履歴すべてを戻す機能ではありません。<a href="https://creativeandcreative9.github.io/GP25_manual/#limits">保存対象の詳細</a>をご覧ください。</li></ul><h3>衣装を合わせる方法の選び方</h3><p>方式ごとに準備するものが違います。他製品の機能は製品ごとに異なるため、次の表は方式の説明です。</p><div class="table-wrap"><table class="method-table"><thead><tr><th>方法</th><th>準備と進め方</th></tr></thead><tbody><tr><td>Blender などで手作業</td><td>形やウェイトを自分で編集して合わせる。部位ごとに細かく作り込めます。</td></tr><tr><td>変換プロファイルを使う方式</td><td>対象アバターの組み合わせに合った変換データを用意します。対応範囲は使う製品とデータを確認します。</td></tr><tr><td>押し出しを中心に調整する方式</td><td>面の位置やすき間を調整します。骨や動きの扱いは製品ごとに確認します。</td></tr><tr><td>元アバターの素体を使う方式</td><td>元と変換先の素体を用意し、体型の違いを変換に使います。</td></tr><tr><td>きがえ工房</td><td>元アバターがあれば素体転写、なければ衣装 Prefab の解析を使います。変換プロファイルを用意する必要はありません。変換後は検査と各工房で仕上げます。</td></tr></tbody></table></div></div></details><details class="manual-detail" id="feature-reference"><summary>できることの早見表</summary><div class="chapter-body"><details class="manual-detail" id="ch-zukan_01_3つ選んで変換するだけ"><summary>2つ選んで、変換を始める</summary><div class="chapter-body"><span class="anchor-alias" id="card-得A8"></span><span class="anchor-alias" id="card-得A7"></span><span class="anchor-alias" id="card-得A5"></span><span class="anchor-alias" id="card-得A4"></span><span class="anchor-alias" id="card-得A3"></span><span class="anchor-alias" id="card-得A2"></span><span class="anchor-alias" id="card-得A1"></span><p>衣装と変換先アバターを選びます。元アバターは自動で探し、見つからないときは衣装そのものから合わせます。素体や骨の判定に案内が出たら、入力欄から修正できます。</p><p><a href="#ch-04_01_衣装のPrefabを着せたい">手順と設定を見る →</a></p></div></details><details class="manual-detail" id="ch-zukan_02_体型や頭身の違うアバターへ"><summary>体型の違いに合わせる</summary><div class="chapter-body"><span class="anchor-alias" id="card-得B5"></span><span class="anchor-alias" id="card-得B4"></span><span class="anchor-alias" id="card-得B2"></span><span class="anchor-alias" id="card-得B1"></span><p>元アバターがあるときは、元と変換先の素体の違いを衣装へ転写します。体とのすき間、体型キー、部分ごとの設定を使って仕上がりを調整できます。</p><p><a href="#ch-04_03_食い込みやぶかぶかを直したい">手順と設定を見る →</a></p><figure><img alt="MANUKA初期衣装をTsubomiに合わせた既存の変換例。左は元のMANUKA、右は変換後のTsubomi" height="700" loading="lazy" src="images/zukan_02_c2_compare.png" width="1400"/><figcaption>別の組み合わせの作例：MANUKA 初期衣装 → Tsubomi。</figcaption></figure></div></details><details class="manual-detail" id="ch-zukan_03_着せたあとを自動で確かめる"><summary>8ポーズで貫通を調べる</summary><div class="chapter-body"><span class="anchor-alias" id="card-得C6"></span><span class="anchor-alias" id="card-得C5"></span><span class="anchor-alias" id="card-得C4"></span><span class="anchor-alias" id="card-得C2"></span><span class="anchor-alias" id="card-得C1"></span><p>変換後は静止状態と8つのポーズを自動チェックします。元からある貫通と変換で増えた貫通を分けて読み、気になるポーズと場所を確認できます。数値は仕上げる場所を探す目安です。</p><p><a href="#ch-04_04_貫通の場所を確かめたい">手順と設定を見る →</a></p></div></details><details class="manual-detail" id="ch-zukan_04_動いたときの服"><summary>動いたときも考えて整える</summary><div class="chapter-body"><span class="anchor-alias" id="card-得D4"></span><span class="anchor-alias" id="card-得D3"></span><span class="anchor-alias" id="card-得D1"></span><p>素体からのウェイト転写とポーズを考えた調整に加え、座ったときのスカートを支える補助ボーンを生成できます。頭の飾りなどは、形を保つ調整も使えます。</p><p><a href="#ch-04_08_座ったときのスカートを直したい">手順と設定を見る →</a></p></div></details><details class="manual-detail" id="ch-zukan_05_体と服が一体のアバターにも"><summary>体と服が一体のアバターへ</summary><div class="chapter-body"><span class="anchor-alias" id="card-得E2"></span><span class="anchor-alias" id="card-得E1"></span><p>体と服が一体になった変換先では、服の下の体を推定して合わせます。元の服を隠す操作もあります。仮の肌は試験的な見た目確認用で、元の肌の形や質感を復元するものではありません。</p><p><a href="#ch-04_05_体と服が一体のアバターに着せたい">手順と設定を見る →</a></p></div></details><details class="manual-detail" id="ch-zukan_06_一部だけ設定を変える"><summary>飾りや一部分を守る</summary><div class="chapter-body"><span class="anchor-alias" id="card-得F4"></span><span class="anchor-alias" id="card-得F2"></span><span class="anchor-alias" id="card-得F3"></span><p>マテリアル、マスク画像、Scene ビューのブラシで範囲を選び、変換の効き具合やすき間を部分ごとに設定できます。</p><p><a href="#ch-04_06_一部だけ形を変えたくない">手順と設定を見る →</a></p></div></details><details class="manual-detail" id="ch-zukan_07_仕掛けや揺れ物も引き継ぐ"><summary>PhysBone・Modular Avatar と使う</summary><div class="chapter-body"><span class="anchor-alias" id="card-得G5"></span><span class="anchor-alias" id="card-得G4"></span><span class="anchor-alias" id="card-得G3"></span><span class="anchor-alias" id="card-得G2"></span><span class="anchor-alias" id="card-得G1"></span><p>PhysBone とコライダーの設定を引き継ぎ、変換先への参照を整えます。Modular Avatar がある環境では、対応する組み込み方を選べます。揺れ幅や接触の見た目は、使用する衣装で調整します。</p><p><a href="#ch-04_09_ModularAvatarやPhysBoneと使いたい">手順と設定を見る →</a></p></div></details><details class="manual-detail" id="ch-zukan_08_安心して試せる"><summary>調整を再開する・取り除く</summary><div class="chapter-body"><span class="anchor-alias" id="card-得I1"></span><span class="anchor-alias" id="card-得H5"></span><span class="anchor-alias" id="card-得H4"></span><span class="anchor-alias" id="card-得H3"></span><span class="anchor-alias" id="card-得H2"></span><span class="anchor-alias" id="card-得H1"></span><p>変換結果には作業の記録が残ります。［この衣装の調整を再開］から設定を見直せます。衣装を外すときは［この変換を取り除く］を使います。複数の作業案を残すときは保存呼出し工房を使えます。</p><p><a href="#ch-04_10_やり直したい">手順と設定を見る →</a></p></div></details><details class="manual-detail" id="ch-zukan_09_苦手なこと"><summary>対応範囲と、仕上がりの確認</summary><div class="chapter-body"><p>変換結果は衣装・体型・姿勢の組み合わせで変わります。対応する入力と調整が必要なケースを、仕様と制限にまとめています。</p><p><a href="#scope">手順と設定を見る →</a></p></div></details><details class="manual-detail" id="ch-zukan_10_悩みから探す"><summary>やりたいことから探す</summary><div class="chapter-body"><p>食い込み、座ったときのスカート、飾りの形、シェイプキーの連動など、気になるところに合わせてレシピを選べます。</p><p><a href="#recipes">手順と設定を見る →</a></p></div></details></div></details><details class="manual-detail" id="ch-08_クレジット"><summary>クレジット</summary><div class="chapter-body"><p>本手引書の作例・画面写真には、次の素材を利用しています。アバター・衣装のデータは製品に同梱していません。権利はそれぞれの作者に帰属します。</p><h3>アバター</h3><ul><li>MANUKAちゃん — 진권（ジンゴ）さん</li><li>Tsubomiちゃん — こここやさん</li><li>ゆうこ（Yuko）— SD こはくちゃんズ。© Unity Technologies Japan/UCL</li></ul><h3>衣装</h3><ul><li>MANUKA 初期衣装 — 진권（ジンゴ）さん</li><li>ReTulpe — HINOshop さん</li><li>OIMO3 — Chiyo_ya さん</li></ul><p>変換した衣装を使用・共有する際は、アバターと衣装それぞれの利用規約に従ってください。本製品の購入で、素材を再配布する権利が追加されることはありません。</p><p>ゆうこの画像は、ユニティちゃんライセンス条項に従って使用しています。ゆうこのモデルデータは製品に同梱していません。</p></div></details></section><section class="closing"><p class="eyebrow">次は、あなたの衣装で。</p><h2>まず1組を、<br/>自分のアバターへ。</h2><a class="button" href="https://appluna.booth.pm/items/9071749">無料の本体を手に入れる ↗</a></section><footer class="footer"><span>きがえ工房 使用手引書 · 2026-11-09<br/>著作権は、作者（アプリ工房ルナ）が持ちます。</span><a href="#ch-index">ページの先頭へ ↑</a></footer></main><div aria-label="画像の拡大" aria-modal="true" class="lightbox" hidden="" id="lightbox" role="dialog"><button type="button">閉じる ×</button><img alt=""/></div><script>
+//著作権は、作者（アプリ工房ルナ）が持ちます。
+//コードのすべてまたは一部の流用を禁じます。
+//Copyright (C) 2026 creativeandcreative9 All Rights Reserved.
 (function(){
-  /* 手順の「できた」印は、読む人のブラウザにだけ残る。KEY は作品ごとに変える */
-  var KEY='kisekaekobo-manual-done', done={};
-  try{done=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
-  function save(){try{localStorage.setItem(KEY,JSON.stringify(done))}catch(e){}}
-  document.querySelectorAll('section.chapter ol').forEach(function(ol){
-    var items=[].filter.call(ol.children,function(c){return c.tagName==='LI'});
-    if(!items.length||ol.closest('li'))return;
-    ol.classList.add('steps');
-    /* CSS の番号は counter で付けるので、<ol start> の続き番号はここで渡す */
-    if(ol.start>1)ol.style.counterReset='step '+(ol.start-1);
-    var sec=ol.closest('section');
-    items.forEach(function(li,i){
-      var id=(sec?sec.id:'')+':'+i+':'+li.textContent.trim().slice(0,24);
-      li.classList.add('step');
-      var b=document.createElement('button');b.type='button';b.className='tick';
-      function paint(){li.classList.toggle('done',!!done[id]);b.textContent=done[id]?'戻す':'できた'}
-      b.onclick=function(){if(done[id])delete done[id];else done[id]=1;save();paint()};
-      li.insertBefore(b,li.firstChild);paint();
+  function revealHash(){
+    var id;try{id=decodeURIComponent(location.hash.slice(1));}catch(e){return;}
+    var target=document.getElementById(id);if(!target)return;
+    var node=target;while(node){if(node.tagName==='DETAILS')node.open=true;node=node.parentElement;}
+    requestAnimationFrame(function(){target.scrollIntoView({block:'start'});});
+  }
+  window.addEventListener('hashchange',revealHash);
+  document.addEventListener('click',function(e){var a=e.target.closest('a[href^="#"]');if(a&&a.hash===location.hash)revealHash();});
+  if(location.hash)revealHash();
+  var key='kisekaekobo-manual-done',done={};try{done=JSON.parse(localStorage.getItem(key)||'{}')}catch(e){}
+  document.querySelectorAll('.chapter-body ol').forEach(function(ol){
+    if(ol.closest('li'))return;
+    Array.from(ol.children).filter(function(c){return c.tagName==='LI'}).forEach(function(li,i){
+      var group=li.closest('details');var id=(group?group.id:'')+':'+i+':'+li.textContent.trim().slice(0,24);
+      li.classList.add('step');var b=document.createElement('button');b.type='button';b.className='tick';
+      function paint(){li.classList.toggle('done',!!done[id]);b.textContent=done[id]?'印を戻す':'できた';b.setAttribute('aria-pressed',!!done[id]);}
+      b.onclick=function(){if(done[id])delete done[id];else done[id]=true;try{localStorage.setItem(key,JSON.stringify(done))}catch(e){}paint();};
+      li.prepend(b);paint();
     });
   });
-  var lb=document.getElementById('lightbox'),lbi=lb.querySelector('img');
-  document.querySelectorAll('main img').forEach(function(im){im.onclick=function(){lbi.src=im.src;lb.classList.add('on')}});
-  lb.onclick=function(){lb.classList.remove('on')};
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')lb.classList.remove('on')});
-  var toc=document.querySelector('nav.toc');
-  document.querySelector('.menu-btn').onclick=function(){toc.classList.toggle('open')};
-  toc.addEventListener('click',function(e){if(e.target.tagName==='A')toc.classList.remove('open')});
-  var links=[].slice.call(toc.querySelectorAll('a[href^="#"]'));
-  var secs=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1))});
-  function spy(){var y=window.scrollY+120,cur=0;secs.forEach(function(s,i){if(s&&s.offsetTop<=y)cur=i});links.forEach(function(a,i){a.classList.toggle('on',i===cur)})}
-  window.addEventListener('scroll',spy,{passive:true});spy();
+//著作権は、作者（アプリ工房ルナ）が持ちます。
+//コードのすべてまたは一部の流用を禁じます。
+//Copyright (C) 2026 creativeandcreative9 All Rights Reserved.
+  var lb=document.getElementById('lightbox'),large=lb.querySelector('img'),close=lb.querySelector('button'),previous;
+  function hide(){lb.classList.remove('on');lb.hidden=true;large.removeAttribute('src');if(previous)previous.focus();}
+  document.querySelectorAll('main img').forEach(function(im){im.tabIndex=0;im.setAttribute('role','button');im.setAttribute('aria-label',im.alt+'。画像を拡大');function show(){previous=im;large.src=im.src;large.alt=im.alt;lb.hidden=false;lb.classList.add('on');close.focus();}im.addEventListener('click',show);im.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();show();}});});
+  close.onclick=hide;lb.addEventListener('click',function(e){if(e.target===lb)hide();});
+  document.addEventListener('keydown',function(e){if(!lb.classList.contains('on'))return;if(e.key==='Escape')hide();if(e.key==='Tab'){e.preventDefault();close.focus();}});
 })();
-</script>
-</body>
-</html>
+//著作権は、作者（アプリ工房ルナ）が持ちます。
+//コードのすべてまたは一部の流用を禁じます。
+//Copyright (C) 2026 creativeandcreative9 All Rights Reserved.
+</script></body></html>
